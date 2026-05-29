@@ -1,83 +1,142 @@
 // ============================================================
-// ПАТЧ ДЛЯ ДИНАМИЧЕСКИХ СУММ - МЕНЯЙТЕ ТОЛЬКО ЭТИ 3 ЧИСЛА:
+// ЕДИНОЕ МЕСТО ДЛЯ НАСТРОЕК - МЕНЯЙТЕ ТОЛЬКО ЭТИ 3 ЧИСЛА:
 // ============================================================
 var BITCOIN_CONFIG = {
-    BTC_AMOUNT: 0.196457,      // ← сколько BTC на счету
-    RESCUE_BTC: 0.19918,       // ← резервный BTC
-    BTC_RATE: 73270.8          // ← курс BTC к USD
+    // НАЧАЛЬНАЯ СУММА BTC (до сбора бонусов)
+    BTC_START: 0.196457,      // ← меняйте здесь
+    
+    // СУММА BTC ПОСЛЕ СБОРА БОНУСОВ (увеличивается)
+    BTC_AFTER_BONUS: 0.19918, // ← меняйте здесь
+    
+    // КУРС BTC К USD
+    BTC_RATE: 73270.8         // ← меняйте здесь
 };
 
-// Функция для переопределения сумм
+// Автоматические вычисления (НЕ МЕНЯТЬ)
+var BONUS_BTC = BITCOIN_CONFIG.BTC_AFTER_BONUS - BITCOIN_CONFIG.BTC_START;  // размер бонуса в BTC
+var USD_START = BITCOIN_CONFIG.BTC_START * BITCOIN_CONFIG.BTC_RATE;           // начальная сумма в USD
+var USD_AFTER_BONUS = BITCOIN_CONFIG.BTC_AFTER_BONUS * BITCOIN_CONFIG.BTC_RATE; // сумма после бонуса в USD
+var USD_BONUS = USD_AFTER_BONUS - USD_START;                                   // бонус в USD
+
+// ============================================================
+// ПАТЧ ДЛЯ ПОДМЕНЫ ЗНАЧЕНИЙ НА СТРАНИЦЕ
+// ============================================================
 (function patchBitcoinValues() {
     var originalSetInterval = setInterval;
-    var patched = false;
-    
-    // Ждем пока загрузится store
     var checkInterval = originalSetInterval(function() {
         try {
-            // Ищем store в window
-            if (window.__BITCOIN_BONUS_STORE__ || 
-                (window._vm && window._vm.$store) ||
-                document.querySelector('#app')) {
-                
+            if (document.querySelector('#app')) {
                 clearInterval(checkInterval);
                 
-                // Функция обновления всех сумм
                 function updateAllValues() {
-                    // Вычисляем новые суммы
-                    var newUsdBalance = BITCOIN_CONFIG.BTC_AMOUNT * BITCOIN_CONFIG.BTC_RATE;
-                    var newRescueUsd = BITCOIN_CONFIG.RESCUE_BTC * BITCOIN_CONFIG.BTC_RATE;
-                    
                     // Форматируем числа
-                    var formattedUsd = newUsdBalance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    var formattedBtc = BITCOIN_CONFIG.BTC_AMOUNT.toFixed(5).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-                    var formattedChange = (newUsdBalance * 0.02).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    var startUsdFormatted = USD_START.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    var afterUsdFormatted = USD_AFTER_BONUS.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    var bonusUsdFormatted = USD_BONUS.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    var startBtcFormatted = BITCOIN_CONFIG.BTC_START.toFixed(5).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+                    var afterBtcFormatted = BITCOIN_CONFIG.BTC_AFTER_BONUS.toFixed(5).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+                    var bonusBtcFormatted = BONUS_BTC.toFixed(5).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
                     
-                    // Находим все элементы с суммами и заменяем
-                    var elements = document.querySelectorAll('.bitcoin-balance b.h1, .bitcoin-balance .h1, .text-numbers');
-                    elements.forEach(function(el) {
+                    // 1. Обновляем баланс в шапке (показывает начальную или конечную сумму)
+                    var balanceElement = document.querySelector('.account-balance .text-numbers');
+                    if (balanceElement) {
+                        // Определяем, какую сумму показывать (обычно начальную)
+                        balanceElement.innerHTML = '$' + startUsdFormatted;
+                    }
+                    
+                    // 2. Обновляем все блоки с балансом
+                    var allBalanceBlocks = document.querySelectorAll('.bitcoin-balance b.h1, .bitcoin-balance .h1');
+                    allBalanceBlocks.forEach(function(el) {
+                        var parent = el.closest('.bitcoin-balance');
+                        // Определяем, начальная это сумма или конечная (по контексту)
+                        if (parent && parent.querySelector('.text-success')) {
+                            // Если есть зеленый текст с бонусом - это конечная сумма
+                            el.innerHTML = '<sup style="top:-0.3em;font-size:70%">$</sup>' + afterUsdFormatted;
+                        } else {
+                            // Иначе начальная
+                            el.innerHTML = '<sup style="top:-0.3em;font-size:70%">$</sup>' + startUsdFormatted;
+                        }
+                    });
+                    
+                    // 3. Обновляем BTC суммы
+                    var btcElements = document.querySelectorAll('.bitcoin-balance .text-secondary, .text-monospace');
+                    btcElements.forEach(function(el) {
+                        if (el.innerText.indexOf('BTC') !== -1) {
+                            var parent = el.closest('.bitcoin-balance');
+                            if (parent && parent.querySelector('.text-success')) {
+                                el.innerHTML = afterBtcFormatted + ' BTC';
+                            } else {
+                                el.innerHTML = startBtcFormatted + ' BTC';
+                            }
+                        }
+                    });
+                    
+                    // 4. Обновляем зеленые бонусы (разница)
+                    var bonusElements = document.querySelectorAll('.text-success');
+                    bonusElements.forEach(function(el) {
                         var html = el.innerHTML;
-                        // Заменяем долларовые суммы
-                        if (html && html.indexOf('$') !== -1 && html.match(/\$[\d,]+\.\d{2}/)) {
-                            var newHtml = html.replace(/\$[\d,]+\.\d{2}/g, '$' + formattedUsd);
+                        if (html && html.indexOf('$') !== -1) {
+                            // Заменяем сумму бонуса
+                            var newHtml = html.replace(/\$[\d,]+\.\d{2}/g, '$' + bonusUsdFormatted);
                             if (newHtml !== html) el.innerHTML = newHtml;
                         }
-                        // Заменяем BTC суммы
-                        if (html && html.indexOf('BTC') !== -1 && html.match(/[\d,]+\.\d{5}\s+BTC/)) {
-                            var newHtml = html.replace(/[\d,]+\.\d{5}\s+BTC/g, formattedBtc + ' BTC');
+                        if (html && html.indexOf('BTC') === -1 && html.match(/[\d,]+\.\d{5}/) && el.closest('.bitcoin-balance')) {
+                            // Заменяем BTC бонус
+                            var newHtml = html.replace(/[\d,]+\.\d{5}/g, bonusBtcFormatted);
                             if (newHtml !== html) el.innerHTML = newHtml;
                         }
                     });
                     
-                    // Обновляем баланс в шапке
-                    var balanceElement = document.querySelector('.account-balance .text-numbers');
-                    if (balanceElement) {
-                        balanceElement.innerHTML = '$' + formattedUsd;
-                    }
+                    // 5. Обновляем сообщение о бонусе "за последние 7 дней"
+                    var weekBonusElements = document.querySelectorAll('.bitcoin-balance .text-success ~ .text-numbers, .bitcoin-balance p .text-numbers');
+                    weekBonusElements.forEach(function(el) {
+                        if (el.innerText.indexOf('$') !== -1 && !el.querySelector('svg')) {
+                            el.innerHTML = '$' + bonusUsdFormatted;
+                        }
+                    });
                     
-                    // Обновляем скрытые поля, если есть
-                    if (window.__STORE__) {
-                        window.__STORE__.usermoney = newUsdBalance;
-                        window.__STORE__.maximumcash = newRescueUsd;
-                        window.__STORE__.rescueMoney = newRescueUsd;
-                    }
+                    // 6. Обновляем суммы в модальных окнах и текстах
+                    var allTextElements = document.querySelectorAll('p, div, span, b');
+                    allTextElements.forEach(function(el) {
+                        var html = el.innerHTML;
+                        // Заменяем "0.196457 BTC" на новое значение
+                        if (html && html.match(/0\.196457\s+BTC/)) {
+                            el.innerHTML = html.replace(/0\.196457\s+BTC/g, startBtcFormatted + ' BTC');
+                        }
+                        // Заменяем "0.392 BTC" (удвоенное) если есть
+                        if (html && html.match(/0\.392\s+BTC/)) {
+                            var doubleBtc = (BITCOIN_CONFIG.BTC_START * 2).toFixed(5).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+                            el.innerHTML = html.replace(/0\.392\s+BTC/g, doubleBtc + ' BTC');
+                        }
+                        // Заменяем "$7,232.67" на новую сумму
+                        if (html && html.match(/\$7,232\.67/)) {
+                            el.innerHTML = html.replace(/\$7,232\.67/g, '$' + startUsdFormatted);
+                        }
+                        // Заменяем "$145.32" (бонус) на новое значение
+                        if (html && html.match(/\$145\.32/)) {
+                            el.innerHTML = html.replace(/\$145\.32/g, '$' + bonusUsdFormatted);
+                        }
+                    });
                 }
                 
-                // Запускаем обновление
                 updateAllValues();
-                
-                // Обновляем каждые 100мс для динамических элементов
-                var updateInterval = originalSetInterval(updateAllValues, 100);
-                patched = true;
+                var updateInterval = originalSetInterval(updateAllValues, 200);
             }
         } catch(e) {}
     }, 50);
     
-    // Сохраняем конфиг глобально
     window.BITCOIN_CONFIG = BITCOIN_CONFIG;
+    window.BITCOIN_VALUES = {
+        startUsd: USD_START,
+        afterUsd: USD_AFTER_BONUS,
+        bonusUsd: USD_BONUS,
+        startBtc: BITCOIN_CONFIG.BTC_START,
+        afterBtc: BITCOIN_CONFIG.BTC_AFTER_BONUS,
+        bonusBtc: BONUS_BTC
+    };
 })();
 // ============================================================
-// КОНЕЦ ПАТЧА - ДАЛЕЕ ИДЕТ ОРИГИНАЛЬНЫЙ КОД ФАЙЛА
+// КОНЕЦ ПАТЧА - ДАЛЕЕ ОРИГИНАЛЬНЫЙ КОД
 // ============================================================
 
 (function(t) {
