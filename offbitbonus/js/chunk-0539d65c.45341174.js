@@ -105,7 +105,7 @@
                 o = (n("c5f6"), {
                     data: function() {
                         return {
-                            usdKurs: 150,
+                            usdKurs: 74,
                             randSum: Number(),
                             publicPath: "/offbitbonus/",
                             notyPayouts: null,
