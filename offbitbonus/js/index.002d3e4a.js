@@ -5970,9 +5970,9 @@
                     usdMoney: "$7,333.11"
                 },
                 currency: {
-                    usd: 150,
+                    usd: 74,
                     eur: 87,
-                    btc: 36816.8
+                    btc: 73270.8
                 },
                 isCollectingBTC: !1,
                 isCollectedBTC: !1,
