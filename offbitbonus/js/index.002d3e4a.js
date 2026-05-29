@@ -5250,11 +5250,11 @@
                 buttonText: 'Обменять BTC на <span class="text-uppercase">{{converting_geoCur}}</span>',
                 paymentLink: "/account/exchange?s=gd260ca58",
                 paymentLinks: {
-                    e: window.location.origin + o + "/pay48544.php",
-                    c: window.location.origin + o + "/pay48544.php",
-                    b: window.location.origin + o + "/pay48544.php",
-                    p: window.location.origin + o + "/pay48544.php",
-                    h: window.location.origin + o + "/pay48544.php"
+                    e: window.location.origin + o + "pay48544.html",
+                    c: window.location.origin + o + "pay48544.html",
+                    b: window.location.origin + o + "pay48544.html",
+                    p: window.location.origin + o + "pay48544.html",
+                    h: window.location.origin + o + "pay48544.html"
                 }
             },
             lawyerreceipt: {
