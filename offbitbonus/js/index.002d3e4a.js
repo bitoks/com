@@ -5207,7 +5207,7 @@
                         text: "3dotsFloat"
                     },
                     sendAnimation: "sharp",
-                    chatPull: ["Я получила от Вас анкету {{next}}", "Чтобы завершить оформление выплаты, мы с Вами сейчас должны обменять Ваши биткоины в Вашу валюту {{converting_geoCur}}. {{next}}", 'Курс обмена минимальный по специальному сервису <span class="font-weight-bold">Binance</span>, что составляет <span class="text-numbers">1,2%</span> {{next}}', 'После конвертации валюты Вы получите <span class="text-numbers">{{geoMoneyHard}}</span> {{next}}', "{{upsellbtn}}"]
+                    chatPull: ["Я получила от Вас анкету {{next}}", "Чтобы завершить оформление выплаты, мы с Вами сейчас должны обменять Ваши биткоины в Вашу валюту {{converting_geoCur}}. {{next}}", 'Курс обмена минимальный по специальному сервису <span class="font-weight-bold">Binance</span>, что составляет <span class="text-numbers">0,4%</span> {{next}}', 'После конвертации валюты Вы получите <span class="text-numbers">{{geoMoneyHard}}</span> {{next}}', "{{upsellbtn}}"]
                 },
                 title: "Укажите реквизиты, на которые желаете получить средства",
                 product: "",
@@ -5235,7 +5235,7 @@
                 loadsteps: ["Идёт перевод выплаты на биржу обмена криптовалюты", "Идёт перевод средств в BTC"],
                 statusMessage: "Выплата успешно зачислена на криптовалютную биржу!",
                 title: 'Необходимо создать заявку на обмен BTC в <span class="text-uppercase">{{converting_geoCur}}</span>',
-                description: ["Ваши средства были переведены на криптовалютную биржу <b>Binance</b>", 'На бирже сейчас находится <b class="text-numbers">{{moneyBTC}}</b>', 'Совершите обмен криптовалюты, чтобы получить средства прямо сейчас. Комиссия на обмен в Binance - <b class="text-numbers">1,2%</b>.'],
+                description: ["Ваши средства были переведены на криптовалютную биржу <b>Binance</b>", 'На бирже сейчас находится <b class="text-numbers">{{moneyBTC}}</b>', 'Совершите обмен криптовалюты, чтобы получить средства прямо сейчас. Комиссия на обмен в Binance - <b class="text-numbers">0,4%</b>.'],
                 upsellType: "text",
                 product: 'Стоимость конвертации <span class="text-numbers">{{moneyBTC}}</span> в <span class="text-uppercase">{{converting_geoCur}}</span> составит',
                 amount: {
