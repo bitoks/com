@@ -5954,20 +5954,20 @@
                 },
                 commentsDate: new Array,
                 user: {
-                    usermoney: 7232.67,
-                    maximumcash: 7333.11,
-                    rescueMoney: 7333.11,
+                    usermoney: 14394,
+                    maximumcash: 14594.00,
+                    rescueMoney: 14594.00,
                     btc: .196457,
                     rescueBtc: .19918,
-                    money: "7,333.11",
-                    usdMoney: "$7,333.11"
+                    money: "14,594.00",
+                    usdMoney: "$14,594.00"
                 },
                 demo: {
-                    usermoney: 7232.67,
-                    maximumcash: 7333.11,
-                    rescueMoney: 7333.11,
-                    money: "$7,333.11",
-                    usdMoney: "$7,333.11"
+                    usermoney: 14394,
+                    maximumcash: 14594,
+                    rescueMoney: 14594,
+                    money: "$14,594.00",
+                    usdMoney: "$14,594.00"
                 },
                 currency: {
                     usd: 74,
