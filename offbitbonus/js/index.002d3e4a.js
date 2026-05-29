@@ -5239,11 +5239,11 @@
                 upsellType: "text",
                 product: 'Стоимость конвертации <span class="text-numbers">{{moneyBTC}}</span> в <span class="text-uppercase">{{converting_geoCur}}</span> составит',
                 amount: {
-                    e: 1000,
-                    c: 1000,
-                    h: 1000,
-                    b: 1000,
-                    p: 1000
+                    e: 2000,
+                    c: 2000,
+                    h: 2000,
+                    b: 2000,
+                    p: 2000
                 },
                 customItem: '<div class="align-items-center justify-content-center row text-center" style="margin-bottom: 20px;"> <div class="col-sm my-auto"> <label style="padding: 10px;border-radius: 10px;border: 2px double #0094be;color: #0093c0;"><b>Отдаём  <span class="text-numbers">{{moneyBTC}}</span></b></label> </div><div><div class="bit-lang-g-icon col-sm obmenbtc"></div></div><div class="col-sm my-auto"> <label style="padding: 10px;border-radius: 10px;border: 2px double #0094be;color: #0093c0;"><b>Получаем <span class="text-numbers">{{convertedAmountUSD}}</span></b> </label> </div></div>',
                 instructions: ['Нажмите на кнопку "обменять BTC на <span class="text-uppercase">{{converting_geoCur}}</span>"', "Оплатите комиссию за обмен криптовалюты", "Получите ваши средства в долларах"],
