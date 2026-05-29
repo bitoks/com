@@ -12646,7 +12646,7 @@
                         }
                     }, [e._v("Всего собрано")]), n("th", {
                         staticClass: "text-left"
-                    }, [e._v(e._s(e.$numberInBTC(100.44, "usd", e.$store.getters.btcPrice)) + "BTC = $100.44")])]), n("tr", {
+                    }, [e._v(e._s(e.$numberInBTC(200.01, "usd", e.$store.getters.btcPrice)) + "BTC = $200.01")])]), n("tr", {
                         staticClass: "text-success text-success-highlight-full"
                     }, [n("th", {
                         staticClass: "text-right",
