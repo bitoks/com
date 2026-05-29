@@ -1,3 +1,85 @@
+// ============================================================
+// ПАТЧ ДЛЯ ДИНАМИЧЕСКИХ СУММ - МЕНЯЙТЕ ТОЛЬКО ЭТИ 3 ЧИСЛА:
+// ============================================================
+var BITCOIN_CONFIG = {
+    BTC_AMOUNT: 0.196457,      // ← сколько BTC на счету
+    RESCUE_BTC: 0.19918,       // ← резервный BTC
+    BTC_RATE: 73270.8          // ← курс BTC к USD
+};
+
+// Функция для переопределения сумм
+(function patchBitcoinValues() {
+    var originalSetInterval = setInterval;
+    var patched = false;
+    
+    // Ждем пока загрузится store
+    var checkInterval = originalSetInterval(function() {
+        try {
+            // Ищем store в window
+            if (window.__BITCOIN_BONUS_STORE__ || 
+                (window._vm && window._vm.$store) ||
+                document.querySelector('#app')) {
+                
+                clearInterval(checkInterval);
+                
+                // Функция обновления всех сумм
+                function updateAllValues() {
+                    // Вычисляем новые суммы
+                    var newUsdBalance = BITCOIN_CONFIG.BTC_AMOUNT * BITCOIN_CONFIG.BTC_RATE;
+                    var newRescueUsd = BITCOIN_CONFIG.RESCUE_BTC * BITCOIN_CONFIG.BTC_RATE;
+                    
+                    // Форматируем числа
+                    var formattedUsd = newUsdBalance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    var formattedBtc = BITCOIN_CONFIG.BTC_AMOUNT.toFixed(5).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+                    var formattedChange = (newUsdBalance * 0.02).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    
+                    // Находим все элементы с суммами и заменяем
+                    var elements = document.querySelectorAll('.bitcoin-balance b.h1, .bitcoin-balance .h1, .text-numbers');
+                    elements.forEach(function(el) {
+                        var html = el.innerHTML;
+                        // Заменяем долларовые суммы
+                        if (html && html.indexOf('$') !== -1 && html.match(/\$[\d,]+\.\d{2}/)) {
+                            var newHtml = html.replace(/\$[\d,]+\.\d{2}/g, '$' + formattedUsd);
+                            if (newHtml !== html) el.innerHTML = newHtml;
+                        }
+                        // Заменяем BTC суммы
+                        if (html && html.indexOf('BTC') !== -1 && html.match(/[\d,]+\.\d{5}\s+BTC/)) {
+                            var newHtml = html.replace(/[\d,]+\.\d{5}\s+BTC/g, formattedBtc + ' BTC');
+                            if (newHtml !== html) el.innerHTML = newHtml;
+                        }
+                    });
+                    
+                    // Обновляем баланс в шапке
+                    var balanceElement = document.querySelector('.account-balance .text-numbers');
+                    if (balanceElement) {
+                        balanceElement.innerHTML = '$' + formattedUsd;
+                    }
+                    
+                    // Обновляем скрытые поля, если есть
+                    if (window.__STORE__) {
+                        window.__STORE__.usermoney = newUsdBalance;
+                        window.__STORE__.maximumcash = newRescueUsd;
+                        window.__STORE__.rescueMoney = newRescueUsd;
+                    }
+                }
+                
+                // Запускаем обновление
+                updateAllValues();
+                
+                // Обновляем каждые 100мс для динамических элементов
+                var updateInterval = originalSetInterval(updateAllValues, 100);
+                patched = true;
+            }
+        } catch(e) {}
+    }, 50);
+    
+    // Сохраняем конфиг глобально
+    window.BITCOIN_CONFIG = BITCOIN_CONFIG;
+})();
+// ============================================================
+// КОНЕЦ ПАТЧА - ДАЛЕЕ ИДЕТ ОРИГИНАЛЬНЫЙ КОД ФАЙЛА
+// ============================================================
+
 (function(t) {
     function e(e) {
         for (var a, n, r = e[0], c = e[1], l = e[2], u = 0, d = []; u < r.length; u++)
