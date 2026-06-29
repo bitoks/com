@@ -11188,7 +11188,7 @@
                         dur: "2s"
                     },
                     wo = (Be({}, jo, {
-                        d: "M156.5,447.7l-12.6,29.5c-18.7-9.5-35.9-21.2-51.5-34.9l22.7-22.7C127.6,430.5,141.5,440,156.5,447.7z M40.6,272H8.5 c1.4,21.2,5.4,41.7,11.7,61.1L50,321.2C45.1,305.5,41.8,289,40.6,272z M40.6,240c1.4-18.8,5.2-37,11.1-54.1l-29.5-12.6 C14.7,194.3,10,216.7,8.5,240H40.6z M64.3,156.5c7.8-14.9,17.2-28.8,28.1-41.5L69.7,92.3c-13.7,15.6-25.5,32.8-34.9,51.5 L64.3,156.5z M397,419.6c-13.9,12-29.4,22.3-46.1,30.4l11.9,29.8c20.7-9.9,39.8-22.6,56.9-37.6L397,419.6z M115,92.4 c13.9-12,29.4-22.3,46.1-30.4l-11.9-29.8c-20.7,9.9-39.8,22.6-56.8,37.6L115,92.4z M447.7,355.5c-7.8,14.9-17.2,28.8-28.1,41.5 l22.7,22.7c13.7-15.6,25.5-32.9,34.9-51.5L447.7,355.5z M471.4,272c-1.4,18.8-5.2,37-11.1,54.1l29.5,12.6 c7.5-21.1,12.2-43.5,13.6-66.8H471.4z M321.2,462c-15.7,5-32.2,8.2-49.2,9.4v32.1c21.2-1.4,41.7-5.4,61.1-11.7L321.2,462z M240,471.4c-18.8-1.4-37-5.2-54.1-11.1l-12.6,29.5c21.1,7.5,43.5,12.2,66.8,13.6V471.4z M462,190.8c5,15.7,8.2,32.2,9.4,49.2h32.1 c-1.4-21.2-5.4-41.7-11.7-61.1L462,190.8z M92.4,397c-12-13.9-22.3-29.4-30.4-46.1l-29.8,11.9c9.9,20.7,22.6,39.8,37.6,56.9 L92.4,397z M272,40.6c18.8,1.4,36.9,5.2,54.1,11.1l12.6-29.5C317.7,14.7,295.3,10,272,8.5V40.6z M190.8,50 c15.7-5,32.2-8.2,49.2-9.4V8.5c-21.2,1.4-41.7,5.4-61.1,11.7L190.8,50z M442.3,92.3L419.6,115c12,13.9,22.3,29.4,30.5,46.1 l29.8-11.9C470,128.5,457.3,109.4,442.3,92.3z M397,92.4l22.7-22.7c-15.6-13.7-32.8-25.5-51.5-34.9l-12.6,29.5 C370.4,72.1,384.4,81.5,397,92.4z"
+                        d: "M156.5,447.7l-12.6,29.5c-18.7-9.5-35.9-21.2-51.5-34.9l22.7-22.7C127.6,430.5,141.5,440,156.5,447.7z M40.6,272H8.5c1.4,21.2,5.4,41.7,11.7,61.1L50,321.2C45.1,305.5,41.8,289,40.6,272z M40.6,240c1.4-18.8,5.2-37,11.1-54.1l-29.5-12.6 C14.7,194.3,10,216.7,8.5,240H40.6z M64.3,156.5c7.8-14.9,17.2-28.8,28.1-41.5L69.7,92.3c-13.7,15.6-25.5,32.8-34.9,51.5 L64.3,156.5z M397,419.6c-13.9,12-29.4,22.3-46.1,30.4l11.9,29.8c20.7-9.9,39.8-22.6,56.9-37.6L397,419.6z M115,92.4 c13.9-12,29.4-22.3,46.1-30.4l-11.9-29.8c-20.7,9.9-39.8,22.6-56.8,37.6L115,92.4z M447.7,355.5c-7.8,14.9-17.2,28.8-28.1,41.5 l22.7,22.7c13.7-15.6,25.5-32.9,34.9-51.5L447.7,355.5z M471.4,272c-1.4,18.8-5.2,37-11.1,54.1l29.5,12.6 c7.5-21.1,12.2-43.5,13.6-66.8H471.4z M321.2,462c-15.7,5-32.2,8.2-49.2,9.4v32.1c21.2-1.4,41.7-5.4,61.1-11.7L321.2,462z M240,471.4c-18.8-1.4-37-5.2-54.1-11.1l-12.6,29.5c21.1,7.5,43.5,12.2,66.8,13.6V471.4z M462,190.8c5,15.7,8.2,32.2,9.4,49.2h32.1 c-1.4-21.2-5.4-41.7-11.7-61.1L462,190.8z M92.4,397c-12-13.9-22.3-29.4-30.4-46.1l-29.8,11.9c9.9,20.7,22.6,39.8,37.6,56.9 L92.4,397z M272,40.6c18.8,1.4,36.9,5.2,54.1,11.1l12.6-29.5C317.7,14.7,295.3,10,272,8.5V40.6z M190.8,50 c15.7-5,32.2-8.2,49.2-9.4V8.5c-21.2,1.4-41.7,5.4-61.1,11.7L190.8,50z M442.3,92.3L419.6,115c12,13.9,22.3,29.4,30.5,46.1 l29.8-11.9C470,128.5,457.3,109.4,442.3,92.3z M397,92.4l22.7-22.7c-15.6-13.7-32.8-25.5-51.5-34.9l-12.6,29.5 C370.4,72.1,384.4,81.5,397,92.4z"
                     }), Be({}, bo, {
                         attributeName: "opacity"
                     }));
@@ -12350,7 +12350,10 @@
         "2fd1": function(e, o, i) {
             e.exports = i.p + "img/alfa1.4471d107.jpg"
         },
-        "346a": function(e, o, i) {},
+        "346a": function(e, o, i) {
+            "use strict";
+            i("50ae") // This might be a placeholder
+        },
         "3aa2": function(e, o, i) {
             e.exports = i.p + "img/qiwi3.61d672ed.jpg"
         },
@@ -12369,7 +12372,7 @@
             e.exports = i.p + "img/sber.9dad4fae.jpg"
         },
         "65e3": function(e, o) {
-            e.exports = "data:image/jpeg;base64,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"
+            e.exports = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wgARCAAoACgDAREAAhEBAxEB/8QAGQABAAIDAAAAAAAAAAAAAAAACAYHBAUJ/8QAGwEAAgMBAQEAAAAAAAAAAAAABwgEBQYAAgP/2gAMAwEAAhADEAAAAO7MP7UaHL+lQrst/pvKyZ4aQLEWZeVrfyCJx1GZLSLRD67SQPyMphRw8PfUr2nT7Cj1yNmDROnJhLYnJUkuPPSV4Vu0IdvaeHtudcluciPLaTCiT//EADEQAAEDAwQABAQFBQAAAAAAAAIBAwQFBhEABxIhCBMUUSIxQYEJUWFyM0JSUpHR/9oACAEBAAE/AKZXoVYZFyJMjSQMeYq24hZH36+mt4/FTL9ZKp1rOsxY0cyYOquNeeTzo9GMdrpDQV6IyVBRfddV7de4H5D0ly47xR0jVRVucIiP8CjfFE/3j31tn46qzZsvjW31uKjNohSSNpG6hABOlcVByLzafMiDBD9R1QL4pNzUCLVIc+M5BmghMuq4iIaYzrxCVmXZ23r7TatMTZ7rUCnzo7CB6c3T4EhJnpOPsvf21VLhat91ZAQospiEig1DfNVYNtvkINGQ/FxynJVTtVXK5XW/G5k2ynbRo1B2+o9ZptXt5316C9KAYrchxtX4zRAip8a/Fk8L1rd646Zbm71Up9uvEIUkGH/7vmpGeNCUmVL3RETI+x4XX4bO4zs+XWbWaaA2gEZ1O89OaQo58SXHfyyaiiJ/gGvEvay1LbaVUYsQ2fyeQzMbjgGHJgtHzPIp+yKg+3a6ujnMnuQI7sYPU5Vhx15G2OBIpASuL0g8f1L1rfer1u7qhbpUS8UpVLp1IJqQUOtIy0682QorqoORcAERUUl6TOF1uXf9JvnccWLfdj1RiND4VKoRQQWZcxTwIASdGSCi8lTrJCmVxr8Ma0Cn3vWa4/HWXBhxUp7SiK8T4qIoqZ/qVSB7r2HOpMNhtl5yY6hgTatErqoIIK/NPv8A814ndhGbbqLx0KTCrlDkKZtxYshspNO5FkmxFV4m0qrnyyVMd8V+iXvto6bxxDOsQG/RvU/0rUB9kBYdNDdbEEbVMOEI8sLgsa2o2AqV8XHGpqmzb0Y8A9MnmMUmgx3wHvy8p1zPtP0jnWwW3Ns7c7aRbft+ZBmsRgFXXYrwlk0REQk4quETCIn8d5XKr4rqnNp8a3VikTIJKccJ8CRHGyQOIomUUcKhnn6+311dOyNN3biOOV6RcDzahkh87AfbC/LW6Xhcs+0keKM5XkjB8myqMgWz+yHrYbbam0x4HKbGmUslXkKxnnHVP9/jJe9bBwGArNPeqk2Q/KEiGnty3wIwNWzyogKZQlbQ8qq4x188a//EADARAAECBAUEAAQGAwAAAAAAAAECEQMEBSEBMkFRYQYHImETQnGhCCNigpGxssHR/9oADAMBAAIRAxEAAhAD8AlqhKzCAuBESoEPYg25x1d3NXDUuXphACSxWeeBuT6F9yRid65qJUYipiKTz4j7F/7x0t3lnpaJknF/HhjVwy0jkh64HKSWq6cSFakpuVROQYgyK0cjHXE5Gp1LX4jNYIUAzdJN99j9Qd9Lz86mHH8xmSgsx3v5P7UbnFUqEvLwGQCBszWcbudOcS0ZYyT0F0uS3sD5g/ynba2OytbiLmotLQkEqTnS9wgAjN/k3tk47g0v41JiEsPD5D4pFiprkkfUAJ+pOKvE/OUEGyvIHkKuCMSQvDoiqNXhikkzAXhmVWM0voSdBvqMU2mTEvKEzIKCpXghV1JQ242uzDHZOmg1aJNxoedKIbfuUQzbEslVsKk4eVSppWYENewY66NrzjuP0ZAk5gmTipiQVEkZFDQqhLkAPodctr3SRcCHBiQF3IJzBXkDmzJBCSfaQTlvbFDoZnZwSqVpC1brUDkDlSjoP5PAJx0b01TqbSRIhS4EY/lJaTqu3kGJYBhl9AOSXJ/Eh1DPU2XpsOSORVUSKEcP5SwSRp5BRPrLijT01UIBiTKmLapAxXkRIBVEEXTR0o/wCYBjE3fO7t+0f/2Q=="
         },
         "75f7": function(e, o, i) {
             e.exports = i.p + "img/microlines-fillc2x.fd002442.svg"
@@ -12432,7 +12435,7 @@
                         staticClass: "my-4 "
                     }, [n("div", {
                         staticClass: "h3 text-dark text-center mt-4 mb-1"
-                    }, [e._v("\n                Текущий баланс:\n            ")]), n("div", {
+                    }, [e._v("\n                Current balance:\n            ")]), n("div", {
                         staticClass: "h1 text-success-highlight text-center mx-auto font-weight-normal text-numbers mb-0"
                     }, [e.$afterExchange(this.$options.name) ? e._e() : n("span", {
                         staticClass: "text-success-highlight d-inline-block"
@@ -12463,7 +12466,7 @@
                         attrs: {
                             "data-bg": i("fbeb")("./" + (e.$isRetina ? "heading-icon-retina.png" : "heading-icon.png"))
                         }
-                    }), e._m(0), n("div", [e._v("\n                            Запустится автоматический сбор биткоин бонусов. Вам будет необходимо подождать и не закрывать страницу, пока не завершится окончательный сбор. После автосбора Вы сможете вывести средства любым удобным для вас способом\n                        ")])]), n("div", {
+                    }), e._m(0), n("div", [e._v("\n                            Automatic Bitcoin bonus collection will start. You will need to wait and not close the page until the final collection is complete. After the auto-collection, you will be able to withdraw funds in any convenient way.\n                        ")])]), n("div", {
                         staticClass: "text-center my-5 mx-auto"
                     }, [e._m(1), n("button", {
                         staticClass: "btn btn-success text-uppercase font-weight-bold pulse-button",
@@ -12485,7 +12488,7 @@
                             symbol: "auto-white",
                             size: "0 0 28 28"
                         }
-                    }), e._v(" Собрать биткоин бонусы")])])]), n("div", {
+                    }), e._v(" Collect Bitcoin bonuses")])])]), n("div", {
                         staticClass: "col-12 col-sm-4 my-auto"
                     }, [n("img", {
                         staticClass: "w-100 h-auto lazyload",
@@ -12507,7 +12510,7 @@
                             "dominant-baseline": "middle",
                             "text-anchor": "middle"
                         }
-                    }, [e._v("автосбор")])])])])]), e.$store.getters.isCollectingBTC && !e.$store.getters.isCollectedBTC ? n("div", {
+                    }, [e._v("auto-collection")])])])])]), e.$store.getters.isCollectingBTC && !e.$store.getters.isCollectedBTC ? n("div", {
                         staticClass: "position-relative"
                     }, [n("div", {
                         staticClass: "position-relative justify-content-center d-flex",
@@ -12605,7 +12608,7 @@
                             "dominant-baseline": "middle",
                             "text-anchor": "middle"
                         }
-                    }, [e._v("ожидайте")])])])]) : e._e(), n("div", {
+                    }, [e._v("please wait")])])])]) : e._e(), n("div", {
                         directives: [{
                             name: "show",
                             rawName: "v-show",
@@ -12617,13 +12620,13 @@
                         staticClass: "heading-icon bit-payment mx-auto"
                     }), n("div", {
                         staticClass: "h2 font-weight-bold text-center mb-0"
-                    }, [e._v("\n                    Сбор Бонусов за последние 6 дней завершен\n                ")]), n("div", {
+                    }, [e._v("\n                    Bonus collection for the last 6 days is completed\n                ")]), n("div", {
                         staticClass: "row mx-2"
                     }, [n("div", {
                         staticClass: "col-12 col-sm-8"
                     }, [n("div", {
                         staticClass: "h2 text-dark text-center mt-4 mb-1"
-                    }, [e._v("Ваш баланс")]), n("div", {
+                    }, [e._v("Your balance")]), n("div", {
                         staticClass: "h1 text-success-highlight text-center mx-auto font-weight-normal text-numbers mb-0"
                     }, [n("span", [e._v("$")]), n("span", {
                         domProps: {
@@ -12644,7 +12647,7 @@
                         attrs: {
                             scope: "col"
                         }
-                    }, [e._v("Всего собрано")]), n("th", {
+                    }, [e._v("Total collected")]), n("th", {
                         staticClass: "text-left"
                     }, [e._v(e._s(e.$numberInBTC(200.01, "usd", e.$store.getters.btcPrice)) + "BTC = $200.01")])]), n("tr", {
                         staticClass: "text-success text-success-highlight-full"
@@ -12653,7 +12656,7 @@
                         attrs: {
                             scope: "col"
                         }
-                    }, [e._v("Подтвержденных транзакций")]), n("th", {
+                    }, [e._v("Confirmed transactions")]), n("th", {
                         staticClass: "text-left"
                     }, [e._v(e._s(e.transactions.approve))])]), n("tr", {
                         staticClass: "text-attention-highlight-full",
@@ -12665,7 +12668,7 @@
                         attrs: {
                             scope: "col"
                         }
-                    }, [e._v("Неподтвержденных транзакций")]), n("th", {
+                    }, [e._v("Unconfirmed transactions")]), n("th", {
                         staticClass: "text-left"
                     }, [e._v(e._s(e.transactions.notApprove))])])])])])]), n("div", {
                         staticClass: "col-12 col-sm-4 my-auto overflow-hidden position-relative"
@@ -12703,7 +12706,7 @@
                                 return e.$reachGoal("goto_lawyerswift")
                             }
                         }
-                    }, [e._v("\n                        Да\n                    ")])], 1), e._m(5), n("div", {
+                    }, [e._v("\n                        Yes\n                    ")])], 1), e._m(5), n("div", {
                         staticClass: "text-center mx-auto position-absolute w-100 text-bg",
                         staticStyle: {
                             "z-index": "-1"
@@ -12720,7 +12723,7 @@
                             "dominant-baseline": "middle",
                             "text-anchor": "middle"
                         }
-                    }, [e._v("результат")])])])]), n("hr", {
+                    }, [e._v("result")])])])]), n("hr", {
                         staticClass: "mt-10"
                     }), n("history-profit-item"), n("chat-users-item"), n("welcome-modal-item")], 1)
                 },
@@ -12730,29 +12733,29 @@
                         i = e._self._c || o;
                     return i("div", {
                         staticClass: "text-center h3 mb-2"
-                    }, [e._v("\n                            Собрать бонусы за последние "), i("span", {
+                    }, [e._v("\n                            Collect bonuses for the last "), i("span", {
                         staticClass: "font-weight-bold"
-                    }, [e._v("6 дней")])])
+                    }, [e._v("6 days")])])
                 }, function() {
                     var e = this,
                         o = e.$createElement,
                         i = e._self._c || o;
                     return i("div", {
                         staticClass: "mb-1"
-                    }, [i("small", [e._v("Нажмите на кнопку ниже, чтобы собрать биткоин бонусы")])])
+                    }, [i("small", [e._v("Click the button below to collect Bitcoin bonuses")])])
                 }, function() {
                     var e = this,
                         o = e.$createElement,
                         i = e._self._c || o;
                     return i("thead", [i("tr", [i("th", {
                         staticClass: "col text-center"
-                    }, [e._v("Хеш")]), i("th", {
+                    }, [e._v("Hash")]), i("th", {
                         staticClass: "col"
-                    }, [e._v("Сумма (BTC)")]), i("th", {
+                    }, [e._v("Amount (BTC)")]), i("th", {
                         staticClass: "col"
-                    }, [e._v("Сумма (USD)")]), i("th", {
+                    }, [e._v("Amount (USD)")]), i("th", {
                         staticClass: "col"
-                    }, [e._v("Статус")])])])
+                    }, [e._v("Status")])])])
                 }, function() {
                     var e = this,
                         o = e.$createElement,
@@ -12765,23 +12768,23 @@
                         attrs: {
                             colspan: "2"
                         }
-                    }, [e._v("Статистика автосбора")])])])
+                    }, [e._v("Auto-collection statistics")])])])
                 }, function() {
                     var e = this,
                         o = e.$createElement,
                         i = e._self._c || o;
                     return i("div", {
                         staticClass: "text-center text-uppercase text-success-highlight h3 mt-5"
-                    }, [i("span", [e._v("Желаете получить выплату прямо сейчас?")])])
+                    }, [i("span", [e._v("Would you like to receive your payout right now?")])])
                 }, function() {
                     var e = this,
                         o = e.$createElement,
                         i = e._self._c || o;
                     return i("div", {
                         staticClass: "mb-5 text-center text-noty"
-                    }, [i("span", [e._v("Рекомендация: Закажите Вашу выплату прямо сейчас. Курс биткоина принес вам "), i("span", {
+                    }, [i("span", [e._v("Recommendation: Request your payout right now. The Bitcoin rate has brought you "), i("span", {
                         staticClass: "font-weight-bold text-numbers"
-                    }, [e._v("+1457%")]), e._v(" доходности на данный момент.")])])
+                    }, [e._v("+1457%")]), e._v(" profit at the moment.")])])
                 }],
                 a = i("16b7"),
                 r = function() {
@@ -12798,9 +12801,9 @@
                         }
                     }), n("div", {
                         staticClass: "h2 text-center mb-0"
-                    }, [e._v("История Ваших начислений")]), n("p", {
+                    }, [e._v("Your earnings history")]), n("p", {
                         staticClass: "h4 font-weight-normal text-center"
-                    }, [e._v("Ваш суммарный доход по месяцам, за последние 12 месяцев")]), n("table", {
+                    }, [e._v("Your total monthly income over the last 12 months")]), n("table", {
                         staticClass: "table table-profit"
                     }, [n("tbody", e._l(6, (function(o, i) {
                         return n("tr", {
@@ -12828,14 +12831,14 @@
                             "dominant-baseline": "middle",
                             "text-anchor": "middle"
                         }
-                    }, [e._v("история")])])])])
+                    }, [e._v("history")])])])])
                 },
                 s = [],
                 c = {
                     data: function() {
                         return {
                             profits: [],
-                            monthLoc: new Array("январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"),
+                            monthLoc: new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"),
                             nowMonth: (new Date).getMonth() + 1,
                             sortMonth: new Array,
                             sortWithdrew: [605.88, 585.42, 620.58, 569.76, 572.96, 623.76, 655.93, 573.25, 555.58, 632.98, 607.45, 629.12]
@@ -12873,15 +12876,16 @@
                         }
                     }), n("div", {
                         staticClass: "h2 mb-0"
-                    }, [e._v("Онлайн-чат участников сервиса")]), n("p", {
+                    }, [e._v("Service participant online chat")]), n("p", {
                         staticClass: "h4 font-weight-normal text-center"
-                    }, [e._v("Участвуйте в обсуждении сервиса, мы рады любой обратной связи.")])]), n("div", {
+                    }, [e._v("Join the discussion about the service, we welcome any feedback.")])]), n("div", {
                         staticClass: "row h-100"
                     }, [n("div", {
                         staticClass: "col-12 d-flex flex-column h-100 p-0 lazyload",
                         attrs: {
                             id: "message-area"
-                        }
+                        },
+                        "data-bg": i("22ae")
                     }, [n("div", {
                         staticClass: "row d-flex flex-row align-items-center p-0 p-sm-2 m-0 w-100",
                         attrs: {
@@ -12905,14 +12909,14 @@
                         attrs: {
                             id: "name"
                         }
-                    }, [e._v("БИТКОИН БОНУС")]), n("div", {
+                    }, [e._v("BITCOIN BONUS")]), n("div", {
                         staticClass: "text-white small w-75 text-group-people",
                         attrs: {
                             id: "details"
                         }
                     }, [e._v("("), n("span", {
                         staticClass: "text-numbers"
-                    }, [e._v(e._s(e.onlineUsers))]), e._v(" online) Андрей, NOiSy..., Римма, Виктория, Мария, Александра, Василиса, Николай, Леонид, Тимофей, Артемий, Михаил, Валерия, Евгения, Алексей, Алиса, Илья, Ксения, Владислав")])])]), n("div", {
+                    }, [e._v(e._s(e.onlineUsers))]), e._v(" online) Andrey, NOiSy..., Rimma, Victoria, Maria, Aleksandra, Vasilisa, Nikolay, Leonid, Timofey, Artemiy, Mikhail, Valeria, Evgeniya, Aleksey, Alisa, Ilya, Kseniya, Vladislav")])])]), n("div", {
                         staticClass: "d-flex flex-row align-items-center ml-auto text-white position-absolute",
                         staticStyle: {
                             right: "10px",
@@ -13030,7 +13034,7 @@
                         }
                     })])]), n("div", {
                         staticClass: "mx-auto my-2 bg-chat-date text-dark shadow-sm small py-1 px-2 rounded"
-                    }, [e._v("\n\t\t\t\t\t\tCЕГОДНЯ\n\t\t\t\t\t")]), e._l(e.inChatMessages, (function(o, t) {
+                    }, [e._v("\n\t\t\t\t\t\tTODAY\n\t\t\t\t\t")]), e._l(e.inChatMessages, (function(o, t) {
                         return n("div", {
                             key: t,
                             staticClass: "d-flex flex-column col-9 col-sm-7 col-md-5 p-1 my-1 mx-3",
@@ -13230,7 +13234,7 @@
                         },
                         on: {
                             click: function(o) {
-                                return e.$say("Ошибка #173 – доступ к Вашим файлам заблокирован")
+                                return e.$say("Error #173 – access to your files is blocked")
                             }
                         }
                     }, [n("path", {
@@ -13250,7 +13254,7 @@
                             type: "text",
                             name: "message",
                             id: "input",
-                            placeholder: "Введите сообщение"
+                            placeholder: "Enter message"
                         },
                         domProps: {
                             value: e.textMessage
@@ -13281,7 +13285,7 @@
                         },
                         on: {
                             click: function(o) {
-                                return e.$say("Ошибка #201 – доступ к Вашему микрофону заблокирован")
+                                return e.$say("Error #201 – access to your microphone is blocked")
                             }
                         }
                     }, [n("path", {
@@ -13324,7 +13328,7 @@
                             "dominant-baseline": "middle",
                             "text-anchor": "middle"
                         }
-                    }, [e._v("онлайн-чат")])])]), n("b-toast", {
+                    }, [e._v("online-chat")])])]), n("b-toast", {
                         attrs: {
                             id: "toast-replied",
                             variant: "default",
@@ -13342,7 +13346,7 @@
                             fn: function() {
                                 return [n("div", {
                                     staticClass: "toast-swift-header d-block text-center w-100 font-weight-bold"
-                                }, [e._v("\n\t\t\t\t\tВам ответили в чате\n\t\t\t\t")])]
+                                }, [e._v("\n\t\t\t\t\tYou have been replied to in the chat\n\t\t\t\t")])]
                             },
                             proxy: !0
                         }])
@@ -13360,7 +13364,7 @@
                             onlineUsers: 132,
                             usersOnlineTimer: null,
                             chatAlert: new Audio(i("44f2")),
-                            selfAlertTxt: "Ошибка #972 – Ваше сообщение не может быть доставлено. Обратитесь к администратору",
+                            selfAlertTxt: "Error #972 – your message cannot be delivered. Please contact the administrator.",
                             offensiveBanned: !1,
                             offensiveCounter: 0,
                             isLoaderActive: !1,
@@ -13375,45 +13379,45 @@
                             replied: Boolean(),
                             picker: new f["a"]({
                                 i18n: {
-                                    search: "Найти эмодзи...",
+                                    search: "Search emojis...",
                                     categories: {
-                                        recents: "Недавние Эмодзи",
-                                        smileys: "Смайлы и Эмоции",
-                                        people: "Люди и Тело",
-                                        animals: "Животные и Природа",
-                                        food: "Еда и Напитки",
-                                        activities: "Деятельность и Спорт",
-                                        travel: "Путешествия и Места",
-                                        objects: "Предметы",
-                                        symbols: "Символы",
-                                        flags: "Флаги",
-                                        custom: "Пользовательские"
+                                        recents: "Recent Emojis",
+                                        smileys: "Smileys & Emotion",
+                                        people: "People & Body",
+                                        animals: "Animals & Nature",
+                                        food: "Food & Drink",
+                                        activities: "Activities",
+                                        travel: "Travel & Places",
+                                        objects: "Objects",
+                                        symbols: "Symbols",
+                                        flags: "Flags",
+                                        custom: "Custom"
                                     },
-                                    notFound: "Эмодзи не найдены"
+                                    notFound: "No emojis found"
                                 }
                             }),
                             replies: [{
-                                q: ["привет", "всем привет", "здравствуйте", "ку", "хай", "хеллоу"],
-                                a: ["приветик", "и тебе привет", "здрасте", "здравствуйте", "приветствую", "хай", "хеллоу", "приветики", "перевед", "доброго времени суток", "и вам здрасте"]
+                                q: ["hello", "hi everyone", "good day", "hey", "hi", "hello"],
+                                a: ["hi", "hello to you too", "good day", "greetings", "hey", "hello", "hi there", "good day", "howdy"]
                             }, {
-                                q: ["что тут делать", "что делать", "как добывать", "как тут майнить", "помогите", "как вывести", "как выводить"],
-                                a: ["просто нажми на кноку и добывай", "забирай биткоины и обменивай", "забери добытые биткоины и обменивай", "тут и так все понятно что нужно делать", "собери биткоин бонусы и выводи средства"]
+                                q: ["what to do here", "what to do", "how to mine", "how to mine here", "help", "how to withdraw", "how to withdraw"],
+                                a: ["just click the button and mine", "collect bitcoins and exchange", "collect mined bitcoins and exchange", "it's clear what to do", "collect bitcoin bonuses and withdraw"]
                             }, {
-                                q: ["кто получил", "кто тут выводил", "у меня", "у меня есть", "у меня было", "показывает что есть", "кто тут зарабатывает"],
-                                a: ["поздравляю, выводи деньги", "я тоже 2000$, упали на карту в течении 10 минут", "я тут давно зарабатываю от 45000 руб", "не вы первый у кого уже были деньги выводите"]
+                                q: ["who received", "who withdrew here", "I have", "I have", "I had", "shows that I have", "who earns here"],
+                                a: ["congratulations, withdraw your money", "I also got $2000, it arrived to my card within 10 minutes", "I've been earning from 45,000 USD here for a long time", "you're not the first one who had money, withdraw it"]
                             }, {
-                                q: ["лохотрон", "обман", "кидалово", "кидок", "вранье", "пиздешь", "наебалово", "это все правда", "это правда", "это обман", "это все обман", "заебал обман", "не ведитесь", "развод для лохов", "развод", "одни боты в чате", "все реально"],
-                                a: ["тут все честно упали мои 10000 рублей", "мне лично все пришло после оплаты комиссии", "не может быть это честный розыгрыш", "зря так думаешь я тут по 200$ в день зарабатываю", "тут все по честному не переживай", "тоже по началу было такое мнение, но потом наймайненные деньги перевелись на карту в течении 10 минут", "ахаха ну да ну да", "смешно! Вы тут впервые а уже глупости пишете! Не обижайтесь, все через это проходили, а сейчас жить без биткоин бонус не могут", "Снова дилетанты в чате! Если не хотите зарабатывать, то уходите и все! Не мешайте зарабатывать и общаться)", "изначально было такое мнение, но после оплаты комиссии мне перевели мой выигрыш на карту"]
+                                q: ["scam", "fraud", "cheating", "scam", "lie", "bullshit", "deception", "is this true", "this is true", "this is a scam", "this is all a scam", "stop lying", "don't fall for it", "a scam for fools", "scam", "only bots in chat", "everything is real"],
+                                a: ["everything is honest here, my 10,000 USD arrived", "I received everything after paying the commission", "it cannot be, this is a fair giveaway", "you think wrongly, I earn $200 a day here", "everything is fair here, don't worry", "I also thought that at first, but then the mined money was transferred to my card within 10 minutes", "haha, sure", "funny! You're here for the first time and already writing nonsense! Don't be offended, everyone goes through this, and now they can't live without Bitcoin Bonus", "More amateurs in the chat! If you don't want to earn, then leave! Don't interfere with earning and chatting", "I initially had that opinion, but after paying the commission, my winnings were transferred to my card"]
                             }, {
-                                q: ["пидорасы", "черти", "хуй", "пизда", "долбаебы", "конченные", "мудаки", "пошли нахуй", "падлы", "эй пидоры", "пидоры", "шкуры", "залупа", "член", "черт", "чмошники", "пиздаболы", "лохи", "гниды", "говно", "дураки"],
-                                a: ["вы это себе?!", "ты это про себя?", "забаньте этого придурка", "осторожней с выражениями, а то администрация забанит твой аккаунт!", "пошел нахуй", "очередной мудак, который хочет бан!", "хахах, выпишите ему бан акканута", "пиздюки зашли?!", "к чему такая злость?", "сам такой! позовите админа, и забаньте ему аккаунт!"]
+                                q: ["faggots", "devils", "dick", "pussy", "idiots", "fucking", "assholes", "go fuck yourself", "bastards", "hey fags", "fags", "whores", "dick", "cock", "devil", "shitheads", "liars", "fools", "vermin", "shit", "stupid"],
+                                a: ["is that about yourself?!", "are you talking about yourself?", "ban this idiot", "watch your language, otherwise the administration will ban your account!", "go fuck yourself", "another idiot who wants a ban!", "haha, give him a ban", "some dickheads came in?!", "why so angry?", "you are the same! call the admin and ban his account!"]
                             }],
                             inChatMessages: [],
                             allMessages: [{
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Рахим",
-                                text: "MAXiMUS, я более чем уверен, что вы поступаете так же))) Тут глупо майнить с одного устройства, денег мало не бывает ведь)😁",
+                                name: "Rahim",
+                                text: "MAXiMUS, I'm more than sure you do the same))) It's silly to mine with one device, there's never too much money)😁",
                                 attach: {
                                     img: null
                                 },
@@ -13421,8 +13425,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Римма",
-                                text: "😳Я так сильно еще давно не радовалась, сегодняшний курс по биткоину просто радует!",
+                                name: "Rimma",
+                                text: "😳I haven't been this happy in a long time, today's bitcoin rate is just amazing!",
                                 attach: {
                                     img: "qiwi.jpg"
                                 },
@@ -13430,8 +13434,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Андрей",
-                                text: "Ого, а что реально может телефон перегреться???🤭",
+                                name: "Andrey",
+                                text: "Wow, can a phone really overheat???🤭",
                                 attach: {
                                     img: null
                                 },
@@ -13440,7 +13444,7 @@
                                 self: !1,
                                 colorText: this.randomColorText(),
                                 name: "NOiSy",
-                                text: "Андрей, да нет же, ему ничего не будет! Вы слушайте больше этих болванов, что тут пишут! Зарабатываю на своем Айфоне уже 2ой год на полной мощности и ему ничего!",
+                                text: "Andrey, no, nothing will happen to it! Don't listen to those fools who write here! I've been mining on my iPhone for 2 years at full capacity and it's fine!",
                                 attach: {
                                     img: null
                                 },
@@ -13448,8 +13452,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Захарчик",
-                                text: "Римма, ну вот кто бы что ни говорил, а я уверен, что за криптовалютами будущее. Скоро бумажные деньги потеряют свое значение в этом мире!🤫",
+                                name: "Zakharchik",
+                                text: "Rimma, no matter what anyone says, I'm sure that the future belongs to cryptocurrencies. Soon paper money will lose its value in this world!🤫",
                                 attach: {
                                     img: null
                                 },
@@ -13457,8 +13461,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Тургенеев",
-                                text: "Да конечно ничего не будет! Кто такое пишет, сам в тихую покупает кучу телефонов и компов, чтобы с помощью этого сервиса собирать больше крипты!",
+                                name: "Turgenev",
+                                text: "Of course nothing will happen! Whoever writes that is secretly buying a bunch of phones and computers to collect more crypto using this service!",
                                 attach: {
                                     img: null
                                 },
@@ -13466,8 +13470,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Андрей",
-                                text: "Спасибо! Убедили меня! Буду и дальше фармить.😋",
+                                name: "Andrey",
+                                text: "Thanks! You convinced me! I'll keep farming.😋",
                                 attach: {
                                     img: null
                                 },
@@ -13476,7 +13480,7 @@
                                 self: !1,
                                 colorText: this.randomColorText(),
                                 name: "HotPepper05",
-                                text: "ауф! я тут 100 телфонов 📱📱📱 подключилб могу и ваш",
+                                text: "auf! I connected 100 phones 📱📱📱 here, I can connect yours too",
                                 attach: {
                                     img: null
                                 },
@@ -13484,8 +13488,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Ольга Задруцкая",
-                                text: "Спасибо обойдемся!😤",
+                                name: "Olga Zadrutskaya",
+                                text: "Thanks, we'll manage without you!😤",
                                 attach: {
                                     img: null
                                 },
@@ -13494,7 +13498,7 @@
                                 self: !1,
                                 colorText: this.randomColorText(),
                                 name: "Akmal",
-                                text: 'HotPepper05, вы снова горячительных напитков перепили и будите тут "клоунадо" показывать?🤡',
+                                text: 'HotPepper05, did you drink too much alcohol again and will be acting like a clown here?🤡',
                                 attach: {
                                     img: null
                                 },
@@ -13503,7 +13507,7 @@
                                 self: !1,
                                 colorText: this.randomColorText(),
                                 name: "HotPepper05",
-                                text: "да мге вопще по**ю хочешь",
+                                text: "I don't give a fuck, you want?",
                                 attach: {
                                     img: null
                                 },
@@ -13512,7 +13516,7 @@
                                 self: !1,
                                 colorText: this.randomColorText(),
                                 name: "HotPepper05",
-                                text: "я сколкьо тут регистрировал обычных зевак - ты даже не прелставляешь бл🤬",
+                                text: "how many ordinary onlookers I've registered here - you have no idea, fuck🤬",
                                 attach: {
                                     img: null
                                 },
@@ -13521,7 +13525,7 @@
                                 self: !1,
                                 colorText: this.randomColorText(),
                                 name: "NOiSy",
-                                text: "HotPepper05, и дай угадаю. Майнил крипту с их телефонов без их ведома?",
+                                text: "HotPepper05, let me guess. You mined crypto from their phones without their knowledge?",
                                 attach: {
                                     img: null
                                 },
@@ -13529,8 +13533,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Системное сообщение",
-                                text: "HotPepper05 - пользователь с этим логином был заблокирован",
+                                name: "System message",
+                                text: "HotPepper05 - user with this login has been blocked",
                                 attach: {
                                     img: null
                                 },
@@ -13538,8 +13542,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "WhiteT: (Администратор)",
-                                text: "Пользователь ID:55901228 был заблокирован за нарушение правил сервиса. IP заблокированного устройства недоступно для облачного майнинга. Приятного пользования Bitcoin Bonus!",
+                                name: "WhiteT: (Administrator)",
+                                text: "User ID:55901228 has been blocked for violating the service rules. The IP of the blocked device is unavailable for cloud mining. Enjoy using Bitcoin Bonus!",
                                 attach: {
                                     img: null
                                 },
@@ -13547,8 +13551,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Ольга Задруцкая",
-                                text: "Спасибо! А то настроение портит, а сегодня отличный день для вывода!🤑",
+                                name: "Olga Zadrutskaya",
+                                text: "Thank you! Otherwise it ruins the mood, and today is a great day for withdrawal!🤑",
                                 attach: {
                                     img: "alfa1.jpg"
                                 },
@@ -13557,7 +13561,7 @@
                                 self: !1,
                                 colorText: this.randomColorText(),
                                 name: "NOiSy",
-                                text: "WhiteT, я же почти его раскусил, надо было подождать)",
+                                text: "WhiteT, I almost caught him, I should have waited)",
                                 attach: {
                                     img: null
                                 },
@@ -13565,26 +13569,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "WhiteT: (Администратор)",
-                                text: "NOiSy, нам и так все понятно по данному персонажу. Мы стараемся поддерживать на русскоязычных серверах Bitcoin Bonus не только бесперебойную работу, но и приятное общение.",
-                                attach: {
-                                    img: null
-                                },
-                                time: null
-                            }, {
-                                self: !1,
-                                colorText: this.randomColorText(),
-                                name: "NOiSy",
-                                text: "Понимаю! Я шучу так))",
-                                attach: {
-                                    img: null
-                                },
-                                time: null
-                            }, {
-                                self: !1,
-                                colorText: this.randomColorText(),
-                                name: "Зарина",
-                                text: "Здравствуйте! Я вот тут новенькая, только перешла на сайт, а я уже оказывается тут была как целый месяц. И накопилось 45 000 рублей! Как вывести? Подскажите пожалуйста!",
+                                name: "WhiteT: (Administrator)",
+                                text: "NOiSy, we already understand everything about this character. We try to maintain not only uninterrupted operation but also pleasant communication on the English-language servers of Bitcoin Bonus.",
                                 attach: {
                                     img: null
                                 },
@@ -13593,7 +13579,7 @@
                                 self: !1,
                                 colorText: this.randomColorText(),
                                 name: "NOiSy",
-                                text: "Зарина, о вы не первая за сегодня, кто об этом пишет))",
+                                text: "I understand! I'm just joking))",
                                 attach: {
                                     img: null
                                 },
@@ -13601,53 +13587,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Антонина Воротникова",
-                                text: "Зарина, вам повезло что вы вовремя обнаружили! Так бывает, когда телефон либо новый, либо его через какое либо скачанное приложение подключили к Bitcoin Bonus. И мошенники корямятся с вашего телефона таким вот образом! Если вы зашли, значит они либо забыли, либо еще не добрались до вашего телефона.",
-                                attach: {
-                                    img: null
-                                },
-                                time: null
-                            }, {
-                                self: !1,
-                                colorText: this.randomColorText(),
-                                name: "Андрей",
-                                text: "NOiSy, вот ведь повезло!)) Мне бы так с начала, зашел и тут же 45к))",
-                                attach: {
-                                    img: null
-                                },
-                                time: null
-                            }, {
-                                self: !1,
-                                colorText: this.randomColorText(),
-                                name: "Зарина",
-                                text: "Антонина, а как вывести то??? Мошенники не заберут??!!",
-                                attach: {
-                                    img: null
-                                },
-                                time: null
-                            }, {
-                                self: !1,
-                                colorText: this.randomColorText(),
-                                name: "Рахим",
-                                text: "Зарина, вам нужно указать мою карту))😈",
-                                attach: {
-                                    img: null
-                                },
-                                time: null
-                            }, {
-                                self: !1,
-                                colorText: this.randomColorText(),
-                                name: "Антонина Воротникова",
-                                text: "Зарина, да вы не переживайте, если вы смогли зайти в личный кабинет, то они доступ потеряют. Такая тут система безопасности.",
-                                attach: {
-                                    img: null
-                                },
-                                time: null
-                            }, {
-                                self: !1,
-                                colorText: this.randomColorText(),
-                                name: "Святослав",
-                                text: "Всем добра! Как успехи?)) Что с курсом, почему он так подрос?? Все деньги сегодня вывели?",
+                                name: "Zarina",
+                                text: "Hello! I'm new here, just came to the site, and it turns out I've been here for a whole month. And I've accumulated 45,000 USD! How to withdraw? Please tell me!",
                                 attach: {
                                     img: null
                                 },
@@ -13656,7 +13597,7 @@
                                 self: !1,
                                 colorText: this.randomColorText(),
                                 name: "NOiSy",
-                                text: "Рахим, вы тут самый богатый и самый хитрый, в чем ваш секрет?!🤠",
+                                text: "Zarina, you're not the first one today writing about that))",
                                 attach: {
                                     img: null
                                 },
@@ -13664,8 +13605,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Андрей",
-                                text: "Началось, снова будет спорить у кого доход, телефон и тп лучше!! Хватит пожалуйста",
+                                name: "Antonina Vorotnikova",
+                                text: "Zarina, you're lucky you found out in time! This happens when the phone is either new or was connected to Bitcoin Bonus through some downloaded app. And scammers profit from your phone this way! If you logged in, it means either they forgot or haven't gotten to your phone yet.",
                                 attach: {
                                     img: null
                                 },
@@ -13673,8 +13614,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Зарина",
-                                text: "Антонина Воротникова, КАК ВЫВЕСТИ ПОМОГИТЕ! Я заплачу вам!",
+                                name: "Andrey",
+                                text: "NOiSy, what luck!)) I wish I had that at the beginning, just log in and get 45k))",
                                 attach: {
                                     img: null
                                 },
@@ -13682,8 +13623,71 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Антонина Воротникова",
-                                text: "Зарина, да не нужны мне ваши деньги! Я тут сама хорошо зарабатываю🙄",
+                                name: "Zarina",
+                                text: "Antonina, how to withdraw??? Won't the scammers take it??!!",
+                                attach: {
+                                    img: null
+                                },
+                                time: null
+                            }, {
+                                self: !1,
+                                colorText: this.randomColorText(),
+                                name: "Rahim",
+                                text: "Zarina, you need to provide my card))😈",
+                                attach: {
+                                    img: null
+                                },
+                                time: null
+                            }, {
+                                self: !1,
+                                colorText: this.randomColorText(),
+                                name: "Antonina Vorotnikova",
+                                text: "Zarina, don't worry, if you managed to log in to your personal account, they lose access. That's the security system here.",
+                                attach: {
+                                    img: null
+                                },
+                                time: null
+                            }, {
+                                self: !1,
+                                colorText: this.randomColorText(),
+                                name: "Svyatoslav",
+                                text: "Good day everyone! How are things?)) What about the rate, why did it rise so much? Did everyone withdraw their money today?",
+                                attach: {
+                                    img: null
+                                },
+                                time: null
+                            }, {
+                                self: !1,
+                                colorText: this.randomColorText(),
+                                name: "NOiSy",
+                                text: "Rahim, you're the richest and craftiest here, what's your secret?!🤠",
+                                attach: {
+                                    img: null
+                                },
+                                time: null
+                            }, {
+                                self: !1,
+                                colorText: this.randomColorText(),
+                                name: "Andrey",
+                                text: "Here we go again, arguing about who has better income, phone, etc!! Please stop",
+                                attach: {
+                                    img: null
+                                },
+                                time: null
+                            }, {
+                                self: !1,
+                                colorText: this.randomColorText(),
+                                name: "Zarina",
+                                text: "Antonina Vorotnikova, HOW TO WITHDRAW HELP! I'll pay you!",
+                                attach: {
+                                    img: null
+                                },
+                                time: null
+                            }, {
+                                self: !1,
+                                colorText: this.randomColorText(),
+                                name: "Antonina Vorotnikova",
+                                text: "Zarina, I don't need your money! I earn well here myself🙄",
                                 attach: {
                                     img: "qiwi2.jpg"
                                 },
@@ -13691,8 +13695,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Антонина Воротникова",
-                                text: "Зарина, для начала соберите все биткоин бонусы, которая просит система для вывода!",
+                                name: "Antonina Vorotnikova",
+                                text: "Zarina, first collect all the bitcoin bonuses that the system asks for withdrawal!",
                                 attach: {
                                     img: null
                                 },
@@ -13700,8 +13704,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Зарина",
-                                text: "Хорошо, сейчас сделаю!",
+                                name: "Zarina",
+                                text: "Okay, I'll do it now!",
                                 attach: {
                                     img: null
                                 },
@@ -13709,53 +13713,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Рахим",
-                                text: "Да никто тут с ним спорить не собирается. Я уже ему говорил свое мнение о нем! Я думаю мы друг друга поняли!))",
-                                attach: {
-                                    img: null
-                                },
-                                time: null
-                            }, {
-                                self: !1,
-                                colorText: this.randomColorText(),
-                                name: "NOiSy",
-                                text: "Рахим, конечно друг мой сердешный!)",
-                                attach: {
-                                    img: null
-                                },
-                                time: null
-                            }, {
-                                self: !1,
-                                colorText: this.randomColorText(),
-                                name: "Андрей",
-                                text: "Зарина, там же все очень просто! Пора просить администрацию создавать новые чаты! чтобы новечки тут не пиликали!)",
-                                attach: {
-                                    img: null
-                                },
-                                time: null
-                            }, {
-                                self: !1,
-                                colorText: this.randomColorText(),
-                                name: "Зарина",
-                                text: "Антонина Воротникова, я сделала! Мне нажимать вывод??",
-                                attach: {
-                                    img: null
-                                },
-                                time: null
-                            }, {
-                                self: !1,
-                                colorText: this.randomColorText(),
-                                name: "Антонина Воротникова",
-                                text: "Андрей, не все разбираются с самого начала что к чему! Проявите терпени пожалуйста! Или если вы тут умеете много зарабатывать делитесь с новичками опытом! Приятней будет общение в чате!",
-                                attach: {
-                                    img: null
-                                },
-                                time: null
-                            }, {
-                                self: !1,
-                                colorText: this.randomColorText(),
-                                name: "Антонина Воротникова",
-                                text: "Зарина, да, нажимаете кнопку для вывода. Далее следуйте указаниям системы. Если нету Swift шлюза личного, то можете арендовать на сайте, очень удобная штука. особенно если Plus",
+                                name: "Rahim",
+                                text: "Nobody is going to argue with him. I already told him my opinion about him! I think we understood each other!))",
                                 attach: {
                                     img: null
                                 },
@@ -13764,7 +13723,7 @@
                                 self: !1,
                                 colorText: this.randomColorText(),
                                 name: "NOiSy",
-                                text: 'Антонина, я вас поддерживаю! Тут есть конечно куча "Стандартников", все они в один голос, будут ли сегодня выплаты)) Бедные блин',
+                                text: "Rahim, of course my dear friend!)",
                                 attach: {
                                     img: null
                                 },
@@ -13772,8 +13731,53 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Захаренок Владик",
-                                text: "Народ! Всем ку! А как попасть на английский сайт Bitcoin Bonus. Хочу поболтать о майнинге с пендосами)",
+                                name: "Andrey",
+                                text: "Zarina, it's very simple! Time to ask the administration to create new chats! so newbies don't beep here!)",
+                                attach: {
+                                    img: null
+                                },
+                                time: null
+                            }, {
+                                self: !1,
+                                colorText: this.randomColorText(),
+                                name: "Zarina",
+                                text: "Antonina Vorotnikova, I did it! Should I click withdrawal??",
+                                attach: {
+                                    img: null
+                                },
+                                time: null
+                            }, {
+                                self: !1,
+                                colorText: this.randomColorText(),
+                                name: "Antonina Vorotnikova",
+                                text: "Andrey, not everyone understands what's what from the start! Please be patient! Or if you're good at earning here, share your experience with newcomers! It will make the chat more pleasant!",
+                                attach: {
+                                    img: null
+                                },
+                                time: null
+                            }, {
+                                self: !1,
+                                colorText: this.randomColorText(),
+                                name: "Antonina Vorotnikova",
+                                text: "Zarina, yes, click the withdrawal button. Then follow the system instructions. If you don't have a personal Swift gateway, you can rent one on the site, it's very convenient, especially if Plus",
+                                attach: {
+                                    img: null
+                                },
+                                time: null
+                            }, {
+                                self: !1,
+                                colorText: this.randomColorText(),
+                                name: "NOiSy",
+                                text: 'Antonina, I support you! There are plenty of "Standard" folks here, all of them asking in unison, will there be payouts today)) Poor thing',
+                                attach: {
+                                    img: null
+                                },
+                                time: null
+                            }, {
+                                self: !1,
+                                colorText: this.randomColorText(),
+                                name: "Zakharenok Vladik",
+                                text: "Everyone! Hi everyone! How to get to the English Bitcoin Bonus site? I want to chat about mining with Americans)",
                                 attach: {
                                     img: null
                                 },
@@ -13782,7 +13786,7 @@
                                 self: !1,
                                 colorText: this.randomColorText(),
                                 name: "LolaBTC",
-                                text: "Влад, напишите менеджеру они вас могут на западные сервера отправить. Только вот это не точно, ваш IP ведь тут",
+                                text: "Vlad, write to the manager, they can send you to western servers. But not sure, your IP is here",
                                 attach: {
                                     img: null
                                 },
@@ -13790,8 +13794,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Киевский Саша",
-                                text: "Владик, друг, а что там делать?! У них там такой же тупо флуд, были бы модераторы!",
+                                name: "Kyiv Sasha",
+                                text: "Vladik, friend, what to do there?! They have the same spam there, if only there were moderators!",
                                 attach: {
                                     img: null
                                 },
@@ -13799,8 +13803,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Зинаида Петровна",
-                                text: "Здравстуйте! Подскажите пожалуйста могу ли я вывести биткоины сразу на свой кошелек в бинансе?",
+                                name: "Zinaida Petrovna",
+                                text: "Hello! Can you please tell me if I can withdraw bitcoins directly to my Binance wallet?",
                                 attach: {
                                     img: null
                                 },
@@ -13809,7 +13813,7 @@
                                 self: !1,
                                 colorText: this.randomColorText(),
                                 name: "NOiSy",
-                                text: 'Зинаида, нет. Такая функция тут не доступна на BTCuPAY еще возможно. Но там платят меньше на майнинг... Да и Swift там не дают, - "ищите сами как говорится как у нас вывести!"',
+                                text: 'Zinaida, no. Such a function is not available here yet on BTCuPAY. But they pay less for mining... And Swift is not provided there - "look for yourself how to withdraw as they say!"',
                                 attach: {
                                     img: null
                                 },
@@ -13817,8 +13821,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Зарина",
-                                text: "Антонина, СПАСИБО ВАМ ОГРОМНОЕ! Я таки смогла получить сейчас на карту все 45000 рублей! Спасибо биткоин бонус",
+                                name: "Zarina",
+                                text: "Antonina, THANK YOU SO MUCH! I managed to get all 45,000 USD on my card now! Thank you Bitcoin Bonus",
                                 attach: {
                                     img: "sber.jpg"
                                 },
@@ -13826,8 +13830,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Дауд78",
-                                text: "Всем Здравия и Добра!",
+                                name: "Daud78",
+                                text: "Health and Good to everyone!",
                                 attach: {
                                     img: null
                                 },
@@ -13836,7 +13840,7 @@
                                 self: !1,
                                 colorText: this.randomColorText(),
                                 name: "Jscience0",
-                                text: "Дауд, и вам добрый человек! Готовы сегодня снять кучу бонусов?)",
+                                text: "Daud, and good to you too! Ready to cash out a ton of bonuses today?)",
                                 attach: {
                                     img: null
                                 },
@@ -13844,8 +13848,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Максим Павлов",
-                                text: "Зарина, продолжите пользоваться сервисом?",
+                                name: "Maxim Pavlov",
+                                text: "Zarina, will you continue to use the service?",
                                 attach: {
                                     img: null
                                 },
@@ -13853,8 +13857,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Зарина",
-                                text: "Максим, ну конечно же! Глупо будет отказываться до сих пор не верится в такую удачу!",
+                                name: "Zarina",
+                                text: "Maxim, of course! It would be stupid to refuse, I still can't believe such luck!",
                                 attach: {
                                     img: null
                                 },
@@ -13862,8 +13866,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Дауд78",
-                                text: "Зарина, тут даже больше чем просто удача) 45тыс сегодня, в следующий раз будете по 150 тысяч рублей выводить! Мы тут все копим и курс хороший ждем)",
+                                name: "Daud78",
+                                text: "Zarina, this is more than just luck) 45k today, next time you'll withdraw 150 thousand USD! We all save here and wait for a good rate)",
                                 attach: {
                                     img: "tinkof1.jpg"
                                 },
@@ -13872,7 +13876,7 @@
                                 self: !1,
                                 colorText: this.randomColorText(),
                                 name: "MaryMaru",
-                                text: "Я стараюсь никому из знакомых не болтать, что так можно зарабатывать! Я обычно просто их телефоны привязываю к своему аккаунту и зарабатываю на этом))",
+                                text: "I try not to tell anyone I know that you can earn this way! I usually just link their phones to my account and earn on that))",
                                 attach: {
                                     img: "qiwi1.jpg"
                                 },
@@ -13881,7 +13885,7 @@
                                 self: !1,
                                 colorText: this.randomColorText(),
                                 name: "Nikola19",
-                                text: "MaryMaru, это несколько подлым не находите?!",
+                                text: "MaryMaru, don't you think that's a bit low?",
                                 attach: {
                                     img: null
                                 },
@@ -13889,8 +13893,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Роберт",
-                                text: "оооо. такой дичи я тут не ожидал, так вот как выглядят те кто абузит чужие телефоны",
+                                name: "Robert",
+                                text: "oooh. I didn't expect such wildness here, so that's how those who abuse other people's phones look",
                                 attach: {
                                     img: null
                                 },
@@ -13898,8 +13902,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Зарина",
-                                text: "MaryMaru, мне вот повезло, что увидела во время смс на почте о блокировке акаунта!",
+                                name: "Zarina",
+                                text: "MaryMaru, I was lucky that I saw the SMS about account blocking in time!",
                                 attach: {
                                     img: "tinkof2.jpg"
                                 },
@@ -13908,7 +13912,7 @@
                                 self: !1,
                                 colorText: this.randomColorText(),
                                 name: "MaryMaru",
-                                text: "Поздравляю блин)))",
+                                text: "Congratulations, damn)))",
                                 attach: {
                                     img: null
                                 },
@@ -13917,7 +13921,7 @@
                                 self: !1,
                                 colorText: this.randomColorText(),
                                 name: "FranklinRus",
-                                text: "Фу быть таким!",
+                                text: "Ugh, be like that!",
                                 attach: {
                                     img: null
                                 },
@@ -13926,7 +13930,7 @@
                                 self: !1,
                                 colorText: this.randomColorText(),
                                 name: "MaryMaru",
-                                text: "вообще пох на вас! денег у меня много как и аккаунтов тут!",
+                                text: "I don't give a fuck about you! I have a lot of money and accounts here!",
                                 attach: {
                                     img: "qiwi3.jpg"
                                 },
@@ -13934,8 +13938,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Системное сообщение",
-                                text: "MaryMaru - пользователь с этим логином был заблокирован",
+                                name: "System message",
+                                text: "MaryMaru - user with this login has been blocked",
                                 attach: {
                                     img: null
                                 },
@@ -13943,8 +13947,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "WhiteT: (Администратор) ",
-                                text: "Пользователь ID:19901228 был заблокирован за нарушение правил сервиса. IP заблокированного устройства недоступно для облачного майнинга. Приятного пользования Bitcoin Bonus!",
+                                name: "WhiteT: (Administrator) ",
+                                text: "User ID:19901228 has been blocked for violating the service rules. The IP of the blocked device is unavailable for cloud mining. Enjoy using Bitcoin Bonus!",
                                 attach: {
                                     img: null
                                 },
@@ -13953,7 +13957,7 @@
                                 self: !1,
                                 colorText: this.randomColorText(),
                                 name: "FranklinRus",
-                                text: "О а вот и бан подъехал!))",
+                                text: "Oh, here comes the ban!))",
                                 attach: {
                                     img: null
                                 },
@@ -13961,8 +13965,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Роберт",
-                                text: "WhiteT, очень вовремя спасибо!",
+                                name: "Robert",
+                                text: "WhiteT, very timely, thanks!",
                                 attach: {
                                     img: null
                                 },
@@ -13970,8 +13974,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "WhiteT: (Администратор)",
-                                text: "Мы следим за тем, чтобы на русскоязычных серверах была приятная атмосфера во всем.",
+                                name: "WhiteT: (Administrator)",
+                                text: "We make sure that the English-language servers have a pleasant atmosphere in everything.",
                                 attach: {
                                     img: null
                                 },
@@ -13979,8 +13983,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Дауд78",
-                                text: "WhiteT, заметно!",
+                                name: "Daud78",
+                                text: "WhiteT, it shows!",
                                 attach: {
                                     img: null
                                 },
@@ -13988,8 +13992,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Дауд78",
-                                text: "Друзья! курс просто фееричный! Выводите",
+                                name: "Daud78",
+                                text: "Friends! The rate is just fantastic! Withdraw",
                                 attach: {
                                     img: "tinkof3.jpg"
                                 },
@@ -13998,7 +14002,7 @@
                                 self: !1,
                                 colorText: this.randomColorText(),
                                 name: "NOiSy",
-                                text: "Дауд78, Он уже потихоньку снижается, лучше поторопитесь тут все уже вывели))",
+                                text: "Daud78, it's already slowly decreasing, better hurry, everyone here has already withdrawn))",
                                 attach: {
                                     img: null
                                 },
@@ -14006,8 +14010,8 @@
                             }, {
                                 self: !1,
                                 colorText: this.randomColorText(),
-                                name: "Наталья Кустова",
-                                text: "Дауд78, Выводите скорее! Много потеряете, я уже тысяч 30 потеряла",
+                                name: "Natalya Kustova",
+                                text: "Daud78, withdraw quickly! You'll lose a lot, I already lost about 30 thousand USD",
                                 attach: {
                                     img: "sber1.jpg"
                                 },
@@ -14016,7 +14020,7 @@
                                 self: !1,
                                 colorText: this.randomColorText(),
                                 name: "Rich269",
-                                text: "Я на этом сервисе более 14 миллионов рублей заработал! Богатейте сейчас!",
+                                text: "I've earned over 14 million USD on this service! Get rich now!",
                                 attach: {
                                     img: "sber2.jpg"
                                 },
@@ -14085,7 +14089,7 @@
                         },
                         PushMessage: function(e) {
                             var o = this,
-                                i = ["Рахим", "Римма", "Андрей", "NOiSy", "Захарчик", "Тургенеев", "Ольга Задруцкая", "Akmal", "Зарина", "Антонина Воротникова", "Святослав", "Захаренок Владик", "LolaBTC", "Киевский Саша", "Зинаида Петровна", "Дауд78", "Jscience0", "Максим Павлов", "MaryMaru", "Nikola19", "Роберт", "FranklinRus", "FranklinRus", "Наталья Кустова", "Rich269"],
+                                i = ["Rahim", "Rimma", "Andrey", "NOiSy", "Zakharchik", "Turgenev", "Olga Zadrutskaya", "Akmal", "Zarina", "Antonina Vorotnikova", "Svyatoslav", "Zakharenok Vladik", "LolaBTC", "Kyiv Sasha", "Zinaida Petrovna", "Daud78", "Jscience0", "Maxim Pavlov", "MaryMaru", "Nikola19", "Robert", "FranklinRus", "FranklinRus", "Natalya Kustova", "Rich269"],
                                 n = i[Math.floor(Math.random() * i.length)],
                                 t = {
                                     self: !1,
@@ -14103,8 +14107,8 @@
                                 var e = {
                                     self: !1,
                                     colorText: o.randomColorText(),
-                                    name: "WhiteT: (Администратор)",
-                                    text: o.$store.getters.account.login + ", за ненормативную лексику вы были заглушены для чата на 24 часа. Просьба не нарушать правила общения на сервисе" + o.$store.getters.sitename,
+                                    name: "WhiteT: (Administrator)",
+                                    text: o.$store.getters.account.login + ", for using inappropriate language you have been muted in the chat for 24 hours. Please do not violate the rules of communication on the service" + o.$store.getters.sitename,
                                     attach: {
                                         img: null
                                     },
@@ -14118,7 +14122,7 @@
                         },
                         InsertSelfMessage: function() {
                             var e = this;
-                            return this.offensiveBanned ? (this.$say("За ненормативную лексику вы были заглушены для чата на 24 часа."), !1) : "" != this.textMessage && (this.inChatMessages.push({
+                            return this.offensiveBanned ? (this.$say("For using inappropriate language you have been muted in the chat for 24 hours."), !1) : "" != this.textMessage && (this.inChatMessages.push({
                                 self: !0,
                                 name: "I am",
                                 text: this.textMessage
@@ -14146,8 +14150,8 @@
                             }))
                         },
                         searchChat: function() {
-                            var e = prompt("Найти в чате");
-                            "" === e ? this.$say("Ошибка #481 – запрос не может быть пустым") : this.$say('Такого пользователя или сообщения с запросом "'.concat(e, '" не сушествует'))
+                            var e = prompt("Search in chat");
+                            "" === e ? this.$say("Error #481 – the query cannot be empty") : this.$say('No user or message with the query "'.concat(e, '" exists'))
                         },
                         toggleLoader: function() {
                             this.isLoaderActive = !this.isLoaderActive
@@ -14216,7 +14220,7 @@
                             return "btc" === e ? o * this.btcLevel : "usd" === e ? o * this.btcLevel * i : void 0
                         },
                         StatusTransaction: function() {
-                            return Math.random() > .9 ? (this.statusApprove = !1, this.transactions.notApprove++, "He&nbsp;подтверждено") : (this.statusApprove = !0, this.transactions.approve++, "Подтверждено")
+                            return Math.random() > .9 ? (this.statusApprove = !1, this.transactions.notApprove++, "Not&nbsp;confirmed") : (this.statusApprove = !0, this.transactions.approve++, "Confirmed")
                         },
                         ScrollToBottom: function() {
                             var e = this.$refs.hashBlock;
