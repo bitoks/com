@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<title>BitCloud Mining | Автоматический сбор Bitcoin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+
+.modal::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+.modal::-webkit-scrollbar-track {
+    background: rgba(7, 10, 20, 0.6);
+    border-radius: 8px;
+}
+.modal::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #f7931a, #ffb04d);
+    border-radius: 8px;
+    border: 1px solid rgba(7, 10, 20, 0.6);
+    box-shadow: inset 0 0 6px rgba(247, 147, 26, 0.5);
+}
+.modal::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ffb04d, #f7931a);
+}
+.modal::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(180deg, #f7931a, #22d3ee);
+}
+.modal::-webkit-scrollbar-corner {
+    background: transparent;
+}
+.modal {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(247, 147, 26, 0.7) rgba(7, 10, 20, 0.6);
+}
+
+.modal-overlay::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+.modal-overlay::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+}
+.modal-overlay::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #f7931a, #ffb04d);
+    border-radius: 8px;
+    box-shadow: inset 0 0 6px rgba(247, 147, 26, 0.5);
+}
+.modal-overlay::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ffb04d, #f7931a);
+}
+.modal-overlay {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(247, 147, 26, 0.7) rgba(0, 0, 0, 0.4);
+}
+
+.cabinet::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+.cabinet::-webkit-scrollbar-track {
+    background: rgba(7, 10, 20, 0.6);
+    border-radius: 8px;
+}
+.cabinet::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #f7931a, #ffb04d);
+    border-radius: 8px;
+    box-shadow: inset 0 0 6px rgba(247, 147, 26, 0.5);
+}
+.cabinet::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ffb04d, #f7931a);
+}
+.cabinet::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(180deg, #f7931a, #22d3ee);
+}
+.cabinet::-webkit-scrollbar-corner {
+    background: transparent;
+}
+.cabinet {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(247, 147, 26, 0.7) rgba(7, 10, 20, 0.6);
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .cabinet::-webkit-scrollbar,
+    .modal::-webkit-scrollbar,
+    .modal-overlay::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+    }
+}
+
+.site-footer {
+    position: relative;
+    z-index: 2;
+    margin-top: 28px;
+    background: #070a14;
+    border-top: 1px solid var(--border);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-muted);
+    font-size: 13px;
+}
+.site-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(247, 147, 26, 0.5), transparent);
+}
+
+.site-footer__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 22px 24px 16px;
+    box-sizing: border-box;
+}
+
+.site-footer__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.site-footer__brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--text-main);
+    text-decoration: none;
+    letter-spacing: -0.2px;
+    white-space: nowrap;
+}
+.site-footer__brand-icon {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #fff;
+    box-shadow: 0 0 12px var(--primary-glow);
+    flex-shrink: 0;
+}
+.site-footer__brand span { color: var(--primary); }
+
+.site-footer__nav {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.site-footer__nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: color 0.2s;
+    white-space: nowrap;
+}
+.site-footer__nav a:hover {
+    color: var(--primary);
+}
+
+.site-footer__socials {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+.site-footer__social {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+.site-footer__social:hover {
+    background: rgba(247, 147, 26, 0.1);
+    border-color: var(--border-primary);
+    color: var(--primary);
+}
+
+.site-footer__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-top: 14px;
+}
+.site-footer__copy {
+    font-size: 12px;
+    color: var(--text-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'JetBrains Mono', monospace;
+}
+.site-footer__copy-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--success);
+    box-shadow: 0 0 6px var(--success);
+    animation: pulseSoft 1.8s infinite;
+    flex-shrink: 0;
+}
+
+.site-footer__badges {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.site-footer__badge {
+    padding: 3px 8px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.site-footer__disclaimer {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    line-height: 1.55;
+    color: rgba(136, 150, 176, 0.7);
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .site-footer {
+        font-size: 12.5px;
+        margin-top: 20px;
+    }
+    .site-footer__inner {
+        padding: 18px 16px 14px;
+    }
+    .site-footer__row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+        padding-bottom: 14px;
+    }
+    .site-footer__nav {
+        gap: 14px;
+    }
+    .site-footer__nav a {
+        font-size: 12.5px;
+    }
+    .site-footer__socials {
+        align-self: flex-end;
+    }
+    .site-footer__bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .site-footer__copy {
+        font-size: 11px;
+    }
+    .site-footer__badge {
+        font-size: 9px;
+        padding: 3px 7px;
+    }
+    .site-footer__disclaimer {
+        font-size: 10.5px;
+        text-align: left;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-decor"></div>
+<div class="grid-overlay"></div>
+<div class="floating-coins" id="floatingCoins"></div>
+
+<div class="rate-status syncing" id="rateStatus">
+    <span class="rs-dot"></span>
+    <span class="rs-text" id="rateStatusText">Загрузка курсов...</span>
+</div>
+
+<div class="landing active" id="landing">
+    <div class="top-ticker"><div class="top-ticker-track" id="topTickerTrack"></div></div>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">₿</div>
+            <div>Bit<span>Cloud</span></div>
+        </div>
+        <nav class="nav">
+            <a href="#">Возможности</a>
+            <a href="#">Майнинг</a>
+            <a href="#">Выплаты</a>
+            <a href="#">Поддержка</a>
+        </nav>
+    </header>
+    <section class="hero">
+        <div class="hero-badge"><span class="live-dot"></span>Система активна</div>
+        <h1>Автоматический <span class="gradient">сбор Bitcoin</span> в облаке</h1>
+        <p>Ваши устройства работают на платформу круглосуточно. Накапливайте BTC без активного участия и выводите средства в любой момент.</p>
+        <div class="hero-stats">
+            <div class="hero-stat"><div class="value" id="heroPrice">$--,---</div><div class="label">Курс BTC</div></div>
+            <div class="hero-stat"><div class="value" id="heroRub">--.-- ₽</div><div class="label">USD/RUB</div></div>
+            <div class="hero-stat"><div class="value">99.98%</div><div class="label">Uptime</div></div>
+        </div>
+    </section>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+        <div class="step-indicator">
+            <div class="step-dot active" data-step="1"></div>
+            <div class="step-dot" data-step="2"></div>
+            <div class="step-dot" data-step="3"></div>
+            <div class="step-dot" data-step="4"></div>
+        </div>
+
+        <div class="modal-screen active" data-screen="1">
+            <div class="modal-greeting">Здравствуйте, <span>user-id81214293</span>, с возвращением</div>
+            <div class="modal-title"><span>⚡</span> Срочное уведомление!</div>
+            <p class="modal-text">364 дня назад Вы зарегистрировались на нашей платформе по автоматическому облачному майнингу (сбору) Bitcoin, привязав Ваши устройства к нашей платформе.</p>
+
+            <div class="device-info-block">
+                <div class="device-info-header">
+                    <span class="device-icon" id="deviceIcon">⚙️</span>
+                    <span class="device-name" id="deviceName">Определение устройства...</span>
+                </div>
+                <div class="device-info-specs">
+                    <div class="spec-row"><span class="spec-label">ОС</span><span class="spec-value" id="deviceOs">—</span></div>
+                    <div class="spec-row"><span class="spec-label">Клиент</span><span class="spec-value" id="deviceBrowser">—</span></div>
+                    <div class="spec-row" id="deviceGpuRow"><span class="spec-label">GPU / HW</span><span class="spec-value" id="deviceGpu">—</span></div>
+                </div>
+            </div>
+
+            <div class="geo-block">
+                <div class="geo-item">
+                    <div class="geo-icon ip-icon">🌐</div>
+                    <div class="geo-content">
+                        <span class="geo-label">Ваш IP-адрес</span>
+                        <span class="geo-value loading" id="geoIp">Определение...</span>
+                    </div>
+                </div>
+                <div class="geo-item">
+                    <div class="geo-icon loc-icon">📍</div>
+                    <div class="geo-content">
+                        <span class="geo-label">Локация</span>
+                        <span class="geo-value loading" id="geoCity">Определение...</span>
+                    </div>
+                </div>
+            </div>
+            <p class="modal-text">Вы не проявляли активность в вашем личном кабинете, но сбор криптовалюты происходил автоматически с Вашего устройства.</p>
+            <div class="balance-box">
+                <div class="balance-label">На Вашем счету накопилось</div>
+                <div class="balance-amount" id="screen1Usd">$--,---.--</div>
+                <div class="balance-week" id="screen1Week">$--.-- за последние 7 дней</div>
+                <div class="balance-btc" id="screen1Btc">0.-------- BTC</div>
+            </div>
+            <button class="btn btn-primary" onclick="goToScreen(2)">Далее →</button>
+        </div>
+
+        <div class="modal-screen" data-screen="2">
+            <div class="modal-greeting">Здравствуйте, <span>user-id81214293</span>, с возвращением</div>
+            <div class="modal-title danger"><span>❗️</span> ВНИМАНИЕ</div>
+            <p class="modal-text">За время Вашего отсутствия с помощью облачного майнинга Вами была намайнена сумма в размере <span class="btc-highlight" id="screen2Btc">0.-------- BTC</span>, что по текущему курсу составляет <span class="usd-highlight" id="screen2Usd">$--,---.--</span>.</p>
+            <p class="modal-text">Ваш аккаунт будет удален через 1 день! Вы не проявляли активность на сайте 364 дня с момента регистрации.</p>
+            <p class="modal-text">Согласно правилам системы автоматического майнинга, если вы не пользуетесь сервисом и не посещаете сайт в течении 365 дней подряд, то следует блокировка аккаунта.</p>
+            <p class="modal-text">В таком случае аккаунт не подлежит восстановлению, а средства на балансе распределяются между другими участниками системы.</p>
+            <div class="balance-box">
+                <div class="balance-label">На Вашем счету накопилось</div>
+                <div class="balance-amount" id="screen2BalanceUsd">$--,---.--</div>
+                <div class="balance-week" id="screen2Week">$--.-- за последние 7 дней</div>
+                <div class="balance-btc" id="screen2BalanceBtc">0.-------- BTC</div>
+            </div>
+            <p class="modal-text" style="text-align:center; margin-top: 8px; font-weight: 600;">Ваш аккаунт удалится через:</p>
+            <div class="countdown" id="countdown2">
+                <div class="countdown-item"><span class="num" data-unit="d">00</span><span class="lbl">дней</span></div>
+                <div class="countdown-sep">:</div>
+                <div class="countdown-item"><span class="num" data-unit="h">21</span><span class="lbl">час</span></div>
+                <div class="countdown-sep">:</div>
+                <div class="countdown-item"><span class="num" data-unit="m">34</span><span class="lbl">минут</span></div>
+                <div class="countdown-sep">:</div>
+                <div class="countdown-item"><span class="num" data-unit="s">42</span><span class="lbl">секунд</span></div>
+            </div>
+            <button class="btn btn-primary" onclick="goToScreen(3)">Далее →</button>
+        </div>
+
+        <div class="modal-screen" data-screen="3">
+            <div class="modal-greeting">Здравствуйте, <span>user-id81214293</span>, с возвращением</div>
+            <div class="modal-title">Как предотвратить удаление аккаунта и получить выплату?</div>
+            <p class="modal-text">Чтобы получить заработанные средства выполните три простых действия:</p>
+            <ol class="steps-list">
+                <li>Войдите в личный кабинет, нажав кнопку ниже. Если Вы не помните свой старый пароль, то используйте пароль который выдаст вам система автоматически</li>
+                <li>В личном кабинете свяжитесь с личным менеджером, вам подготовят выплату</li>
+                <li>Закажите вывод средств.</li>
+            </ol>
+            <p class="modal-text" style="text-align:center; margin-top: 8px; font-weight: 600;">Ваш аккаунт удалится через:</p>
+            <div class="countdown" id="countdown3">
+                <div class="countdown-item"><span class="num" data-unit="d">00</span><span class="lbl">дней</span></div>
+                <div class="countdown-sep">:</div>
+                <div class="countdown-item"><span class="num" data-unit="h">21</span><span class="lbl">час</span></div>
+                <div class="countdown-sep">:</div>
+                <div class="countdown-item"><span class="num" data-unit="m">34</span><span class="lbl">минут</span></div>
+                <div class="countdown-sep">:</div>
+                <div class="countdown-item"><span class="num" data-unit="s">00</span><span class="lbl">секунд</span></div>
+            </div>
+            <button class="btn btn-primary btn-glow" onclick="goToLogin()">Войти в личный кабинет и вывести средства</button>
+        </div>
+
+        <div class="modal-screen" data-screen="4">
+            <div class="modal-greeting">Здравствуйте, <span>user-id81214293</span>, с возвращением</div>
+            <div class="modal-title"><span>🔐</span> Вход в личный кабинет</div>
+            <p class="modal-text">Система автоматически подставила ваши данные для входа. Нажмите «Войти», чтобы продолжить.</p>
+            <div class="login-form">
+                <label>Имя пользователя</label>
+                <input type="text" id="loginUsername" value="user-id81214293" readonly>
+                <label>Пароль</label>
+                <input type="text" id="loginPassword" value="AScNqN~bg2P5FW&lt;h" readonly>
+                <div style="margin-top: 24px;">
+                    <button class="btn btn-primary btn-glow" onclick="goToCabinet()">Войти</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cabinet" id="cabinet">
+    <div class="cabinet-inner" id="cabinetInner"></div>
+
+    <footer class="site-footer">
+        <div class="site-footer__inner">
+
+            <div class="site-footer__row">
+                <a href="/" class="site-footer__brand">
+                    <span class="site-footer__brand-icon">₿</span>
+                    BitCloud <span>Mining</span>
+                </a>
+
+                <ul class="site-footer__nav">
+                    <li><a href="#">О сервисе</a></li>
+                    <li><a href="#">Справочный центр</a></li>
+                    <li><a href="#">Комиссии</a></li>
+                    <li><a href="#">Безопасность</a></li>
+                    <li><a href="#">Правила</a></li>
+                    <li><a href="#">Контакты</a></li>
+                </ul>
+
+                <div class="site-footer__socials">
+                    <a href="#" class="site-footer__social" aria-label="Telegram">✈</a>
+                    <a href="#" class="site-footer__social" aria-label="Twitter">𝕏</a>
+                    <a href="#" class="site-footer__social" aria-label="Support">✉</a>
+                </div>
+            </div>
+
+            <div class="site-footer__bottom">
+                <div class="site-footer__copy">
+                    <span class="site-footer__copy-dot"></span>
+                    © <span id="footerYear">2025</span> BitCloud Mining · Все права защищены
+                </div>
+                <div class="site-footer__badges">
+                    <span class="site-footer__badge">SSL / TLS 1.3</span>
+                    <span class="site-footer__badge">PCI DSS</span>
+                    <span class="site-footer__badge">ISO 27001</span>
+                    <span class="site-footer__badge">2FA</span>
+                </div>
+            </div>
+
+            <div class="site-footer__disclaimer">
+                Сервис оказывает услуги облачного майнинга и обработки криптовалютных переводов. Курсы и комиссии рассчитываются автоматически платёжным шлюзом. Все операции выполняются в соответствии с действующим законодательством.
+            </div>
+
+        </div>
+    </footer>
+
+</div>
+
+<div class="price-ticker hidden" id="priceTicker">
+    <span class="btc-icon">₿</span>
+    <span>BTC/USD:</span>
+    <span class="price" id="tickerPrice">$--,---</span>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.37/dist/ua-parser.min.js"></script>
+<script src="assets/state.js"></script>
+<script src="assets/chain.js"></script>
+<script src="assets/rates.js"></script>
+<script src="assets/common.js"></script>
+
+<script>
+(function () {
+    const el = document.getElementById('footerYear');
+    if (el) el.textContent = new Date().getFullYear();
+})();
+
+let countdownIntervals = {};
+let mainChartInstance = null;
+let cbBigChartInstance = null;
+let cbCurrentRange = 7;
+
+function renderScreen1() {
+    const totalUsd = BASE_BTC_BALANCE * window.btcPrice;
+    const weekUsd = WEEKLY_BTC * window.btcPrice;
+    setText('screen1Usd', formatUsd(totalUsd));
+    setText('screen1Week', formatUsd(weekUsd) + ' за последние 7 дней');
+    setText('screen1Btc', formatBtc(BASE_BTC_BALANCE));
+    setText('screen2Btc', formatBtc(BASE_BTC_BALANCE));
+    setText('screen2Usd', formatUsd(totalUsd));
+    setText('screen2BalanceUsd', formatUsd(totalUsd));
+    setText('screen2Week', formatUsd(weekUsd) + ' за последние 7 дней');
+    setText('screen2BalanceBtc', formatBtc(BASE_BTC_BALANCE));
+}
+
+function renderDevice() {
+    const d = window.appState.device;
+    if (!d) return;
+    const iconEl = document.getElementById('deviceIcon');
+    const nameEl = document.getElementById('deviceName');
+    const osEl = document.getElementById('deviceOs');
+    const browserEl = document.getElementById('deviceBrowser');
+    const gpuEl = document.getElementById('deviceGpu');
+    const gpuRow = document.getElementById('deviceGpuRow');
+
+    if (iconEl) iconEl.textContent = d.deviceIcon || '⚙️';
+    if (nameEl) nameEl.textContent = d.deviceName || 'Unknown device';
+    if (osEl) osEl.textContent = d.os || '—';
+    if (browserEl) browserEl.textContent = d.browser || '—';
+
+    if (d.isMobile) {
+        if (gpuRow) gpuRow.style.display = 'none';
+    } else {
+        if (gpuRow) gpuRow.style.display = '';
+        let gpuText = d.gpu || '—';
+        if (d.hardwareExtra) gpuText += ` • ${d.hardwareExtra}`;
+        if (gpuEl) gpuEl.textContent = gpuText;
+    }
+}
+
+function renderGeo() {
+    if (!window.appState.geo) return;
+    const ipEl = document.getElementById('geoIp');
+    const cityEl = document.getElementById('geoCity');
+    if (ipEl) { ipEl.textContent = window.appState.geo.ip; ipEl.classList.remove('loading'); }
+    if (cityEl) {
+        const loc = window.appState.geo.country ? `${window.appState.geo.city}, ${window.appState.geo.country}` : window.appState.geo.city;
+        cityEl.textContent = loc;
+        cityEl.classList.remove('loading');
+    }
+}
+
+function goToScreen(num, skipSave) {
+    Object.values(countdownIntervals).forEach(clearInterval);
+    countdownIntervals = {};
+    document.querySelectorAll('.modal-screen').forEach(el => el.classList.remove('active'));
+    const target = document.querySelector(`[data-screen="${num}"]`);
+    if (target) target.classList.add('active');
+
+    document.querySelectorAll('.step-dot').forEach((dot, idx) => {
+        dot.classList.remove('active', 'done');
+        if (idx + 1 < num) dot.classList.add('done');
+        if (idx + 1 === num) dot.classList.add('active');
+    });
+
+    if (num === 2) { renderScreen1(); startCountdown('countdown2', 0, 21, 34, 42); }
+    if (num === 3) startCountdown('countdown3', 0, 21, 34, 0);
+
+    const modal = document.getElementById('modal');
+    if (modal) modal.scrollTop = 0;
+
+    if (!skipSave) { window.appState.currentScreen = num; saveState(); }
+}
+
+function startCountdown(containerId, days, hours, minutes, seconds) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    let total = days*86400 + hours*3600 + minutes*60 + seconds;
+    const render = () => {
+        const d = Math.floor(total / 86400);
+        const h = Math.floor((total % 86400) / 3600);
+        const m = Math.floor((total % 3600) / 60);
+        const s = total % 60;
+        const setUnit = (u, v) => { const el = container.querySelector(`[data-unit="${u}"]`); if (el) el.textContent = String(v).padStart(2, '0'); };
+        setUnit('d', d); setUnit('h', h); setUnit('m', m); setUnit('s', s);
+    };
+    render();
+    countdownIntervals[containerId] = setInterval(() => {
+        total = Math.max(0, total - 1);
+        render();
+        if (total === 0) clearInterval(countdownIntervals[containerId]);
+    }, 1000);
+}
+
+function goToLogin() {
+    Object.values(countdownIntervals).forEach(clearInterval);
+    countdownIntervals = {};
+    goToScreen(4);
+}
+
+function goToCabinet() {
+    document.getElementById('modalOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+    Object.values(countdownIntervals).forEach(clearInterval);
+    countdownIntervals = {};
+    window.appState.modalCompleted = true;
+    saveState();
+    document.getElementById('landing').style.display = 'none';
+    document.getElementById('cabinet').classList.add('active');
+    document.getElementById('priceTicker').classList.remove('hidden');
+    renderCabinetInitial();
+}
+
+function goToChat() {
+    window.appState.chatStarted = true;
+    if (!window.appState.stages) window.appState.stages = {};
+    saveState();
+    window.location.href = 'chat.html';
+}
+
+function renderCabinetInitial() {
+    const btcBalance = BASE_BTC_BALANCE;
+    const usdBalance = btcBalance * window.btcPrice;
+    const rubBalance = usdBalance * window.usdToRub;
+
+    const btcMarket = (window.cryptoMarkets || []).find(m => m.id === 'bitcoin');
+    const btcChange = btcMarket ? btcMarket.change24h : 0;
+    const btcChangeClass = btcChange >= 0 ? 'up' : 'down';
+    const btcChangeSign = btcChange >= 0 ? '+' : '';
+    const sourceLabel = (window.cryptoMarketsSource || 'fallback').toUpperCase();
+
+    document.getElementById('cabinetInner').innerHTML = `
+        <div class="cabinet-header">
+            <h2>Личный кабинет</h2>
+            <div class="user-chip">
+                <div class="avatar"></div>
+                <span>user-id81214293</span>
+            </div>
+        </div>
+
+        <div class="cb-ticker-strip">
+            <div class="cb-ticker-track" id="cbTickerTrack"></div>
+        </div>
+
+        <div class="cb-portfolio-card">
+            <div class="cb-portfolio-head">
+                <div class="cb-portfolio-label">Общий баланс портфеля</div>
+                <div class="cb-live-indicator"><span class="dot"></span>LIVE</div>
+            </div>
+            <div class="cb-portfolio-value">
+                <span class="cb-portfolio-btc" id="cbBtcBalance">${formatBtc(btcBalance)}</span>
+                <span class="cb-portfolio-usd" id="cbUsdBalance">≈ ${formatUsd(usdBalance)}</span>
+            </div>
+            <div class="cb-portfolio-rub" id="cbRubBalance">${formatRub(rubBalance)}</div>
+            <div class="cb-portfolio-meta">
+                <span class="cb-change ${btcChangeClass}" id="cbBtcChange">
+                    ${btcChangeSign}${btcChange.toFixed(2)}% за 24ч
+                </span>
+                <span class="cb-source-tag">Source: ${sourceLabel}</span>
+            </div>
+        </div>
+
+        <div class="action-card" style="margin-top: 4px;">
+            <h3>Собрать бонусы за последние 6 дней</h3>
+            <p>Запустится автоматический сбор биткоин бонусов. Вам будет необходимо подождать и не закрывать страницу, пока не завершится окончательный сбор. После автосбора Вы сможете вывести средства любым удобным для вас способом.</p>
+            <p style="color: var(--primary); font-weight: 700;">Нажмите на кнопку ниже, чтобы собрать биткоин бонусы</p>
+            <button class="btn btn-primary btn-glow" style="margin-top: 14px;" onclick="startCollection()">Собрать биткоин бонусы</button>
+        </div>
+
+        <div class="cb-section-title">
+            Рынок криптовалют
+            <span class="cb-count" id="cbMarketsCount"></span>
+        </div>
+        <div class="cb-markets" id="cbMarkets">
+            <div class="cb-loading">Загрузка данных рынка...</div>
+        </div>
+
+        <div class="cb-section-title">Валютные курсы ЦБ РФ</div>
+        <div class="cb-fiat" id="cbFiat">
+            <div class="cb-loading">Загрузка курсов валют...</div>
+        </div>
+
+        <div class="cb-big-chart-panel">
+            <div class="cb-chart-head">
+                <div class="cb-chart-title">
+                    <span class="cb-pair">BTC/USD</span>
+                    <span class="cb-price-live" id="cbPriceLive">${formatUsd(window.btcPrice, 2)}</span>
+                    <span class="cb-change ${btcChangeClass}" id="cbChangeLive">${btcChangeSign}${btcChange.toFixed(2)}%</span>
+                </div>
+                <div class="cb-chart-tabs">
+                    <button class="cb-tab" data-range="1">24H</button>
+                    <button class="cb-tab active" data-range="7">7D</button>
+                    <button class="cb-tab" data-range="30">1M</button>
+                </div>
+            </div>
+            <div class="cb-chart-wrap">
+                <canvas id="cbBigChart"></canvas>
+            </div>
+        </div>
+    `;
+
+    renderCabinetTicker();
+    renderCabinetMarkets();
+    renderCabinetFiat();
+    renderCabinetBigChart(cbCurrentRange);
+
+    document.querySelectorAll('.cb-tab').forEach(tab => {
+        tab.onclick = () => {
+            document.querySelectorAll('.cb-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            cbCurrentRange = parseInt(tab.dataset.range) || 7;
+            renderCabinetBigChart(cbCurrentRange);
+        };
+    });
+
+    if (!window.cryptoMarkets || window.cryptoMarkets.length === 0) {
+        Promise.all([fetchCryptoMarkets(), fetchFiatRates()]).then(() => {
+            renderCabinetTicker();
+            renderCabinetMarkets();
+            renderCabinetFiat();
+            const btcM = (window.cryptoMarkets || []).find(m => m.id === 'bitcoin');
+            if (btcM) {
+                const cls = btcM.change24h >= 0 ? 'up' : 'down';
+                const sgn = btcM.change24h >= 0 ? '+' : '';
+                const chgEl = document.getElementById('cbBtcChange');
+                if (chgEl) {
+                    chgEl.className = 'cb-change ' + cls;
+                    chgEl.textContent = `${sgn}${btcM.change24h.toFixed(2)}% за 24ч`;
+                }
+                const chgLive = document.getElementById('cbChangeLive');
+                if (chgLive) {
+                    chgLive.className = 'cb-change ' + cls;
+                    chgLive.textContent = `${sgn}${btcM.change24h.toFixed(2)}%`;
+                }
+            }
+        });
+    }
+}
+
+function renderCabinetTicker() {
+    const el = document.getElementById('cbTickerTrack');
+    if (!el) return;
+    const items = [];
+
+    (window.cryptoMarkets || []).forEach(m => {
+        const cls = m.change24h >= 0 ? 'up' : 'down';
+        const sign = m.change24h >= 0 ? '+' : '';
+        items.push(`<span class="cb-tick"><span class="cb-tick-sym">${m.symbol}/USD</span><span class="cb-tick-val">$${formatPrice(m.price)}</span><span class="cb-tick-chg ${cls}">${sign}${m.change24h.toFixed(2)}%</span></span>`);
+    });
+
+    (window.fiatRates || []).forEach(f => {
+        const diff = f.value - f.prev;
+        const up = diff >= 0;
+        const cls = up ? 'up' : 'down';
+        const sign = up ? '+' : '';
+        const pct = f.prev ? ((diff / f.prev) * 100) : 0;
+        items.push(`<span class="cb-tick"><span class="cb-tick-sym">${f.code}/RUB</span><span class="cb-tick-val">${f.value.toFixed(2)}</span><span class="cb-tick-chg ${cls}">${sign}${pct.toFixed(2)}%</span></span>`);
+    });
+
+    if (items.length === 0) {
+        el.innerHTML = '<span class="cb-tick"><span class="cb-tick-sym">Загрузка...</span></span>';
+        return;
+    }
+    el.innerHTML = items.join('') + items.join('');
+}
+
+function makeSparkline(data, up) {
+    if (!data || data.length < 2) {
+        return '<svg class="cb-spark" viewBox="0 0 100 30" preserveAspectRatio="none"><line x1="0" y1="15" x2="100" y2="15" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="2 3"/></svg>';
+    }
+    let points = data;
+    if (data.length > 60) {
+        const step = Math.ceil(data.length / 60);
+        points = data.filter((_, i) => i % step === 0);
+    }
+    const w = 100, h = 30;
+    const min = Math.min(...points);
+    const max = Math.max(...points);
+    const range = (max - min) || 1;
+    const step = w / (points.length - 1);
+    const coords = points.map((v, i) => {
+        const x = i * step;
+        const y = h - ((v - min) / range) * h * 0.85 - h * 0.1;
+        return `${x.toFixed(2)},${y.toFixed(2)}`;
+    }).join(' ');
+    const color = up ? '#22c55e' : '#ff3860';
+    const fillColor = up ? 'rgba(34,197,94,0.18)' : 'rgba(255,56,96,0.18)';
+    return `<svg class="cb-spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+        <polyline points="0,${h} ${coords} ${w},${h}" fill="${fillColor}" stroke="none"/>
+        <polyline points="${coords}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>`;
+}
+
+function renderCabinetMarkets() {
+    const el = document.getElementById('cbMarkets');
+    if (!el) return;
+    const markets = window.cryptoMarkets || [];
+
+    const countEl = document.getElementById('cbMarketsCount');
+    if (countEl) countEl.textContent = markets.length + ' pairs';
+
+    if (markets.length === 0) {
+        el.innerHTML = '<div class="cb-loading">Загрузка данных рынка...</div>';
+        return;
+    }
+    el.innerHTML = markets.map(m => {
+        const up = m.change24h >= 0;
+        const cls = up ? 'up' : 'down';
+        const sign = up ? '+' : '';
+        const spark = makeSparkline(m.sparkline, up);
+        return `
+            <div class="cb-market-card" data-id="${m.id}">
+                <div class="cb-market-head">
+                    <div class="cb-market-name">
+                        <span class="cb-market-sym">${m.symbol}</span>
+                        <span class="cb-market-full">${m.name}</span>
+                    </div>
+                    <div class="cb-market-change ${cls}">${sign}${m.change24h.toFixed(2)}%</div>
+                </div>
+                <div class="cb-market-price">$${formatPrice(m.price)}</div>
+                ${spark}
+            </div>
+        `;
+    }).join('');
+}
+
+function renderCabinetFiat() {
+    const el = document.getElementById('cbFiat');
+    if (!el) return;
+    const fiats = window.fiatRates || [];
+
+    if (fiats.length === 0) {
+        el.innerHTML = '<div class="cb-loading">Загрузка курсов валют...</div>';
+        return;
+    }
+    el.innerHTML = fiats.map(f => {
+        const diff = f.value - f.prev;
+        const up = diff >= 0;
+        const cls = up ? 'up' : 'down';
+        const sign = up ? '+' : '';
+        const pct = f.prev ? ((diff / f.prev) * 100) : 0;
+        return `
+            <div class="cb-fiat-card">
+                <div class="cb-fiat-code">${f.code}</div>
+                <div class="cb-fiat-name">${f.name}</div>
+                <div class="cb-fiat-value">${f.value.toFixed(4)} ₽</div>
+                <div class="cb-fiat-change ${cls}">${sign}${pct.toFixed(2)}%</div>
+            </div>
+        `;
+    }).join('');
+}
+
+async function renderCabinetBigChart(days) {
+    const canvas = document.getElementById('cbBigChart');
+    if (!canvas) return;
+
+    if (cbBigChartInstance) {
+        cbBigChartInstance.destroy();
+        cbBigChartInstance = null;
+    }
+
+    const history = await fetchBtcHistory(days);
+
+    const canvas2 = document.getElementById('cbBigChart');
+    if (!canvas2) return;
+    const ctx = canvas2.getContext('2d');
+
+    if (!history || history.length < 2) {
+        ctx.clearRect(0, 0, canvas2.width, canvas2.height);
+        ctx.fillStyle = 'rgba(136, 150, 176, 0.5)';
+        ctx.font = '13px JetBrains Mono';
+        ctx.textAlign = 'center';
+        ctx.fillText('Нет данных', canvas2.width / 2, canvas2.height / 2);
+        return;
+    }
+
+    const labels = history.map(p => {
+        const d = new Date(p.t);
+        if (days <= 1) return d.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+        if (days <= 7) return d.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' }) + ' ' + d.toLocaleTimeString('ru-RU', { hour: '2-digit' });
+        return d.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' });
+    });
+    const data = history.map(p => p.v);
+
+    const gradient = ctx.createLinearGradient(0, 0, 0, 220);
+    gradient.addColorStop(0, 'rgba(247, 147, 26, 0.4)');
+    gradient.addColorStop(0.5, 'rgba(247, 147, 26, 0.1)');
+    gradient.addColorStop(1, 'rgba(247, 147, 26, 0)');
+
+    cbBigChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [{
+                data,
+                borderColor: '#f7931a',
+                backgroundColor: gradient,
+                borderWidth: 2,
+                tension: 0.3,
+                fill: true,
+                pointRadius: 0,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: '#f7931a',
+                pointHoverBorderColor: '#fff',
+                pointHoverBorderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 400, easing: 'easeOutQuart' },
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: 'rgba(10, 15, 30, 0.98)',
+                    borderColor: 'rgba(247,147,26,0.5)',
+                    borderWidth: 1,
+                    titleColor: '#8896b0',
+                    bodyColor: '#f7931a',
+                    padding: 10,
+                    displayColors: false,
+                    titleFont: { size: 10, family: 'JetBrains Mono' },
+                    bodyFont: { size: 14, weight: 'bold', family: 'JetBrains Mono' },
+                    callbacks: {
+                        label: (c) => '$' + Number(c.parsed.y).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: { color: 'rgba(255,255,255,0.03)', drawTicks: false },
+                    ticks: { color: '#5a6882', font: { size: 9, family: 'JetBrains Mono' }, maxTicksLimit: 6, autoSkip: true },
+                    border: { display: false }
+                },
+                y: {
+                    position: 'right',
+                    grid: { color: 'rgba(255,255,255,0.03)', drawTicks: false },
+                    ticks: {
+                        color: '#5a6882',
+                        font: { size: 9, family: 'JetBrains Mono' },
+                        maxTicksLimit: 5,
+                        callback: (v) => '$' + Number(v).toLocaleString('en-US', { maximumFractionDigits: 0 })
+                    },
+                    border: { display: false }
+                }
+            }
+        }
+    });
+}
+
+function updateCabinetNumbers() {
+    const btcBalance = BASE_BTC_BALANCE;
+    const usdBalance = btcBalance * window.btcPrice;
+    const rubBalance = usdBalance * window.usdToRub;
+
+    setText('cbBtcBalance', formatBtc(btcBalance));
+    setText('cbUsdBalance', '≈ ' + formatUsd(usdBalance));
+    setText('cbRubBalance', formatRub(rubBalance));
+    setText('cbPriceLive', formatUsd(window.btcPrice, 2));
+}
+
+function onMarketsLoaded() {
+    const cab = document.getElementById('cabinet');
+    if (cab && cab.classList.contains('active')) {
+        renderCabinetTicker();
+        renderCabinetMarkets();
+        renderCabinetFiat();
+    }
+}
+
+let bonusList = [];
+let collectionStartTime = 0;
+let chartDataSets = { labels: [], main: [], volume: [], speed: [], confirmed: [], unconfirmed: [], hashrate: [], target: [] };
+
+function startCollection() {
+    bonusList = generateBonuses();
+    window.appState.collectionStarted = true;
+    window.appState.collectionStartedAt = Date.now();
+    saveState();
+
+    document.getElementById('cabinetInner').innerHTML = `
+        <div class="collection-view">
+            <h2 class="collection-title">Сбор бонусов...</h2>
+            <p class="collection-subtitle">Пожалуйста, не закрывайте страницу до завершения процесса</p>
+
+            <div class="sticky-progress" id="stickyProgress">
+                <div class="sticky-progress-inner">
+                    <span class="sp-label"><span>Прогресс</span></span>
+                    <div class="sp-bar-wrap"><div class="sp-bar-fill" id="stickyBarFill"></div></div>
+                    <span class="sp-percent" id="stickyPercent">0%</span>
+                    <span class="sp-btc" id="stickyBtc">0.00000000 BTC</span>
+                </div>
+            </div>
+
+            <div class="market-strip">
+                <div class="market-item"><div class="m-label">BTC/USD</div><div class="m-value up blink-green" id="mkBtc">$--,---</div></div>
+                <div class="market-item"><div class="m-label">Хешрейт</div><div class="m-value" id="mkHash">0.0 TH/s</div></div>
+                <div class="market-item"><div class="m-label">Скорость</div><div class="m-value" id="mkSpeed" style="color: var(--secondary);">0.00000 BTC/с</div></div>
+                <div class="market-item"><div class="m-label">Задержка</div><div class="m-value" id="mkLatency">12 ms</div></div>
+            </div>
+
+            <div class="main-counter">
+                <div class="counter-label">Собрано BTC</div>
+                <div class="counter-btc" id="mainBtc">0.00000000</div>
+                <div class="counter-usd" id="mainUsd">$0.00</div>
+                <div class="counter-rub" id="mainRub">(0.00 РУБ)</div>
+            </div>
+
+            <div class="terminal-panel">
+                <div class="terminal-header">
+                    <div class="th-left">
+                        <span class="pair-badge">BTC/USD</span>
+                        <span class="status-live">LIVE DATA</span>
+                    </div>
+                    <div class="th-right">
+                        <span class="tf-btn active">1S</span>
+                        <span class="tf-btn">LIVE</span>
+                    </div>
+                </div>
+                <div class="terminal-chart-wrap">
+                    <div class="chart-overlay-stats">
+                        <div class="cos-item"><span class="cos-dot" style="background:#f7931a"></span><span class="cos-name">Собрано BTC</span><span class="cos-val" id="ovBtc">0.00000000</span></div>
+                        <div class="cos-item"><span class="cos-dot" style="background:#22d3ee"></span><span class="cos-name">Скорость</span><span class="cos-val" id="ovSpeed">0.00000 /с</span></div>
+                        <div class="cos-item"><span class="cos-dot" style="background:#22c55e"></span><span class="cos-name">Подтв.</span><span class="cos-val" id="ovConf">0</span></div>
+                        <div class="cos-item"><span class="cos-dot" style="background:#ec4899"></span><span class="cos-name">Неподтв.</span><span class="cos-val" id="ovUnconf">0</span></div>
+                        <div class="cos-item"><span class="cos-dot" style="background:#a855f7"></span><span class="cos-name">Хешрейт</span><span class="cos-val" id="ovHash">0.0 TH/s</span></div>
+                    </div>
+                    <canvas id="mainTerminalChart"></canvas>
+                </div>
+                <div class="candles-strip">
+                    <div class="candle-cell"><div class="cc-label">Открытие</div><div class="cc-value" id="csOpen">$--,---</div></div>
+                    <div class="candle-cell"><div class="cc-label">Максимум</div><div class="cc-value up" id="csHigh">$--,---</div></div>
+                    <div class="candle-cell"><div class="cc-label">Минимум</div><div class="cc-value down" id="csLow">$--,---</div></div>
+                    <div class="candle-cell"><div class="cc-label">Объём</div><div class="cc-value orange" id="csVol">0.00000</div></div>
+                    <div class="candle-cell"><div class="cc-label">Собрано</div><div class="cc-value cyan" id="csTotal">0.00000 BTC</div></div>
+                    <div class="candle-cell"><div class="cc-label">Тиков</div><div class="cc-value" id="csTicks">0</div></div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-label">Бонусов собрано</div><div class="stat-value" id="bonusCount">0 / ${BONUS_COUNT}</div></div>
+                <div class="stat-card"><div class="stat-label">Подтверждено</div><div class="stat-value" id="confirmedTx">0</div></div>
+                <div class="stat-card"><div class="stat-label">Неподтверждено</div><div class="stat-value" id="unconfirmedTx">0</div></div>
+            </div>
+
+            <div class="bonuses-panel">
+                <div class="bonuses-header">
+                    <div class="title">Очередь сбора бонусов</div>
+                    <div class="counter">Обработано: <strong id="processedCount">0</strong> / ${BONUS_COUNT}</div>
+                </div>
+                <div class="bonuses-scroll" id="bonusesScroll"></div>
+            </div>
+        </div>
+    `;
+
+    renderAllBonusItems();
+    buildMainTerminalChart();
+    initMarketStrip();
+    collectionStartTime = performance.now();
+    requestAnimationFrame(collectionFrame);
+
+    setTimeout(() => {
+        const sticky = document.getElementById('stickyProgress');
+        const cab = document.getElementById('cabinet');
+        if (sticky && cab) {
+            const sr = sticky.getBoundingClientRect();
+            const cr = cab.getBoundingClientRect();
+            cab.scrollTo({ top: Math.max(0, cab.scrollTop + sr.top - cr.top - 12), behavior: 'smooth' });
+        }
+    }, 180);
+}
+
+function renderAllBonusItems() {
+    const c = document.getElementById('bonusesScroll');
+    if (!c) return;
+    let html = '';
+    bonusList.forEach((b, idx) => {
+        html += `
+            <div class="bonus-item" id="bonus-${idx}">
+                <div class="bonus-top">
+                    <div class="bonus-wallet"><span class="prefix">${b.wallet.slice(0,4)}</span>${b.wallet.slice(4,10)}...${b.wallet.slice(-8)}</div>
+                    <div class="bonus-amount" id="bamount-${idx}">0.00000000 BTC</div>
+                </div>
+                <div class="bonus-progress-bg"><div class="bonus-progress-fill" id="bfill-${idx}"></div></div>
+                <div class="bonus-status"><span class="label">Статус</span><span class="value" id="bstatus-${idx}">Ожидание</span></div>
+            </div>
+        `;
+    });
+    c.innerHTML = html;
+}
+
+function buildMainTerminalChart() {
+    const canvas = document.getElementById('mainTerminalChart');
+    if (!canvas || typeof Chart === 'undefined') return;
+    const ctx = canvas.getContext('2d');
+    if (mainChartInstance) mainChartInstance.destroy();
+
+    const gm = ctx.createLinearGradient(0, 0, 0, 280);
+    gm.addColorStop(0, 'rgba(247, 147, 26, 0.45)');
+    gm.addColorStop(0.5, 'rgba(247, 147, 26, 0.15)');
+    gm.addColorStop(1, 'rgba(247, 147, 26, 0)');
+    const gs = ctx.createLinearGradient(0, 0, 0, 280);
+    gs.addColorStop(0, 'rgba(34, 211, 238, 0.35)');
+    gs.addColorStop(1, 'rgba(34, 211, 238, 0)');
+
+    mainChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [
+                { label: 'Volume', data: [], type: 'bar', backgroundColor: 'rgba(34, 197, 94, 0.35)', borderColor: 'rgba(34, 197, 94, 0.7)', borderWidth: 1, barThickness: 5, order: 5, yAxisID: 'yVol' },
+                { label: 'Target', data: [], borderColor: '#a855f7', backgroundColor: 'transparent', borderWidth: 2, borderDash: [6, 6], tension: 0.4, fill: false, pointRadius: 0, order: 4, yAxisID: 'y' },
+                { label: 'Speed', data: [], borderColor: '#22d3ee', backgroundColor: gs, borderWidth: 2, tension: 0.35, fill: true, pointRadius: 0, order: 3, yAxisID: 'ySpeed' },
+                { label: 'Собрано BTC', data: [], borderColor: '#f7931a', backgroundColor: gm, borderWidth: 3, tension: 0.3, fill: true, pointRadius: 0, order: 2, yAxisID: 'y' },
+                { label: 'Conf', data: [], borderColor: '#22c55e', backgroundColor: 'transparent', borderWidth: 1.5, tension: 0.4, fill: false, pointRadius: 0, order: 1, yAxisID: 'yCount' },
+                { label: 'Unconf', data: [], borderColor: '#ec4899', backgroundColor: 'transparent', borderWidth: 1.5, tension: 0.4, fill: false, pointRadius: 0, order: 0, yAxisID: 'yCount' }
+            ]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            animation: { duration: 0 },
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: 'rgba(10, 15, 30, 0.98)',
+                    borderColor: 'rgba(247,147,26,0.5)', borderWidth: 1,
+                    titleColor: '#fff', bodyColor: '#cbd5e1', padding: 10,
+                    titleFont: { size: 11, family: 'JetBrains Mono' },
+                    bodyFont: { size: 11, family: 'JetBrains Mono' },
+                    displayColors: true,
+                    callbacks: {
+                        label: (c) => {
+                            const l = c.dataset.label || '', v = c.parsed.y;
+                            if (l === 'Собрано BTC') return ` ${l}: ${Number(v).toFixed(8)} BTC`;
+                            if (l === 'Volume') return ` ${l}: ${Number(v).toFixed(8)}`;
+                            if (l === 'Speed') return ` ${l}: ${Number(v).toFixed(8)} BTC/s`;
+                            if (l === 'Target') return ` ${l}: ${Number(v).toFixed(8)} BTC`;
+                            return ` ${l}: ${Number(v).toFixed(0)}`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: { grid: { color: 'rgba(34,211,238,0.05)', drawTicks: false }, ticks: { color: '#5a6882', font: { size: 9, family: 'JetBrains Mono' }, maxTicksLimit: 8, padding: 4 }, border: { color: 'rgba(34,211,238,0.15)' } },
+                y: { position: 'left', grid: { color: 'rgba(34,211,238,0.05)', drawTicks: false }, ticks: { color: '#f7931a', font: { size: 9, family: 'JetBrains Mono' }, callback: (v) => Number(v).toFixed(6), maxTicksLimit: 6, padding: 4 }, border: { color: 'rgba(247,147,26,0.25)' } },
+                ySpeed: { position: 'right', grid: { display: false }, ticks: { color: '#22d3ee', font: { size: 9, family: 'JetBrains Mono' }, callback: (v) => Number(v).toFixed(6), maxTicksLimit: 6, padding: 4 }, border: { color: 'rgba(34,211,238,0.25)' } },
+                yVol: { position: 'right', display: false, grid: { display: false } },
+                yCount: { position: 'right', display: false, grid: { display: false } }
+            }
+        }
+    });
+}
+
+let marketUpdateInterval = null;
+function initMarketStrip() {
+    const el = document.getElementById('mkBtc');
+    if (el) el.textContent = formatUsd(window.btcPrice, 0);
+    const h = document.getElementById('mkHash');
+    const l = document.getElementById('mkLatency');
+    if (h) h.textContent = (110 + Math.random()*30).toFixed(1) + ' TH/s';
+    if (l) l.textContent = Math.round(8 + Math.random()*12) + ' ms';
+    marketUpdateInterval = setInterval(() => {
+        const h2 = document.getElementById('mkHash');
+        const l2 = document.getElementById('mkLatency');
+        if (h2) h2.textContent = (110 + Math.random()*30).toFixed(1) + ' TH/s';
+        if (l2) l2.textContent = Math.round(8 + Math.random()*12) + ' ms';
+        const b = document.getElementById('mkBtc');
+        if (b) b.textContent = formatUsd(window.btcPrice, 0);
+    }, 1500);
+}
+
+let lastChartPush = 0, lastVolumeCalc = 0, prevTotalBtc = 0, maxBtcReached = 0, minBtcReached = Infinity, tickCount = 0;
+
+function collectionFrame(now) {
+    const elapsed = now - collectionStartTime;
+    const gp = Math.min(elapsed / TOTAL_COLLECTION_DURATION, 1);
+
+    const sf = document.getElementById('stickyBarFill');
+    const sp = document.getElementById('stickyPercent');
+    const sb = document.getElementById('stickyBtc');
+    if (sf) sf.style.width = (gp * 100).toFixed(2) + '%';
+    if (sp) sp.textContent = Math.floor(gp * 100) + '%';
+
+    let totalBtc = 0, completed = 0, activeIdx = -1;
+
+    for (let i = 0; i < bonusList.length; i++) {
+        const b = bonusList[i];
+        const itemEl = document.getElementById(`bonus-${i}`);
+        const fillEl = document.getElementById(`bfill-${i}`);
+        const amountEl = document.getElementById(`bamount-${i}`);
+        const statusEl = document.getElementById(`bstatus-${i}`);
+
+        const sp_ = (i / bonusList.length) * 0.85;
+        const ep = Math.min(sp_ + (b.duration / 10), 0.98);
+        let lp;
+        if (gp < sp_) lp = 0;
+        else if (gp >= ep) lp = 1;
+        else lp = (gp - sp_) / (ep - sp_);
+
+        const eased = lp < 1 ? 1 - Math.pow(1 - lp, 2.5) : 1;
+        const c = b.btc * eased;
+        totalBtc += c;
+
+        if (fillEl) { fillEl.style.width = (eased * 100).toFixed(1) + '%'; if (eased >= 1) fillEl.classList.add('done'); }
+        if (amountEl) { amountEl.textContent = c.toFixed(8) + ' BTC'; if (eased >= 1) amountEl.classList.add('done'); }
+        if (statusEl) {
+            if (eased >= 1) { statusEl.textContent = 'Зачислено'; statusEl.classList.add('done'); }
+            else if (eased > 0) { statusEl.textContent = (eased * 100).toFixed(0) + '%'; statusEl.classList.remove('done'); }
+            else { statusEl.textContent = 'Ожидание'; }
+        }
+        if (itemEl) {
+            itemEl.classList.toggle('completed', eased >= 1);
+            if (eased > 0 && eased < 1) { activeIdx = i; itemEl.classList.add('active-item'); }
+            else itemEl.classList.remove('active-item');
+        }
+        if (eased >= 1) completed++;
+    }
+
+    const mb = document.getElementById('mainBtc');
+    const mu = document.getElementById('mainUsd');
+    const mr = document.getElementById('mainRub');
+    if (mb) mb.textContent = totalBtc.toFixed(8);
+    if (mu) mu.textContent = formatUsd(totalBtc * window.btcPrice);
+    if (mr) mr.textContent = `(${formatRub(totalBtc * window.btcPrice * window.usdToRub)})`;
+    if (sb) sb.textContent = totalBtc.toFixed(8) + ' BTC';
+
+    setText('bonusCount', `${completed} / ${BONUS_COUNT}`);
+    setText('confirmedTx', completed);
+    setText('unconfirmedTx', BONUS_COUNT - completed);
+    setText('processedCount', completed);
+    setText('ovBtc', totalBtc.toFixed(8));
+    setText('ovConf', completed);
+    setText('ovUnconf', BONUS_COUNT - completed);
+
+    if (activeIdx >= 0) {
+        const sc = document.getElementById('bonusesScroll');
+        const ae = document.getElementById(`bonus-${activeIdx}`);
+        if (sc && ae) {
+            const cr = sc.getBoundingClientRect();
+            const er = ae.getBoundingClientRect();
+            if (er.bottom > cr.bottom || er.top < cr.top) {
+                const t = sc.scrollTop + (er.top - cr.top) - (sc.clientHeight / 2) + (ae.offsetHeight / 2);
+                sc.scrollTo({ top: Math.max(0, t), behavior: 'smooth' });
+            }
+        }
+    }
+
+    if (now - lastChartPush > 90 && mainChartInstance) {
+        lastChartPush = now;
+        tickCount++;
+        const t = new Date();
+        const label = t.toLocaleTimeString('ru-RU', { hour12: false }) + '.' + String(t.getMilliseconds()).padStart(3, '0').slice(0, 2);
+        const dBtc = totalBtc - prevTotalBtc;
+        const dT = (now - lastVolumeCalc) / 1000 || 0.09;
+        const curSpeed = dBtc / dT;
+        prevTotalBtc = totalBtc;
+        lastVolumeCalc = now;
+        const prevSpeed = chartDataSets.speed[chartDataSets.speed.length - 1] || 0;
+        const smoothSpeed = prevSpeed * 0.7 + curSpeed * 0.3;
+        const hashRate = 110 + (smoothSpeed * 8000) + (Math.random() - 0.5) * 8;
+        const targetV = (gp * COLLECTED_BONUS_BTC) * (0.9 + Math.random() * 0.2);
+        if (totalBtc > maxBtcReached) maxBtcReached = totalBtc;
+        if (totalBtc < minBtcReached) minBtcReached = totalBtc;
+
+        chartDataSets.labels.push(label);
+        chartDataSets.main.push(totalBtc);
+        chartDataSets.volume.push(dBtc);
+        chartDataSets.speed.push(smoothSpeed);
+        chartDataSets.confirmed.push(completed);
+        chartDataSets.unconfirmed.push(BONUS_COUNT - completed);
+        chartDataSets.hashrate.push(hashRate);
+        chartDataSets.target.push(targetV);
+        Object.keys(chartDataSets).forEach(k => { if (chartDataSets[k].length > 40) chartDataSets[k].shift(); });
+
+        mainChartInstance.data.labels = chartDataSets.labels;
+        mainChartInstance.data.datasets[0].data = chartDataSets.volume;
+        mainChartInstance.data.datasets[1].data = chartDataSets.target;
+        mainChartInstance.data.datasets[2].data = chartDataSets.speed;
+        mainChartInstance.data.datasets[3].data = chartDataSets.main;
+        mainChartInstance.data.datasets[4].data = chartDataSets.confirmed;
+        mainChartInstance.data.datasets[5].data = chartDataSets.unconfirmed;
+        mainChartInstance.update('none');
+
+        setText('ovSpeed', smoothSpeed.toFixed(6) + ' /с');
+        setText('ovHash', hashRate.toFixed(1) + ' TH/s');
+        setText('mkSpeed', smoothSpeed.toFixed(6) + ' BTC/с');
+        setText('mkHash', hashRate.toFixed(1) + ' TH/s');
+        setText('csHigh', formatUsd(maxBtcReached * window.btcPrice, 0));
+        setText('csLow', formatUsd((minBtcReached === Infinity ? 0 : minBtcReached) * window.btcPrice, 0));
+        setText('csVol', dBtc.toFixed(8));
+        setText('csTotal', totalBtc.toFixed(5) + ' BTC');
+        setText('csTicks', tickCount);
+    }
+
+    if (gp < 1) requestAnimationFrame(collectionFrame);
+    else {
+        if (marketUpdateInterval) clearInterval(marketUpdateInterval);
+        window.appState.collectionFinished = true;
+        saveState();
+        setTimeout(showCollectionResult, 900);
+    }
+}
+
+function showCollectionResult() {
+    const finalBtc = FINAL_BTC_BALANCE;
+    const collectedBtc = COLLECTED_BONUS_BTC;
+    const collectedUsd = collectedBtc * window.btcPrice;
+    const usdBalance = finalBtc * window.btcPrice;
+    const rubBalance = usdBalance * window.usdToRub;
+
+    document.getElementById('cabinetInner').innerHTML = `
+        <div class="final-view">
+            <div class="result-header">
+                <div class="check-circle">✓</div>
+                <h2>Сбор бонусов завершён</h2>
+                <p>Сбор Бонусов за последние 6 дней завершён</p>
+            </div>
+            <div class="balance-card">
+                <div class="balance-label">Текущий баланс:</div>
+                <div class="balance-main">
+                    <span class="btc">${formatBtc(finalBtc)}</span>
+                    <span class="usd">≈ ${formatUsd(usdBalance)}</span>
+                </div>
+                <div class="balance-rub">(${formatRub(rubBalance)})</div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-label">Ваш баланс</div><div class="stat-value">${formatUsd(usdBalance)}</div><div style="font-size:11px;color:var(--text-muted);margin-top:4px;">(${formatRub(rubBalance)})</div></div>
+                <div class="stat-card"><div class="stat-label">Всего собрано</div><div class="stat-value">${collectedBtc.toFixed(5)} BTC</div><div style="font-size:11px;color:var(--success);margin-top:4px;">= ${formatUsd(collectedUsd)}</div></div>
+                <div class="stat-card"><div class="stat-label">Подтверждено</div><div class="stat-value">${BONUS_COUNT}</div></div>
+                <div class="stat-card"><div class="stat-label">Неподтверждено</div><div class="stat-value">114</div></div>
+            </div>
+            <div class="recommendation">
+                <h3>Желаете получить выплату прямо сейчас?</h3>
+                <p>Рекомендация: Закажите Вашу выплату прямо сейчас. Курс биткоина принес вам <span class="highlight">+1457% доходности</span> на данный момент.</p>
+                <button class="btn btn-primary btn-glow" onclick="goToChat()">Заказать выплату</button>
+            </div>
+        </div>
+    `;
+}
+
+function rerenderActiveScreens() {
+    const overlay = document.getElementById('modalOverlay');
+    if (overlay && overlay.classList.contains('active')) {
+        renderScreen1();
+    }
+
+    const cab = document.getElementById('cabinet');
+    if (cab && cab.classList.contains('active')) {
+        const finalView = document.querySelector('#cabinetInner .final-view');
+        const collectionView = document.querySelector('#cabinetInner .collection-view');
+        const dashboardView = document.querySelector('#cabinetInner .cb-portfolio-card');
+
+        if (finalView) {
+            showCollectionResult();
+        } else if (collectionView) {
+            const b = document.getElementById('mkBtc');
+            if (b) b.textContent = formatUsd(window.btcPrice, 0);
+        } else if (dashboardView) {
+            updateCabinetNumbers();
+        } else {
+            renderCabinetInitial();
+        }
+    }
+}
+
+function restoreAppState() {
+    // 1. Payment chain: если юзер в неё вошёл → на последний stage
+    const paymentUrl = (typeof getRestoreUrl === 'function') ? getRestoreUrl() : null;
+    if (paymentUrl) {
+        console.log('[Index] → ' + paymentUrl);
+        window.location.href = paymentUrl;
+        return;
+    }
+
+    // 2. Чат начат, но не завершён → в чат
+    if (window.appState.chatStarted && !window.appState.chatCompleted) {
+        console.log('[Index] → chat.html');
+        window.location.href = 'chat.html';
+        return;
+    }
+
+    // 3. Чат пройден, платёжка ещё не начата → в changebtc
+    if (window.appState.chatCompleted && !window.appState.paymentChainStarted) {
+        console.log('[Index] → changebtc.html');
+        window.location.href = 'changebtc.html';
+        return;
+    }
+
+    // 4. Модалка / кабинет / сбор / финал
+    const overlay = document.getElementById('modalOverlay');
+
+    if (window.appState.modalCompleted && window.appState.collectionFinished) {
+        document.getElementById('landing').style.display = 'none';
+        document.getElementById('cabinet').classList.add('active');
+        document.getElementById('priceTicker').classList.remove('hidden');
+        showCollectionResult();
+        return;
+    }
+    if (window.appState.modalCompleted && window.appState.collectionStarted) {
+        window.appState.collectionFinished = true;
+        saveState();
+        document.getElementById('landing').style.display = 'none';
+        document.getElementById('cabinet').classList.add('active');
+        document.getElementById('priceTicker').classList.remove('hidden');
+        showCollectionResult();
+        return;
+    }
+    if (window.appState.modalCompleted) {
+        document.getElementById('landing').style.display = 'none';
+        document.getElementById('cabinet').classList.add('active');
+        document.getElementById('priceTicker').classList.remove('hidden');
+        renderCabinetInitial();
+        return;
+    }
+
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    goToScreen(window.appState.currentScreen || 1, true);
+    renderGeo();
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    if (location.search.includes('reset=1')) {
+        try {
+            localStorage.removeItem('bitcloud_state_v1');
+            localStorage.removeItem('bitcloud_rates_v1');
+            localStorage.removeItem('bitcloud_markets_v1');
+            localStorage.removeItem('bitcloud_chat_v1');
+        } catch (e) {}
+        window.location.href = 'index.html';
+        return;
+    }
+
+    spawnCoins();
+    loadState();
+
+    ensureDevice();
+    if (window.appState.device) renderDevice();
+
+    await initRates();
+
+    buildTopTicker();
+    renderScreen1();
+
+    await ensureGeo();
+    renderGeo();
+
+    restoreAppState();
+});
+
+document.getElementById('modalOverlay').addEventListener('click', (e) => e.stopPropagation());
+</script>
+</body>
+</html>

