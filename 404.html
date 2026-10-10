@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<title>Страница не найдена | Bitcoin Bonus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+
+html, body {
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #070a14;
+    overflow-x: hidden;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    color: #e8ecf4;
+    padding: clamp(16px, 4vw, 32px);
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Фоновая сетка */
+.grid-overlay {
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(247, 147, 26, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(247, 147, 26, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Радиальное свечение */
+.bg-decor {
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle at 20% 10%, rgba(247, 147, 26, 0.15), transparent 40%),
+        radial-gradient(circle at 80% 90%, rgba(34, 211, 238, 0.10), transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(247, 147, 26, 0.05), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Основной контейнер */
+.error-card {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: min(560px, calc(100vw - 32px));
+    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 24px;
+    padding: clamp(28px, 6vw, 44px) clamp(20px, 5vw, 36px);
+    box-sizing: border-box;
+    text-align: center;
+    box-shadow:
+        0 0 0 1px rgba(247, 147, 26, 0.05) inset,
+        0 30px 80px rgba(0, 0, 0, 0.5),
+        0 0 100px rgba(247, 147, 26, 0.06);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    animation: cardFadeIn 0.6s ease both;
+}
+
+@keyframes cardFadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Большой 404 */
+.error-code {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-size: clamp(72px, 22vw, 128px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    background: linear-gradient(135deg, #f7931a 0%, #ffb04d 50%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    margin: 0 0 clamp(8px, 2vw, 12px);
+    user-select: none;
+    filter: drop-shadow(0 0 30px rgba(247, 147, 26, 0.25));
+    animation: codePulse 3s ease-in-out infinite;
+}
+
+@keyframes codePulse {
+    0%, 100% { filter: drop-shadow(0 0 30px rgba(247, 147, 26, 0.25)); }
+    50%      { filter: drop-shadow(0 0 45px rgba(247, 147, 26, 0.45)); }
+}
+
+/* Заголовок */
+.error-title {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-size: clamp(20px, 5vw, 26px);
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 12px;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+}
+
+/* Подзаголовок */
+.error-subtitle {
+    font-size: clamp(13px, 3.6vw, 15px);
+    line-height: 1.65;
+    color: #9aa6bd;
+    margin: 0 auto 24px;
+    max-width: 420px;
+}
+
+/* Таймер-плашка */
+.redirect-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 18px;
+    margin: 0 auto 24px;
+    background: rgba(247, 147, 26, 0.08);
+    border: 1px solid rgba(247, 147, 26, 0.22);
+    border-radius: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(12.5px, 3.6vw, 14px);
+    color: #e8ecf4;
+    max-width: 420px;
+    line-height: 1.5;
+    word-break: normal;
+    overflow-wrap: anywhere;
+}
+
+.redirect-box .rdot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #f7931a;
+    box-shadow: 0 0 10px #f7931a;
+    animation: dotBlink 1.2s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+@keyframes dotBlink {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.4; transform: scale(0.85); }
+}
+
+.redirect-box .rsec {
+    display: inline-block;
+    min-width: 2ch;
+    font-weight: 700;
+    color: #ffffff;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+}
+
+/* Прогресс-бар */
+.progress-bar {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    height: 4px;
+    margin: 0 auto 26px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar__fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #f7931a, #ffb04d);
+    border-radius: 4px;
+    box-shadow: 0 0 12px rgba(247, 147, 26, 0.6);
+    transition: width 1s linear;
+}
+
+/* Кнопки */
+.error-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.error-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    line-height: 1;
+}
+
+.error-btn--primary {
+    background: linear-gradient(135deg, #f7931a, #ffb04d);
+    color: #1a1a1a;
+    box-shadow: 0 6px 20px rgba(247, 147, 26, 0.35);
+}
+.error-btn--primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 26px rgba(247, 147, 26, 0.5);
+    filter: brightness(1.05);
+}
+
+.error-btn--ghost {
+    background: rgba(255, 255, 255, 0.04);
+    color: #e8ecf4;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+.error-btn--ghost:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(247, 147, 26, 0.4);
+    color: #f7931a;
+}
+
+/* Логотип вверху */
+.brand-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 22px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: #e8ecf4;
+    text-decoration: none;
+    letter-spacing: -0.2px;
+}
+
+.brand-mark__icon {
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, #f7931a, #ffb04d);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: #fff;
+    box-shadow: 0 0 14px rgba(247, 147, 26, 0.5);
+    flex-shrink: 0;
+}
+
+.brand-mark span { color: #f7931a; }
+
+/* Футер под карточкой */
+.site-credit {
+    position: relative;
+    z-index: 2;
+    margin-top: 22px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: #8896b0;
+    text-align: center;
+    letter-spacing: 0.3px;
+    line-height: 1.6;
+}
+
+.site-credit a {
+    color: #8896b0;
+    text-decoration: none;
+    border-bottom: 1px dotted rgba(136, 150, 176, 0.4);
+    transition: color 0.2s, border-color 0.2s;
+}
+.site-credit a:hover {
+    color: #f7931a;
+    border-bottom-color: rgba(247, 147, 26, 0.6);
+}
+
+/* Мобилки */
+@media (max-width: 480px) {
+    .error-card {
+        padding: 26px 18px 28px;
+        border-radius: 20px;
+    }
+    .redirect-box {
+        padding: 12px 14px;
+        font-size: 12px;
+    }
+    .error-btn {
+        padding: 11px 18px;
+        font-size: 13px;
+        width: 100%;
+        justify-content: center;
+    }
+    .error-actions {
+        flex-direction: column;
+    }
+}
+
+/* Уменьшенная анимация для тех, кто предпочитает */
+@media (prefers-reduced-motion: reduce) {
+    .error-code, .redirect-box .rdot, .error-card {
+        animation: none !important;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-decor"></div>
+<div class="grid-overlay"></div>
+
+<main class="error-card" role="main" aria-labelledby="errTitle">
+
+    <a href="https://bitmom.ru/id81214293" class="brand-mark" aria-label="Bitcoin Bonus">
+        <span class="brand-mark__icon">₿</span>
+        Bitcoin <span>Bonus</span>
+    </a>
+
+    <h1 class="error-code" aria-hidden="true">404</h1>
+
+    <h2 id="errTitle" class="error-title">BITCOIN BONUS</h2>
+    <p class="error-subtitle">
+    </p>
+
+    <div class="redirect-box" role="status" aria-live="polite">
+        <span class="rdot" aria-hidden="true"></span>
+        <span>Перенаправление через <span class="rsec" id="redirectSeconds">0</span> сек</span>
+    </div>
+
+    <div class="progress-bar" aria-hidden="true">
+        <div class="progress-bar__fill" id="redirectProgress"></div>
+    </div>
+
+    <div class="error-actions">
+        <a href="https://yandex.ru" class="error-btn error-btn--primary" id="goNowBtn">
+            Перейти сейчас
+        </a>
+        <a href="/" class="error-btn error-btn--ghost">
+            ← На главную
+        </a>
+    </div>
+
+    <div class="site-credit">
+        © <span id="year">2026</span> Bitcoin Bonus · <a href="https://bitmom.ru/id81214293">bitmom.ru</a>
+    </div>
+
+</main>
+
+<script>
+(function () {
+    /* ---- Год в футере ---- */
+    var yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    /* ---- Настройки редиректа ---- */
+    var REDIRECT_URL = 'https://bitmom.ru/id81214293';
+    var TOTAL_SECONDS = 0;
+
+    /* ---- Элементы ---- */
+    var secEl   = document.getElementById('redirectSeconds');
+    var fillEl  = document.getElementById('redirectProgress');
+    var goNowBtn = document.getElementById('goNowBtn');
+
+    var remaining = TOTAL_SECONDS;
+    if (secEl) secEl.textContent = remaining;
+
+    /* ---- Прогресс-бар: плавно на 100% за TOTAL_SECONDS ---- */
+    if (fillEl) {
+        /* Форсируем перерисовку, чтобы transition сработал */
+        void fillEl.offsetWidth;
+        fillEl.style.transition = 'width ' + TOTAL_SECONDS + 's linear';
+        fillEl.style.width = '100%';
+    }
+
+    /* ---- Тикер секунд ---- */
+    var timer = setInterval(function () {
+        remaining -= 1;
+        if (remaining < 0) remaining = 0;
+        if (secEl) secEl.textContent = remaining;
+
+        if (remaining <= 0) {
+            clearInterval(timer);
+            doRedirect();
+        }
+    }, 1000);
+
+    /* ---- Сам редирект ---- */
+    var redirected = false;
+    function doRedirect() {
+        if (redirected) return;
+        redirected = true;
+        try {
+            /* replace — чтобы юзер не мог вернуться по «назад» на 404 */
+            window.location.replace(REDIRECT_URL);
+        } catch (e) {
+            window.location.href = REDIRECT_URL;
+        }
+    }
+
+    /* ---- Кнопка «Перейти сейчас» — моментальный редирект ---- */
+    if (goNowBtn) {
+        goNowBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            clearInterval(timer);
+            doRedirect();
+        });
+    }
+
+    /* ---- На всякий случай: если юзер уйдёт со вкладки — таймер живёт,
+       но redirect всё равно выполнится. Если вернётся — сработает сразу. */
+    document.addEventListener('visibilitychange', function () {
+        if (!document.hidden && remaining <= 0) {
+            doRedirect();
+        }
+    });
+
+})();
+</script>
+
+</body>
+</html>
