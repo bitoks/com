@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<title>Правила сервиса | Bitcoin Bonus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+/* ============================================================
+   TERMS PAGE — Правила сервиса
+   ============================================================ */
+
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background: #070a14;
+    color: #e8ecf4;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Фон */
+.bg-decor {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+        radial-gradient(circle at 15% 5%, rgba(247, 147, 26, 0.14), transparent 40%),
+        radial-gradient(circle at 85% 95%, rgba(34, 211, 238, 0.09), transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(247, 147, 26, 0.04), transparent 65%);
+}
+.grid-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+        linear-gradient(rgba(247, 147, 26, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(247, 147, 26, 0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(circle at 50% 30%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle at 50% 30%, #000 30%, transparent 80%);
+}
+
+/* Топ-навигация */
+.top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(7, 10, 20, 0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.top-nav__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+.top-nav__brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #e8ecf4;
+    text-decoration: none;
+    letter-spacing: -0.2px;
+    white-space: nowrap;
+}
+.top-nav__brand-icon {
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, #f7931a, #ffb04d);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: #fff;
+    box-shadow: 0 0 14px rgba(247, 147, 26, 0.45);
+    flex-shrink: 0;
+}
+.top-nav__brand span { color: #f7931a; }
+
+.top-nav__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 9px;
+    color: #b7bfcc;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+.top-nav__back:hover {
+    background: rgba(247, 147, 26, 0.08);
+    border-color: rgba(247, 147, 26, 0.35);
+    color: #f7931a;
+}
+
+/* Контент */
+.page {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 60px;
+}
+
+/* Hero */
+.hero {
+    padding: clamp(36px, 7vw, 72px) 0 clamp(20px, 4vw, 32px);
+    text-align: center;
+}
+.hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    background: rgba(247, 147, 26, 0.08);
+    border: 1px solid rgba(247, 147, 26, 0.25);
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #ffb04d;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+}
+.hero__badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #f7931a;
+    box-shadow: 0 0 10px #f7931a;
+    animation: badgePulse 1.8s ease-in-out infinite;
+}
+@keyframes badgePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
+.hero__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(28px, 6vw, 46px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+    color: #ffffff;
+}
+.hero__title-accent {
+    background: linear-gradient(135deg, #f7931a 0%, #ffb04d 50%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+.hero__subtitle {
+    font-size: clamp(14px, 3.6vw, 16px);
+    line-height: 1.65;
+    color: #9aa6bd;
+    max-width: 620px;
+    margin: 0 auto;
+}
+
+/* Метаданные документа */
+.doc-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin: 22px auto 0;
+    max-width: 700px;
+}
+.doc-meta__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #8896b0;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+.doc-meta__item strong {
+    color: #e8ecf4;
+    font-weight: 700;
+}
+
+/* Основной layout: сайдбар + контент */
+.layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: clamp(24px, 5vw, 40px);
+}
+@media (min-width: 1024px) {
+    .layout {
+        grid-template-columns: 260px 1fr;
+        gap: 40px;
+        align-items: start;
+    }
+}
+
+/* Сайдбар — содержание */
+.toc {
+    padding: 20px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012));
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 18px;
+}
+@media (min-width: 1024px) {
+    .toc {
+        position: sticky;
+        top: 90px;
+    }
+}
+.toc__title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #8896b0;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.toc__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    counter-reset: tocit;
+}
+.toc__link {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 9px;
+    color: #b7bfcc;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 1.4;
+    font-weight: 500;
+    transition: all 0.15s;
+    counter-increment: tocit;
+    border: 1px solid transparent;
+}
+.toc__link::before {
+    content: counter(toct, decimal-leading-zero);
+    flex-shrink: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: #667285;
+    letter-spacing: 0.4px;
+    padding-top: 2px;
+    transition: color 0.2s;
+}
+.toc__link:hover {
+    background: rgba(247, 147, 26, 0.06);
+    color: #f7931a;
+    border-color: rgba(247, 147, 26, 0.2);
+}
+.toc__link:hover::before { color: #f7931a; }
+
+.toc__link.active {
+    background: rgba(247, 147, 26, 0.1);
+    color: #f7931a;
+    border-color: rgba(247, 147, 26, 0.3);
+}
+.toc__link.active::before { color: #f7931a; }
+
+/* Основной текст */
+.content {
+    max-width: 760px;
+}
+.content > .intro {
+    padding: 20px 22px;
+    background: linear-gradient(135deg, rgba(247, 147, 26, 0.06), rgba(34, 211, 238, 0.02));
+    border: 1px solid rgba(247, 147, 26, 0.22);
+    border-radius: 14px;
+    margin-bottom: 32px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #b7bfcc;
+}
+.content > .intro strong {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* Секции правил */
+.rules-section {
+    padding: clamp(28px, 5vw, 40px) 0 0;
+    scroll-margin-top: 90px;
+}
+.rules-section:first-of-type { padding-top: 0; }
+
+.rules-section__header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.rules-section__num {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    background: linear-gradient(135deg, rgba(247, 147, 26, 0.2), rgba(247, 147, 26, 0.05));
+    border: 1px solid rgba(247, 147, 26, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: #f7931a;
+    letter-spacing: 0.5px;
+}
+.rules-section__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(18px, 4.4vw, 22px);
+    font-weight: 700;
+    line-height: 1.25;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+/* Список пунктов */
+.rules-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.rule-item {
+    display: flex;
+    gap: 14px;
+    padding: 16px 18px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    transition: border-color 0.2s, background 0.2s;
+}
+.rule-item:hover {
+    border-color: rgba(247, 147, 26, 0.24);
+    background: rgba(247, 147, 26, 0.03);
+}
+.rule-item__num {
+    flex-shrink: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: #f7931a;
+    padding-top: 2px;
+    letter-spacing: 0.3px;
+    min-width: 32px;
+}
+.rule-item__body { flex: 1; min-width: 0; }
+.rule-item__text {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: #b7bfcc;
+    margin: 0;
+}
+.rule-item__text strong {
+    color: #ffffff;
+    font-weight: 600;
+}
+.rule-item__text code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    padding: 1px 7px;
+    background: rgba(247, 147, 26, 0.1);
+    border: 1px solid rgba(247, 147, 26, 0.2);
+    border-radius: 5px;
+    color: #ffb04d;
+    white-space: nowrap;
+}
+.rule-item__text a {
+    color: #f7931a;
+    text-decoration: none;
+    border-bottom: 1px dotted rgba(247, 147, 26, 0.5);
+    transition: border-color 0.2s;
+}
+.rule-item__text a:hover {
+    border-bottom-color: #f7931a;
+}
+
+/* Подсветка запрещено / предупреждение */
+.rule-item--warning {
+    background: linear-gradient(180deg, rgba(255, 56, 96, 0.05), rgba(255, 255, 255, 0.008));
+    border-color: rgba(255, 56, 96, 0.2);
+}
+.rule-item--warning:hover {
+    border-color: rgba(255, 56, 96, 0.36);
+    background: linear-gradient(180deg, rgba(255, 56, 96, 0.08), rgba(255, 255, 255, 0.008));
+}
+.rule-item--warning .rule-item__num { color: #ff8fa0; }
+
+.rule-item--info {
+    background: linear-gradient(180deg, rgba(34, 211, 238, 0.04), rgba(255, 255, 255, 0.008));
+    border-color: rgba(34, 211, 238, 0.18);
+}
+.rule-item--info:hover {
+    border-color: rgba(34, 211, 238, 0.32);
+}
+.rule-item--info .rule-item__num { color: #22d3ee; }
+
+/* CTA внизу контента */
+.cta {
+    margin-top: clamp(36px, 7vw, 56px);
+    padding: clamp(24px, 5vw, 32px);
+    background:
+        linear-gradient(135deg, rgba(247, 147, 26, 0.10), rgba(34, 211, 238, 0.04));
+    border: 1px solid rgba(247, 147, 26, 0.28);
+    border-radius: 20px;
+    text-align: center;
+}
+.cta__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(18px, 4.4vw, 24px);
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 10px;
+    line-height: 1.25;
+}
+.cta__text {
+    font-size: clamp(13px, 3.4vw, 14.5px);
+    line-height: 1.65;
+    color: #9aa6bd;
+    max-width: 520px;
+    margin: 0 auto 22px;
+}
+.cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+.cta__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 11px;
+    text-decoration: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+.cta__btn--primary {
+    background: linear-gradient(135deg, #f7931a, #ffb04d);
+    color: #1a1a1a;
+    box-shadow: 0 8px 24px rgba(247, 147, 26, 0.35);
+}
+.cta__btn--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(247, 147, 26, 0.5);
+    filter: brightness(1.05);
+}
+.cta__btn--ghost {
+    background: rgba(255, 255, 255, 0.04);
+    color: #e8ecf4;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+.cta__btn--ghost:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(247, 147, 26, 0.4);
+    color: #f7931a;
+}
+
+/* Футер */
+.site-footer {
+    position: relative;
+    z-index: 2;
+    margin-top: 60px;
+    background: #070a14;
+    border-top: 1px solid var(--border, rgba(255,255,255,0.06));
+    font-family: 'Inter', sans-serif;
+    color: var(--text-muted, #8896b0);
+    font-size: 13px;
+}
+.site-footer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(247, 147, 26, 0.5), transparent);
+}
+.site-footer__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 24px 16px;
+}
+.site-footer__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.site-footer__copy {
+    font-size: 12px;
+    color: var(--text-muted, #8896b0);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'JetBrains Mono', monospace;
+}
+.site-footer__copy-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 6px #22c55e;
+    flex-shrink: 0;
+}
+.site-footer__badges {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.site-footer__badge {
+    padding: 3px 8px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border, rgba(255,255,255,0.06));
+    border-radius: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--text-muted, #8896b0);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.site-footer__disclaimer {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border, rgba(255,255,255,0.06));
+    font-size: 11px;
+    line-height: 1.55;
+    color: rgba(136, 150, 176, 0.7);
+    text-align: center;
+}
+
+/* Скроллбар */
+html::-webkit-scrollbar, body::-webkit-scrollbar { width: 10px; height: 10px; }
+html::-webkit-scrollbar-track, body::-webkit-scrollbar-track { background: rgba(7, 10, 20, 0.6); }
+html::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #f7931a, #ffb04d);
+    border-radius: 8px;
+    box-shadow: inset 0 0 6px rgba(247, 147, 26, 0.5);
+}
+html::-webkit-scrollbar-thumb:hover, body::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ffb04d, #f7931a);
+}
+html, body {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(247, 147, 26, 0.7) rgba(7, 10, 20, 0.6);
+}
+
+/* Мобилки */
+@media (max-width: 640px) {
+    .top-nav__inner { padding: 12px 16px; }
+    .page { padding: 0 16px 40px; }
+    .cta__actions { flex-direction: column; }
+    .cta__btn { width: 100%; justify-content: center; }
+    .site-footer__inner { padding: 20px 16px 14px; }
+    .site-footer__bottom { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .site-footer__disclaimer { font-size: 10.5px; text-align: left; }
+    .rules-section__num { width: 36px; height: 36px; font-size: 12px; }
+    .rule-item { padding: 14px 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero__badge::before { animation: none; }
+    .rule-item, .toc__link { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-decor"></div>
+<div class="grid-overlay"></div>
+
+<!-- ============================================================
+     ТОП-НАВИГАЦИЯ
+     ============================================================ -->
+<nav class="top-nav">
+    <div class="top-nav__inner">
+        <a href="/" class="top-nav__brand">
+            <span class="top-nav__brand-icon">₿</span>
+            Bitcoin <span>Bonus</span>
+        </a>
+        <a href="/" class="top-nav__back">← На главную</a>
+    </div>
+</nav>
+
+<main class="page">
+
+    <!-- ============================================================
+         HERO
+         ============================================================ -->
+    <section class="hero">
+        <div class="hero__badge">Правила сервиса</div>
+        <h1 class="hero__title">
+            Как работает <span class="hero__title-accent">Bitcoin Bonus</span>
+        </h1>
+        <p class="hero__subtitle">
+            Правила, права и обязанности сторон, порядок оказания услуг
+            по сбору бонусов, обмену криптовалюты и выводу средств.
+        </p>
+
+        <div class="doc-meta">
+            <span class="doc-meta__item">
+                Редакция: <strong>2.4</strong>
+            </span>
+            <span class="doc-meta__item">
+                Обновлено: <strong>10.10.2026</strong>
+            </span>
+            <span class="doc-meta__item">
+                Вступает в силу: <strong>с момента регистрации</strong>
+            </span>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         LAYOUT: САЙДБАР + КОНТЕНТ
+         ============================================================ -->
+    <div class="layout">
+
+        <!-- Содержание -->
+        <aside class="toc" aria-label="Содержание">
+            <div class="toc__title">Содержание</div>
+            <ul class="toc__list">
+                <li><a href="#s1" class="toc__link">Общие положения</a></li>
+                <li><a href="#s2" class="toc__link">Регистрация и аккаунт</a></li>
+                <li><a href="#s3" class="toc__link">Сбор бонусов</a></li>
+                <li><a href="#s4" class="toc__link">Обмен BTC → RUB</a></li>
+                <li><a href="#s5" class="toc__link">Вывод средств</a></li>
+                <li><a href="#s6" class="toc__link">Комиссии и тарифы</a></li>
+                <li><a href="#s7" class="toc__link">Права и обязанности</a></li>
+                <li><a href="#s8" class="toc__link">Запрещённые действия</a></li>
+                <li><a href="#s9" class="toc__link">Ответственность</a></li>
+                <li><a href="#s10" class="toc__link">Персональные данные</a></li>
+                <li><a href="#s11" class="toc__link">Изменение правил</a></li>
+                <li><a href="#s12" class="toc__link">Контакты</a></li>
+            </ul>
+        </aside>
+
+        <!-- Контент -->
+        <div class="content">
+
+            <div class="intro">
+                <strong>Используя сервис Bitcoin Bonus, вы принимаете настоящие правила.</strong>
+                Пожалуйста, внимательно ознакомьтесь с документом перед регистрацией.
+                Если какое-то положение вам не подходит — рекомендуем воздержаться
+                от использования платформы.
+            </div>
+
+            <!-- 01 -->
+            <section class="rules-section" id="s1">
+                <div class="rules-section__header">
+                    <div class="rules-section__num">01</div>
+                    <h2 class="rules-section__title">Общие положения</h2>
+                </div>
+                <ul class="rules-list">
+                    <li class="rule-item">
+                        <div class="rule-item__num">1.1</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Bitcoin Bonus — платформа для сбора криптовалютных бонусов
+                                из партнёрских программ криптобирж, кэшбэк-сервисов и
+                                реферальных начислений, а также для обмена криптовалюты
+                                на фиатные валюты.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">1.2</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Сервис не является банком, брокером или инвестиционной
+                                платформой. Мы не даём инвестиционных советов и не
+                                гарантируем доходность.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">1.3</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Все операции на платформе происходят в соответствии с
+                                действующим законодательством. Пользователь самостоятельно
+                                несёт ответственность за соблюдение налогового
+                                законодательства в своей юрисдикции.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">1.4</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Регистрация на платформе означает полное и безоговорочное
+                                принятие настоящих правил. В случае несогласия с любым
+                                из положений, пользователь обязан прекратить использование
+                                сервиса.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 02 -->
+            <section class="rules-section" id="s2">
+                <div class="rules-section__header">
+                    <div class="rules-section__num">02</div>
+                    <h2 class="rules-section__title">Регистрация и аккаунт</h2>
+                </div>
+                <ul class="rules-list">
+                    <li class="rule-item">
+                        <div class="rule-item__num">2.1</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Для использования сервиса необходимо создать личный
+                                кабинет. При регистрации вы обязуетесь указать
+                                достоверные данные о себе.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">2.2</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Каждый пользователь может иметь только <strong>один
+                                аккаунт</strong>. Мультиаккаунтинг запрещён и ведёт к
+                                блокировке всех связанных учётных записей.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">2.3</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Возраст пользователя должен быть не менее
+                                <code>18 лет</code>. При обнаружении нарушений
+                                аккаунт блокируется без возможности восстановления.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item rule-item--info">
+                        <div class="rule-item__num">2.4</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Для повышения лимитов и вывода крупных сумм требуется
+                                верификация личности — <a href="security.html">подробнее
+                                о процессе верификации</a>.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">2.5</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Вы несёте полную ответственность за сохранность
+                                пароля и средств двухфакторной аутентификации.
+                                Платформа не восстанавливает доступ к аккаунту при
+                                отсутствии 2FA-кодов и резервных кодов.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 03 -->
+            <section class="rules-section" id="s3">
+                <div class="rules-section__header">
+                    <div class="rules-section__num">03</div>
+                    <h2 class="rules-section__title">Сбор бонусов</h2>
+                </div>
+                <ul class="rules-list">
+                    <li class="rule-item">
+                        <div class="rule-item__num">3.1</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Бонусы формируются из партнёрских программ, привязанных
+                                к профилю пользователя. Начисление зависит от активности
+                                партнёрских сервисов и не является гарантированной
+                                доходностью.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">3.2</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Зачисление бонусов на баланс происходит автоматически
+                                в течение нескольких минут после подтверждения от
+                                партнёрской программы. В редких случаях срок может
+                                достигать 24 часов.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">3.3</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Платформа вправе приостановить начисление бонусов,
+                                если заподозрит манипуляции с партнёрскими программами
+                                (фрод, накрутка, использование ботов).
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item rule-item--info">
+                        <div class="rule-item__num">3.4</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Чем больше бонусов вы собираете, тем ниже становится
+                                комиссия обмена и вывода. Система уровней работает
+                                автоматически — <a href="fees.html">подробнее о тарифах</a>.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 04 -->
+            <section class="rules-section" id="s4">
+                <div class="rules-section__header">
+                    <div class="rules-section__num">04</div>
+                    <h2 class="rules-section__title">Обмен BTC → RUB</h2>
+                </div>
+                <ul class="rules-list">
+                    <li class="rule-item">
+                        <div class="rule-item__num">4.1</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Обмен криптовалюты происходит по <strong>рыночному
+                                курсу</strong>, актуальному на момент подтверждения
+                                операции. Курс обновляется в реальном времени.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">4.2</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Все комиссии и итоговая сумма к получению отображаются
+                                <strong>до подтверждения операции</strong>. Пользователь
+                                видит точные значения и может отказаться от обмена.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item rule-item--warning">
+                        <div class="rule-item__num">4.3</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                После подтверждения операции обмен <strong>не может
+                                быть отменён</strong>. Убедитесь в правильности
+                                направления обмена и суммы перед подтверждением.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">4.4</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Минимальные и максимальные суммы обмена зависят от
+                                направления и уровня аккаунта. Полный список —
+                                на странице <a href="fees.html">Комиссии</a>.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 05 -->
+            <section class="rules-section" id="s5">
+                <div class="rules-section__header">
+                    <div class="rules-section__num">05</div>
+                    <h2 class="rules-section__title">Вывод средств</h2>
+                </div>
+                <ul class="rules-list">
+                    <li class="rule-item">
+                        <div class="rule-item__num">5.1</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Вывод средств возможен на банковскую карту, банковский
+                                счёт, через СБП и на криптовалютный кошелёк. Полный
+                                список способов — в разделе <a href="fees.html">Комиссии</a>.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">5.2</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Стандартное время зачисления — <strong>в течение
+                                10 минут</strong> после подтверждения операции. Для
+                                крупных сумм срок может увеличиваться в связи с
+                                лимитами платёжной системы массовых выплат.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">5.3</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Реквизиты для вывода можно изменить в личном кабинете.
+                                После изменения реквизитов операции приостанавливаются
+                                на 24 часа в целях безопасности.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item rule-item--warning">
+                        <div class="rule-item__num">5.4</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Вывод возможен <strong>только на реквизиты, принадлежащие
+                                владельцу аккаунта</strong>. Переводы третьим лицам
+                                запрещены.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">5.5</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Если операция отклонена платёжной системой, комиссия
+                                возвращается на баланс автоматически в течение 24 часов.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 06 -->
+            <section class="rules-section" id="s6">
+                <div class="rules-section__header">
+                    <div class="rules-section__num">06</div>
+                    <h2 class="rules-section__title">Комиссии и тарифы</h2>
+                </div>
+                <ul class="rules-list">
+                    <li class="rule-item">
+                        <div class="rule-item__num">6.1</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Все комиссии публикуются на странице
+                                <a href="fees.html">Комиссии</a>. Никаких скрытых
+                                платежей или подписок нет.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">6.2</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Комиссия всегда отображается до подтверждения
+                                операции. Отказ от подтверждения не влечёт
+                                списаний.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">6.3</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Уровень аккаунта пересчитывается автоматически
+                                каждый месяц. Ставки применяются к операциям,
+                                начиная с момента повышения уровня.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">6.4</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Дополнительные услуги (транзитная ячейка,
+                                ускоренный вывод) оплачиваются отдельно и всегда
+                                показываются заранее.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 07 -->
+            <section class="rules-section" id="s7">
+                <div class="rules-section__header">
+                    <div class="rules-section__num">07</div>
+                    <h2 class="rules-section__title">Права и обязанности сторон</h2>
+                </div>
+                <ul class="rules-list">
+                    <li class="rule-item">
+                        <div class="rule-item__num">7.1</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                <strong>Мы обязуемся:</strong> обеспечивать
+                                работоспособность платформы, соблюдать заявленные
+                                сроки операций, защищать данные пользователей,
+                                информировать об изменениях в работе сервиса.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">7.2</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                <strong>Мы имеем право:</strong> изменять тарифы
+                                с предварительным уведомлением, приостанавливать
+                                аккаунты при подозрении на фрод, запрашивать
+                                верификацию личности.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">7.3</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                <strong>Вы обязуетесь:</strong> указывать
+                                достоверные данные, соблюдать настоящие правила,
+                                хранить пароль и коды 2FA в безопасности,
+                                самостоятельно уплачивать налоги.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">7.4</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                <strong>Вы имеете право:</strong> получать
+                                поддержку, знакомиться с историей операций,
+                                запрашивать удаление персональных данных,
+                                отказываться от дополнительных услуг.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 08 -->
+            <section class="rules-section" id="s8">
+                <div class="rules-section__header">
+                    <div class="rules-section__num">08</div>
+                    <h2 class="rules-section__title">Запрещённые действия</h2>
+                </div>
+                <ul class="rules-list">
+                    <li class="rule-item rule-item--warning">
+                        <div class="rule-item__num">8.1</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Использование сервиса для <strong>отмывания денег,
+                                финансирования терроризма</strong> или иной
+                                противоправной деятельности.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item rule-item--warning">
+                        <div class="rule-item__num">8.2</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Создание нескольких аккаунтов, продажа или передача
+                                личного кабинета третьим лицам.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item rule-item--warning">
+                        <div class="rule-item__num">8.3</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Использование ботов, скриптов или сторонних
+                                программ для автоматизации операций без
+                                письменного разрешения администрации.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item rule-item--warning">
+                        <div class="rule-item__num">8.4</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Попытки взлома, DDOS-атаки, эксплуатация
+                                уязвимостей платформы, социальная инженерия в
+                                отношении сотрудников поддержки.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item rule-item--warning">
+                        <div class="rule-item__num">8.5</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Вывод средств на реквизиты третьих лиц или
+                                с использованием чужих платёжных данных.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 09 -->
+            <section class="rules-section" id="s9">
+                <div class="rules-section__header">
+                    <div class="rules-section__num">09</div>
+                    <h2 class="rules-section__title">Ответственность</h2>
+                </div>
+                <ul class="rules-list">
+                    <li class="rule-item">
+                        <div class="rule-item__num">9.1</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Платформа не несёт ответственности за действия
+                                третьих лиц, в том числе за сбои в работе
+                                партнёрских программ, банков и платёжных систем.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">9.2</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Платформа не отвечает за убытки, возникшие в
+                                результате компрометации пароля пользователя,
+                                если при этом отсутствовала двухфакторная
+                                аутентификация.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">9.3</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Максимальная ответственность платформы ограничена
+                                суммой фактического остатка на балансе пользователя
+                                на момент наступления события.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item rule-item--info">
+                        <div class="rule-item__num">9.4</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Если инцидент произошёл по вине платформы
+                                (утечка данных, ошибка в системе), средства
+                                пользователю компенсируются в полном объёме.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 10 -->
+            <section class="rules-section" id="s10">
+                <div class="rules-section__header">
+                    <div class="rules-section__num">10</div>
+                    <h2 class="rules-section__title">Персональные данные</h2>
+                </div>
+                <ul class="rules-list">
+                    <li class="rule-item">
+                        <div class="rule-item__num">10.1</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Мы собираем минимально необходимый объём персональных
+                                данных: email, телефон, данные для верификации
+                                (при необходимости).
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">10.2</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Персональные данные <strong>не передаются
+                                третьим лицам</strong>, кроме случаев, прямо
+                                предусмотренных законом или необходимых для
+                                проведения платежа.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">10.3</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Вы можете запросить экспорт или удаление своих
+                                данных через поддержку. Удаление аккаунта влечёт
+                                безвозвратную утрату истории операций.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">10.4</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Данные хранятся в зашифрованном виде в соответствии
+                                со стандартом <code>ISO 27001</code> и требованиями
+                                <code>PCI DSS Level 1</code>.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 11 -->
+            <section class="rules-section" id="s11">
+                <div class="rules-section__header">
+                    <div class="rules-section__num">11</div>
+                    <h2 class="rules-section__title">Изменение правил</h2>
+                </div>
+                <ul class="rules-list">
+                    <li class="rule-item">
+                        <div class="rule-item__num">11.1</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Платформа вправе изменять настоящие правила
+                                в одностороннем порядке.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">11.2</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Об изменениях мы уведомляем <strong>за 7 календарных
+                                дней</strong> через email и в личном кабинете.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">11.3</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Продолжение использования сервиса после вступления
+                                изменений в силу означает согласие с новой
+                                редакцией.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">11.4</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Актуальная версия правил всегда доступна на этой
+                                странице. Внизу указаны дата и номер редакции.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 12 -->
+            <section class="rules-section" id="s12">
+                <div class="rules-section__header">
+                    <div class="rules-section__num">12</div>
+                    <h2 class="rules-section__title">Контакты</h2>
+                </div>
+                <ul class="rules-list">
+                    <li class="rule-item">
+                        <div class="rule-item__num">12.1</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                <strong>Поддержка:</strong>
+                                <a href="mailto:support@bitcoin-bonus.example">support@bitcoin-bonus.example</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">12.2</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                <strong>Вопросы безопасности:</strong>
+                                <a href="mailto:security@bitcoin-bonus.example">security@bitcoin-bonus.example</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">12.3</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                <strong>Юридические вопросы:</strong>
+                                <a href="mailto:legal@bitcoin-bonus.example">legal@bitcoin-bonus.example</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li class="rule-item">
+                        <div class="rule-item__num">12.4</div>
+                        <div class="rule-item__body">
+                            <p class="rule-item__text">
+                                Ответ на любой запрос — в течение
+                                <strong>рабочего дня</strong>. Срочные вопросы
+                                решаются через чат в личном кабинете.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- CTA -->
+            <section class="cta">
+                <h2 class="cta__title">Остались вопросы по правилам?</h2>
+                <p class="cta__text">
+                    Персональный менеджер ответит на любой вопрос. Также
+                    загляните в справочный центр — там собраны ответы
+                    на самые частые вопросы.
+                </p>
+                <div class="cta__actions">
+                    <a href="help.html" class="cta__btn cta__btn--primary">
+                        Открыть справочный центр →
+                    </a>
+                    <a href="/" class="cta__btn cta__btn--ghost">
+                        Вернуться на главную
+                    </a>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+</main>
+
+<!-- ============================================================
+     ФУТЕР
+     ============================================================ -->
+<footer class="site-footer">
+    <div class="site-footer__inner">
+        <div class="site-footer__bottom">
+            <div class="site-footer__copy">
+                <span class="site-footer__copy-dot"></span>
+                © <span id="footerYear">2025</span> Bitcoin Bonus · Все права защищены
+            </div>
+            <div class="site-footer__badges">
+                <span class="site-footer__badge">SSL / TLS 1.3</span>
+                <span class="site-footer__badge">PCI DSS</span>
+                <span class="site-footer__badge">ISO 27001</span>
+                <span class="site-footer__badge">2FA</span>
+            </div>
+        </div>
+        <div class="site-footer__disclaimer">
+            Сервис оказывает услуги обработки транзитных криптовалютных переводов.
+            Курсы и комиссии рассчитываются автоматически платёжным шлюзом.
+            Все операции выполняются в соответствии с действующим законодательством.
+        </div>
+    </div>
+</footer>
+
+<script>
+(function () {
+    /* ---- Год в футере ---- */
+    var yearEl = document.getElementById('footerYear');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    /* ============================================================
+       ПОДСВЕТКА АКТИВНОЙ СЕКЦИИ В СОДЕРЖАНИИ
+       ============================================================ */
+    var sections = document.querySelectorAll('.rules-section');
+    var tocLinks = document.querySelectorAll('.toc__link');
+
+    if (sections.length && tocLinks.length && 'IntersectionObserver' in window) {
+        var linkMap = {};
+        tocLinks.forEach(function (link) {
+            var id = link.getAttribute('href').replace('#', '');
+            linkMap[id] = link;
+        });
+
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    var id = entry.target.id;
+                    tocLinks.forEach(function (l) { l.classList.remove('active'); });
+                    if (linkMap[id]) linkMap[id].classList.add('active');
+                }
+            });
+        }, {
+            rootMargin: '-90px 0px -60% 0px',
+            threshold: 0
+        });
+
+        sections.forEach(function (s) { observer.observe(s); });
+    }
+
+    /* ============================================================
+       ПЛАВНЫЙ СКРОЛЛ ПО КЛИКУ
+       ============================================================ */
+    tocLinks.forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            var href = link.getAttribute('href');
+            if (!href || href.charAt(0) !== '#') return;
+            var target = document.querySelector(href);
+            if (!target) return;
+            e.preventDefault();
+            var top = target.getBoundingClientRect().top + window.pageYOffset - 80;
+            window.scrollTo({ top: top, behavior: 'smooth' });
+            history.replaceState(null, '', href);
+        });
+    });
+})();
+</script>
+
+</body>
+</html>
