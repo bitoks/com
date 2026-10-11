@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<title>Справочный центр | Bitcoin Bonus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+/* ============================================================
+   HELP CENTER — Справочный центр
+   ============================================================ */
+
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background: #070a14;
+    color: #e8ecf4;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Фон */
+.bg-decor {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+        radial-gradient(circle at 15% 5%, rgba(247, 147, 26, 0.14), transparent 40%),
+        radial-gradient(circle at 85% 95%, rgba(34, 211, 238, 0.09), transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(247, 147, 26, 0.04), transparent 65%);
+}
+.grid-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+        linear-gradient(rgba(247, 147, 26, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(247, 147, 26, 0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(circle at 50% 30%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle at 50% 30%, #000 30%, transparent 80%);
+}
+
+/* Топ-навигация */
+.top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(7, 10, 20, 0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.top-nav__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+.top-nav__brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #e8ecf4;
+    text-decoration: none;
+    letter-spacing: -0.2px;
+    white-space: nowrap;
+}
+.top-nav__brand-icon {
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, #f7931a, #ffb04d);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: #fff;
+    box-shadow: 0 0 14px rgba(247, 147, 26, 0.45);
+    flex-shrink: 0;
+}
+.top-nav__brand span { color: #f7931a; }
+
+.top-nav__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 9px;
+    color: #b7bfcc;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+.top-nav__back:hover {
+    background: rgba(247, 147, 26, 0.08);
+    border-color: rgba(247, 147, 26, 0.35);
+    color: #f7931a;
+}
+
+/* Основной контент */
+.page {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 60px;
+}
+
+/* Hero */
+.hero {
+    padding: clamp(36px, 7vw, 72px) 0 clamp(28px, 5vw, 44px);
+    text-align: center;
+}
+.hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    background: rgba(247, 147, 26, 0.08);
+    border: 1px solid rgba(247, 147, 26, 0.25);
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #ffb04d;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+}
+.hero__badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #f7931a;
+    box-shadow: 0 0 10px #f7931a;
+    animation: badgePulse 1.8s ease-in-out infinite;
+}
+@keyframes badgePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
+.hero__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(28px, 6vw, 46px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+    color: #ffffff;
+}
+.hero__title-accent {
+    background: linear-gradient(135deg, #f7931a 0%, #ffb04d 50%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+.hero__subtitle {
+    font-size: clamp(14px, 3.6vw, 16px);
+    line-height: 1.65;
+    color: #9aa6bd;
+    max-width: 620px;
+    margin: 0 auto 28px;
+}
+
+/* Поиск */
+.search-box {
+    max-width: 620px;
+    margin: 0 auto;
+    position: relative;
+}
+.search-box__icon {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    font-size: 17px;
+    color: #8896b0;
+    pointer-events: none;
+    transition: color 0.2s;
+}
+.search-box__input {
+    width: 100%;
+    padding: 15px 20px 15px 52px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 13px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14.5px;
+    color: #e8ecf4;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.search-box__input::placeholder { color: #667285; }
+.search-box__input:focus {
+    border-color: rgba(247, 147, 26, 0.45);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 0 4px rgba(247, 147, 26, 0.08);
+}
+.search-box__input:focus + .search-box__icon,
+.search-box:focus-within .search-box__icon { color: #f7931a; }
+
+.search-box__hint {
+    margin-top: 12px;
+    font-size: 12.5px;
+    color: #667285;
+    text-align: center;
+}
+.search-box__hint a {
+    color: #8896b0;
+    text-decoration: none;
+    border-bottom: 1px dotted rgba(136, 150, 176, 0.4);
+    margin: 0 3px;
+    transition: color 0.2s;
+}
+.search-box__hint a:hover { color: #f7931a; border-bottom-color: rgba(247, 147, 26, 0.5); }
+
+/* Секции */
+.section {
+    padding: clamp(32px, 6vw, 56px) 0 0;
+}
+.section__head {
+    text-align: center;
+    margin-bottom: clamp(24px, 4vw, 36px);
+}
+.section__eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #f7931a;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+.section__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(20px, 4.6vw, 30px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+    margin: 0 0 10px;
+}
+.section__desc {
+    font-size: clamp(13px, 3.4vw, 14.5px);
+    line-height: 1.65;
+    color: #8896b0;
+    max-width: 580px;
+    margin: 0 auto;
+}
+
+/* Категории */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+}
+.category-card {
+    padding: 22px 20px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012));
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s, background 0.25s;
+    text-align: left;
+    color: inherit;
+    font-family: inherit;
+    width: 100%;
+    display: block;
+}
+.category-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(247, 147, 26, 0.32);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    background: linear-gradient(180deg, rgba(247, 147, 26, 0.05), rgba(255, 255, 255, 0.012));
+}
+.category-card__icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(247, 147, 26, 0.22), rgba(247, 147, 26, 0.06));
+    border: 1px solid rgba(247, 147, 26, 0.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    margin-bottom: 14px;
+}
+.category-card__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15.5px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 6px;
+    line-height: 1.3;
+}
+.category-card__text {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: #8896b0;
+    margin: 0 0 12px;
+}
+.category-card__count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: #f7931a;
+    letter-spacing: 0.4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.category-card__count::after {
+    content: '→';
+    transition: transform 0.2s;
+    font-family: 'Inter', sans-serif;
+}
+.category-card:hover .category-card__count::after {
+    transform: translateX(3px);
+}
+
+/* Популярные статьи */
+.popular-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 10px;
+}
+.article-link {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 18px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 13px;
+    text-decoration: none;
+    transition: all 0.2s;
+    color: inherit;
+}
+.article-link:hover {
+    background: rgba(247, 147, 26, 0.05);
+    border-color: rgba(247, 147, 26, 0.3);
+    transform: translateX(2px);
+}
+.article-link__num {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
+    background: rgba(247, 147, 26, 0.12);
+    border: 1px solid rgba(247, 147, 26, 0.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: #f7931a;
+}
+.article-link__body { flex: 1; min-width: 0; }
+.article-link__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #e8ecf4;
+    margin: 0 0 4px;
+    line-height: 1.4;
+}
+.article-link__meta {
+    font-size: 11.5px;
+    color: #667285;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.article-link__tag {
+    padding: 1px 7px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    color: #8896b0;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+/* FAQ */
+.faq {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 860px;
+    margin: 0 auto;
+}
+.faq__item {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.25s;
+}
+.faq__item[open] { border-color: rgba(247, 147, 26, 0.28); }
+
+.faq__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 16px 20px;
+    cursor: pointer;
+    list-style: none;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #e8ecf4;
+    transition: color 0.2s;
+    user-select: none;
+}
+.faq__q::-webkit-details-marker { display: none; }
+.faq__q:hover { color: #f7931a; }
+.faq__q::after {
+    content: '+';
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 700;
+    color: #f7931a;
+    background: rgba(247, 147, 26, 0.1);
+    border: 1px solid rgba(247, 147, 26, 0.28);
+    border-radius: 6px;
+    transition: transform 0.25s;
+}
+.faq__item[open] .faq__q::after {
+    content: '−';
+    transform: rotate(180deg);
+}
+.faq__a {
+    padding: 0 20px 18px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: #9aa6bd;
+}
+.faq__a p { margin: 0 0 10px; }
+.faq__a p:last-child { margin-bottom: 0; }
+.faq__a strong { color: #e8ecf4; font-weight: 600; }
+.faq__a code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    padding: 1px 7px;
+    background: rgba(247, 147, 26, 0.1);
+    border: 1px solid rgba(247, 147, 26, 0.2);
+    border-radius: 5px;
+    color: #ffb04d;
+}
+
+/* Контакты / каналы поддержки */
+.channels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+}
+.channel-card {
+    padding: 22px 20px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012));
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    display: block;
+}
+.channel-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(247, 147, 26, 0.32);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+.channel-card__icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(247, 147, 26, 0.22), rgba(247, 147, 26, 0.06));
+    border: 1px solid rgba(247, 147, 26, 0.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    margin-bottom: 14px;
+}
+.channel-card__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15.5px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 6px;
+    line-height: 1.3;
+}
+.channel-card__text {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: #8896b0;
+    margin: 0 0 12px;
+}
+.channel-card__action {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: #f7931a;
+    letter-spacing: 0.4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.channel-card__action::after {
+    content: '→';
+    transition: transform 0.2s;
+    font-family: 'Inter', sans-serif;
+}
+.channel-card:hover .channel-card__action::after {
+    transform: translateX(3px);
+}
+.channel-card__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    color: #22c55e;
+    margin-left: 8px;
+}
+.channel-card__status::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 6px #22c55e;
+    animation: badgePulse 1.8s ease-in-out infinite;
+}
+
+/* CTA */
+.cta {
+    margin-top: clamp(36px, 7vw, 56px);
+    padding: clamp(28px, 6vw, 44px) clamp(22px, 5vw, 40px);
+    background:
+        linear-gradient(135deg, rgba(247, 147, 26, 0.10), rgba(34, 211, 238, 0.04));
+    border: 1px solid rgba(247, 147, 26, 0.28);
+    border-radius: 22px;
+    text-align: center;
+}
+.cta__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(20px, 5vw, 28px);
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 12px;
+    line-height: 1.25;
+}
+.cta__text {
+    font-size: clamp(13.5px, 3.5vw, 15px);
+    line-height: 1.65;
+    color: #9aa6bd;
+    max-width: 560px;
+    margin: 0 auto 24px;
+}
+.cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+.cta__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 26px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14.5px;
+    font-weight: 600;
+    border-radius: 11px;
+    text-decoration: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+.cta__btn--primary {
+    background: linear-gradient(135deg, #f7931a, #ffb04d);
+    color: #1a1a1a;
+    box-shadow: 0 8px 24px rgba(247, 147, 26, 0.35);
+}
+.cta__btn--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(247, 147, 26, 0.5);
+    filter: brightness(1.05);
+}
+.cta__btn--ghost {
+    background: rgba(255, 255, 255, 0.04);
+    color: #e8ecf4;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+.cta__btn--ghost:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(247, 147, 26, 0.4);
+    color: #f7931a;
+}
+
+/* Футер */
+.site-footer {
+    position: relative;
+    z-index: 2;
+    margin-top: 60px;
+    background: #070a14;
+    border-top: 1px solid var(--border, rgba(255,255,255,0.06));
+    font-family: 'Inter', sans-serif;
+    color: var(--text-muted, #8896b0);
+    font-size: 13px;
+}
+.site-footer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(247, 147, 26, 0.5), transparent);
+}
+.site-footer__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 24px 16px;
+}
+.site-footer__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.site-footer__copy {
+    font-size: 12px;
+    color: var(--text-muted, #8896b0);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'JetBrains Mono', monospace;
+}
+.site-footer__copy-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 6px #22c55e;
+    flex-shrink: 0;
+}
+.site-footer__badges {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.site-footer__badge {
+    padding: 3px 8px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border, rgba(255,255,255,0.06));
+    border-radius: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--text-muted, #8896b0);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.site-footer__disclaimer {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border, rgba(255,255,255,0.06));
+    font-size: 11px;
+    line-height: 1.55;
+    color: rgba(136, 150, 176, 0.7);
+    text-align: center;
+}
+
+/* Скроллбар */
+html::-webkit-scrollbar, body::-webkit-scrollbar { width: 10px; height: 10px; }
+html::-webkit-scrollbar-track, body::-webkit-scrollbar-track { background: rgba(7, 10, 20, 0.6); }
+html::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #f7931a, #ffb04d);
+    border-radius: 8px;
+    box-shadow: inset 0 0 6px rgba(247, 147, 26, 0.5);
+}
+html::-webkit-scrollbar-thumb:hover, body::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ffb04d, #f7931a);
+}
+html, body {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(247, 147, 26, 0.7) rgba(7, 10, 20, 0.6);
+}
+
+/* Мобилки */
+@media (max-width: 640px) {
+    .top-nav__inner { padding: 12px 16px; }
+    .page { padding: 0 16px 40px; }
+    .cta__actions { flex-direction: column; }
+    .cta__btn { width: 100%; justify-content: center; }
+    .site-footer__inner { padding: 20px 16px 14px; }
+    .site-footer__bottom { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .site-footer__disclaimer { font-size: 10.5px; text-align: left; }
+    .article-link { padding: 14px 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero__badge::before, .channel-card__status::before { animation: none; }
+    .category-card, .channel-card, .article-link { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-decor"></div>
+<div class="grid-overlay"></div>
+
+<!-- ============================================================
+     ТОП-НАВИГАЦИЯ
+     ============================================================ -->
+<nav class="top-nav">
+    <div class="top-nav__inner">
+        <a href="/" class="top-nav__brand">
+            <span class="top-nav__brand-icon">₿</span>
+            Bitcoin <span>Bonus</span>
+        </a>
+        <a href="/" class="top-nav__back">← На главную</a>
+    </div>
+</nav>
+
+<main class="page">
+
+    <!-- ============================================================
+         HERO + ПОИСК
+         ============================================================ -->
+    <section class="hero">
+        <div class="hero__badge">Справочный центр</div>
+        <h1 class="hero__title">
+            Чем можем <span class="hero__title-accent">помочь?</span>
+        </h1>
+        <p class="hero__subtitle">
+            Найдите ответ на любой вопрос о сборе бонусов, обмене BTC, выплатах,
+            безопасности и работе личного кабинета.
+        </p>
+
+        <div class="search-box">
+            <input
+                type="search"
+                class="search-box__input"
+                id="helpSearch"
+                placeholder="Поиск: комиссия, вывод, верификация, бонусы..."
+                autocomplete="off"
+                aria-label="Поиск по справочному центру"
+            >
+            <span class="search-box__icon" aria-hidden="true">🔍</span>
+        </div>
+        <div class="search-box__hint">
+            Популярное:
+            <a href="#" data-search="вывод">вывод</a> ·
+            <a href="#" data-search="комиссия">комиссия</a> ·
+            <a href="#" data-search="бонусы">бонусы</a> ·
+            <a href="#" data-search="верификация">верификация</a>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         КАТЕГОРИИ
+         ============================================================ -->
+    <section class="section">
+        <div class="section__head">
+            <div class="section__eyebrow">Категории</div>
+            <h2 class="section__title">Выберите раздел</h2>
+            <p class="section__desc">
+                6 категорий, охватывающих все стороны работы с платформой —
+                от регистрации до вывода средств.
+            </p>
+        </div>
+
+        <div class="categories-grid">
+            <button class="category-card" data-topic="start">
+                <div class="category-card__icon">🚀</div>
+                <div class="category-card__title">Начало работы</div>
+                <p class="category-card__text">
+                    Регистрация, вход в кабинет, настройка профиля и первые шаги в системе.
+                </p>
+                <span class="category-card__count">12 статей</span>
+            </button>
+
+            <button class="category-card" data-topic="bonuses">
+                <div class="category-card__icon">💎</div>
+                <div class="category-card__title">Сбор бонусов</div>
+                <p class="category-card__text">
+                    Как формируются бонусы, откуда берутся, как ускорить накопление.
+                </p>
+                <span class="category-card__count">18 статей</span>
+            </button>
+
+            <button class="category-card" data-topic="exchange">
+                <div class="category-card__icon">🔄</div>
+                <div class="category-card__title">Обмен BTC → RUB</div>
+                <p class="category-card__text">
+                    Курсы, комиссии, лимиты и пошаговая инструкция по обмену криптовалюты.
+                </p>
+                <span class="category-card__count">14 статей</span>
+            </button>
+
+            <button class="category-card" data-topic="payouts">
+                <div class="category-card__icon">💳</div>
+                <div class="category-card__title">Выплаты и выводы</div>
+                <p class="category-card__text">
+                    Способы вывода, сроки зачисления, реквизиты и работа с транзитными операциями.
+                </p>
+                <span class="category-card__count">22 статьи</span>
+            </button>
+
+            <button class="category-card" data-topic="security">
+                <div class="category-card__icon">🛡️</div>
+                <div class="category-card__title">Безопасность</div>
+                <p class="category-card__text">
+                    Двухфакторная аутентификация, антифрод, защита аккаунта и данных.
+                </p>
+                <span class="category-card__count">9 статей</span>
+            </button>
+
+            <button class="category-card" data-topic="other">
+                <div class="category-card__icon">⚙️</div>
+                <div class="category-card__title">Другие вопросы</div>
+                <p class="category-card__text">
+                    Налоги, отчётность, партнёрская программа, юридические аспекты.
+                </p>
+                <span class="category-card__count">16 статей</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         ПОПУЛЯРНЫЕ СТАТЬИ
+         ============================================================ -->
+    <section class="section">
+        <div class="section__head">
+            <div class="section__eyebrow">Популярное</div>
+            <h2 class="section__title">Топ-10 статей</h2>
+            <p class="section__desc">
+                Самые часто открываемые материалы справочного центра
+                за последние 30 дней.
+            </p>
+        </div>
+
+        <div class="popular-grid">
+            <a href="#" class="article-link" data-search="комиссия">
+                <span class="article-link__num">01</span>
+                <div class="article-link__body">
+                    <div class="article-link__title">Как рассчитывается комиссия на обмен?</div>
+                    <div class="article-link__meta">
+                        <span class="article-link__tag">Обмен</span>
+                        <span>4 мин чтения</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="article-link" data-search="вывод">
+                <span class="article-link__num">02</span>
+                <div class="article-link__body">
+                    <div class="article-link__title">Сколько идут деньги на карту после вывода?</div>
+                    <div class="article-link__meta">
+                        <span class="article-link__tag">Выплаты</span>
+                        <span>3 мин чтения</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="article-link" data-search="бонусы">
+                <span class="article-link__num">03</span>
+                <div class="article-link__body">
+                    <div class="article-link__title">Откуда появляются биткоин-бонусы?</div>
+                    <div class="article-link__meta">
+                        <span class="article-link__tag">Бонусы</span>
+                        <span>5 мин чтения</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="article-link" data-search="верификация">
+                <span class="article-link__num">04</span>
+                <div class="article-link__body">
+                    <div class="article-link__title">Нужно ли проходить верификацию?</div>
+                    <div class="article-link__meta">
+                        <span class="article-link__tag">Аккаунт</span>
+                        <span>2 мин чтения</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="article-link" data-search="2fa">
+                <span class="article-link__num">05</span>
+                <div class="article-link__body">
+                    <div class="article-link__title">Как включить двухфакторную аутентификацию?</div>
+                    <div class="article-link__meta">
+                        <span class="article-link__tag">Безопасность</span>
+                        <span>3 мин чтения</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="article-link" data-search="лимит">
+                <span class="article-link__num">06</span>
+                <div class="article-link__body">
+                    <div class="article-link__title">Что делать, если превышен лимит на вывод?</div>
+                    <div class="article-link__meta">
+                        <span class="article-link__tag">Выплаты</span>
+                        <span>4 мин чтения</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="article-link" data-search="реквизиты">
+                <span class="article-link__num">07</span>
+                <div class="article-link__body">
+                    <div class="article-link__title">Как изменить реквизиты для вывода?</div>
+                    <div class="article-link__meta">
+                        <span class="article-link__tag">Выплаты</span>
+                        <span>2 мин чтения</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="article-link" data-search="налог">
+                <span class="article-link__num">08</span>
+                <div class="article-link__body">
+                    <div class="article-link__title">Как отчитываться по бонусам перед налоговой?</div>
+                    <div class="article-link__meta">
+                        <span class="article-link__tag">Налоги</span>
+                        <span>6 мин чтения</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="article-link" data-search="транзит">
+                <span class="article-link__num">09</span>
+                <div class="article-link__body">
+                    <div class="article-link__title">Что такое транзитная экспресс-ячейка?</div>
+                    <div class="article-link__meta">
+                        <span class="article-link__tag">Выплаты</span>
+                        <span>5 мин чтения</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="article-link" data-search="поддержка">
+                <span class="article-link__num">10</span>
+                <div class="article-link__body">
+                    <div class="article-link__title">Как связаться с персональным менеджером?</div>
+                    <div class="article-link__meta">
+                        <span class="article-link__tag">Поддержка</span>
+                        <span>2 мин чтения</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         FAQ
+         ============================================================ -->
+    <section class="section">
+        <div class="section__head">
+            <div class="section__eyebrow">FAQ</div>
+            <h2 class="section__title">Частые вопросы</h2>
+            <p class="section__desc">
+                Быстрые ответы на самые популярные вопросы пользователей.
+            </p>
+        </div>
+
+        <div class="faq">
+            <details class="faq__item">
+                <summary class="faq__q">Что такое Bitcoin Bonus и как это работает?</summary>
+                <div class="faq__a">
+                    <p>
+                        <strong>Bitcoin Bonus</strong> — платформа для сбора криптовалютных
+                        бонусов из партнёрских программ бирж, кэшбэк-сервисов и реферальных
+                        начислений. Мы агрегируем все источники в единый баланс, который
+                        можно обменять на рубли и вывести на карту или кошелёк.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Сколько стоит регистрация и пользование сервисом?</summary>
+                <div class="faq__a">
+                    <p>
+                        Регистрация и базовые функции — <strong>бесплатно</strong>. Комиссия
+                        удерживается только при выводе средств. Средняя комиссия на обмен
+                        BTC → RUB — 0,14% от суммы конвертации.
+                    </p>
+                    <p>
+                        Дополнительные услуги (транзитная ячейка, ускоренный вывод) оплачиваются
+                        отдельно и всегда показываются перед подтверждением операции.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Как быстро приходят деньги после запроса на вывод?</summary>
+                <div class="faq__a">
+                    <p>
+                        Стандартное время зачисления — <strong>в течение 10 минут</strong> после
+                        подтверждения операции. Если речь идёт о крупной сумме, срок может
+                        составить до 30 рабочих дней — это связано с лимитами платёжной
+                        системы массовых выплат.
+                    </p>
+                    <p>
+                        В личном кабинете всегда виден текущий статус операции и ожидаемое
+                        время зачисления.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Какая минимальная сумма для вывода?</summary>
+                <div class="faq__a">
+                    <p>
+                        Минимальная сумма зависит от выбранного способа вывода. Для банковских
+                        карт — от <code>1 000 ₽</code>, для электронных кошельков — от
+                        <code>500 ₽</code>. Внутренние переводы между пользователями не имеют
+                        минимального порога.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Как защищены мои данные и средства?</summary>
+                <div class="faq__a">
+                    <p>
+                        Все соединения идут через <strong>TLS 1.3</strong>, платёжный шлюз
+                        сертифицирован по <strong>PCI DSS</strong>, а внутренние процессы
+                        соответствуют <strong>ISO 27001</strong>. Дополнительно доступна
+                        двухфакторная аутентификация (2FA) и автоматические антифрод-проверки.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Я не вижу свой вывод. Что делать?</summary>
+                <div class="faq__a">
+                    <p>
+                        Проверьте историю операций в личном кабинете — там отображается текущий
+                        статус каждой транзакции. Если операция задерживается больше 24 часов,
+                        напишите персональному менеджеру через чат в кабинете. В большинстве
+                        случаев вопрос решается в течение часа.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Нужно ли платить налоги с бонусов?</summary>
+                <div class="faq__a">
+                    <p>
+                        Налогообложение зависит от вашего налогового статуса и юрисдикции.
+                        Мы рекомендуем консультироваться с налоговым специалистом.
+                        <strong>История операций</strong> в личном кабинете позволяет
+                        сформировать все необходимые отчёты для декларирования.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Как изменить реквизиты для вывода средств?</summary>
+                <div class="faq__a">
+                    <p>
+                        Зайдите в <strong>«Личный кабинет → Профиль → Реквизиты»</strong>,
+                        нажмите «Изменить» и укажите новые платёжные данные. После сохранения
+                        потребуется подтверждение по 2FA. Новые реквизиты вступают в силу
+                        сразу для последующих операций.
+                    </p>
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         КАНАЛЫ ПОДДЕРЖКИ
+         ============================================================ -->
+    <section class="section">
+        <div class="section__head">
+            <div class="section__eyebrow">Поддержка</div>
+            <h2 class="section__title">Свяжитесь с нами удобным способом</h2>
+            <p class="section__desc">
+                Персональный менеджер, чат на сайте и email —
+                отвечаем в течение рабочего дня.
+            </p>
+        </div>
+
+        <div class="channels-grid">
+            <a href="#" class="channel-card">
+                <div class="channel-card__icon">💬</div>
+                <div class="channel-card__title">
+                    Чат в личном кабинете
+                    <span class="channel-card__status">В сети</span>
+                </div>
+                <p class="channel-card__text">
+                    Быстрее всего — вопрос попадает напрямую вашему менеджеру.
+                    Среднее время ответа — 15 минут.
+                </p>
+                <span class="channel-card__action">Открыть чат</span>
+            </a>
+
+            <a href="mailto:support@bitcoin-bonus.example" class="channel-card">
+                <div class="channel-card__icon">✉️</div>
+                <div class="channel-card__title">Электронная почта</div>
+                <p class="channel-card__text">
+                    Для сложных вопросов, требующих приложения документов или
+                    выписок. Ответ в течение рабочего дня.
+                </p>
+                <span class="channel-card__action">Написать письмо</span>
+            </a>
+
+            <a href="#" class="channel-card">
+                <div class="channel-card__icon">✈️</div>
+                <div class="channel-card__title">
+                    Telegram-канал
+                    <span class="channel-card__status">В сети</span>
+                </div>
+                <p class="channel-card__text">
+                    Новости платформы, изменения в комиссиях, релизы обновлений
+                    и анонсы партнёрских программ.
+                </p>
+                <span class="channel-card__action">Подписаться</span>
+            </a>
+
+            <a href="#" class="channel-card">
+                <div class="channel-card__icon">📞</div>
+                <div class="channel-card__title">Обратный звонок</div>
+                <p class="channel-card__text">
+                    Для премиальных аккаунтов. Оставьте заявку — мы перезвоним
+                    в течение 30 минут в рабочее время.
+                </p>
+                <span class="channel-card__action">Заказать звонок</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         CTA
+         ============================================================ -->
+    <section class="cta">
+        <h2 class="cta__title">Не нашли ответ?</h2>
+        <p class="cta__text">
+            Напишите персональному менеджеру — он ответит на любой вопрос
+            о работе сервиса, бонусах, обменах и выводах.
+        </p>
+        <div class="cta__actions">
+            <a href="/" class="cta__btn cta__btn--primary">
+                Написать менеджеру →
+            </a>
+            <a href="/" class="cta__btn cta__btn--ghost">
+                Вернуться на главную
+            </a>
+        </div>
+    </section>
+
+</main>
+
+<!-- ============================================================
+     ФУТЕР
+     ============================================================ -->
+<footer class="site-footer">
+    <div class="site-footer__inner">
+        <div class="site-footer__bottom">
+            <div class="site-footer__copy">
+                <span class="site-footer__copy-dot"></span>
+                © <span id="footerYear">2025</span> Bitcoin Bonus · Все права защищены
+            </div>
+            <div class="site-footer__badges">
+                <span class="site-footer__badge">SSL / TLS 1.3</span>
+                <span class="site-footer__badge">PCI DSS</span>
+                <span class="site-footer__badge">ISO 27001</span>
+                <span class="site-footer__badge">2FA</span>
+            </div>
+        </div>
+        <div class="site-footer__disclaimer">
+            Сервис оказывает услуги обработки транзитных криптовалютных переводов.
+            Курсы и комиссии рассчитываются автоматически платёжным шлюзом.
+            Все операции выполняются в соответствии с действующим законодательством.
+        </div>
+    </div>
+</footer>
+
+<script>
+(function () {
+    /* ---- Год в футере ---- */
+    var yearEl = document.getElementById('footerYear');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    /* ---- Клик по подсказке поиска — подставляем слово и фокус в инпут ---- */
+    var searchInput = document.getElementById('helpSearch');
+    document.querySelectorAll('[data-search]').forEach(function (el) {
+        el.addEventListener('click', function (e) {
+            var q = el.getAttribute('data-search');
+            if (!q || !searchInput) return;
+            e.preventDefault();
+            searchInput.value = q;
+            searchInput.focus();
+            /* Здесь можно вызвать фильтрацию/поиск: */
+            console.log('[Help] поиск по запросу:', q);
+        });
+    });
+
+    /* ---- Клик по категории — скролл к FAQ или отдельной странице ---- */
+    document.querySelectorAll('.category-card').forEach(function (card) {
+        card.addEventListener('click', function () {
+            var topic = card.getAttribute('data-topic') || '';
+            console.log('[Help] категория:', topic);
+            /* Здесь можно сделать редирект на help-<topic>.html */
+        });
+    });
+
+    /* ---- Живой поиск по заголовкам статей в пределах страницы ---- */
+    if (searchInput) {
+        searchInput.addEventListener('input', function () {
+            var q = (searchInput.value || '').trim().toLowerCase();
+            var items = document.querySelectorAll('.article-link, .faq__item');
+
+            items.forEach(function (el) {
+                if (!q) { el.style.display = ''; return; }
+                var text = (el.textContent || '').toLowerCase();
+                el.style.display = text.indexOf(q) !== -1 ? '' : 'none';
+            });
+        });
+    }
+})();
+</script>
+
+</body>
+</html>
