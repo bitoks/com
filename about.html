@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<title>О сервисе | Bitcoin Bonus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+/* ============================================================
+   ABOUT PAGE — О сервисе
+   ============================================================ */
+
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background: #070a14;
+    color: #e8ecf4;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Фон */
+.bg-decor {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+        radial-gradient(circle at 15% 5%, rgba(247, 147, 26, 0.14), transparent 40%),
+        radial-gradient(circle at 85% 95%, rgba(34, 211, 238, 0.09), transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(247, 147, 26, 0.04), transparent 65%);
+}
+.grid-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+        linear-gradient(rgba(247, 147, 26, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(247, 147, 26, 0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(circle at 50% 30%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle at 50% 30%, #000 30%, transparent 80%);
+}
+
+/* Топ-навигация */
+.top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(7, 10, 20, 0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.top-nav__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+.top-nav__brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #e8ecf4;
+    text-decoration: none;
+    letter-spacing: -0.2px;
+    white-space: nowrap;
+}
+.top-nav__brand-icon {
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, #f7931a, #ffb04d);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: #fff;
+    box-shadow: 0 0 14px rgba(247, 147, 26, 0.45);
+    flex-shrink: 0;
+}
+.top-nav__brand span { color: #f7931a; }
+
+.top-nav__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 9px;
+    color: #b7bfcc;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+.top-nav__back:hover {
+    background: rgba(247, 147, 26, 0.08);
+    border-color: rgba(247, 147, 26, 0.35);
+    color: #f7931a;
+}
+
+/* Основной контент */
+.page {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 60px;
+}
+
+/* Hero */
+.hero {
+    padding: clamp(40px, 8vw, 80px) 0 clamp(32px, 6vw, 56px);
+    text-align: center;
+}
+.hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    background: rgba(247, 147, 26, 0.08);
+    border: 1px solid rgba(247, 147, 26, 0.25);
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #ffb04d;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+}
+.hero__badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #f7931a;
+    box-shadow: 0 0 10px #f7931a;
+    animation: badgePulse 1.8s ease-in-out infinite;
+}
+@keyframes badgePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
+
+.hero__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(28px, 6vw, 48px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 20px;
+    color: #ffffff;
+}
+.hero__title-accent {
+    background: linear-gradient(135deg, #f7931a 0%, #ffb04d 50%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+.hero__subtitle {
+    font-size: clamp(14px, 3.6vw, 17px);
+    line-height: 1.7;
+    color: #9aa6bd;
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+/* Секции */
+.section {
+    padding: clamp(36px, 7vw, 64px) 0 0;
+}
+.section__head {
+    text-align: center;
+    margin-bottom: clamp(28px, 5vw, 44px);
+}
+.section__eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #f7931a;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+.section__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(22px, 5vw, 34px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+    margin: 0 0 12px;
+}
+.section__desc {
+    font-size: clamp(13.5px, 3.5vw, 15px);
+    line-height: 1.65;
+    color: #8896b0;
+    max-width: 620px;
+    margin: 0 auto;
+}
+
+/* Статистика */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+}
+.stat-card {
+    padding: 24px 20px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012));
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 18px;
+    text-align: center;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+.stat-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(247, 147, 26, 0.28);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+.stat-card__value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(26px, 6vw, 38px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #f7931a, #ffb04d);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+}
+.stat-card__label {
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: #8896b0;
+    font-weight: 500;
+}
+
+/* Как это работает */
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    counter-reset: step;
+}
+.step-card {
+    position: relative;
+    padding: 28px 22px 22px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.008));
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 18px;
+    counter-increment: step;
+    transition: border-color 0.25s;
+}
+.step-card:hover { border-color: rgba(247, 147, 26, 0.28); }
+.step-card::before {
+    content: counter(step, decimal-leading-zero);
+    position: absolute;
+    top: -14px;
+    left: 22px;
+    padding: 5px 12px;
+    background: #0d1220;
+    border: 1px solid rgba(247, 147, 26, 0.35);
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #f7931a;
+    letter-spacing: 0.5px;
+}
+.step-card__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 10px;
+    line-height: 1.35;
+}
+.step-card__text {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: #8896b0;
+    margin: 0;
+}
+
+/* Преимущества */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+}
+.feature-card {
+    padding: 22px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.008));
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    transition: border-color 0.25s, transform 0.25s;
+}
+.feature-card:hover {
+    border-color: rgba(247, 147, 26, 0.28);
+    transform: translateY(-2px);
+}
+.feature-card__icon {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(247, 147, 26, 0.22), rgba(247, 147, 26, 0.06));
+    border: 1px solid rgba(247, 147, 26, 0.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+.feature-card__body { flex: 1; min-width: 0; }
+.feature-card__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 6px;
+    line-height: 1.3;
+}
+.feature-card__text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #8896b0;
+    margin: 0;
+}
+
+/* Блок безопасности */
+.security {
+    padding: clamp(24px, 5vw, 36px);
+    background:
+        linear-gradient(135deg, rgba(247, 147, 26, 0.06), rgba(34, 211, 238, 0.03));
+    border: 1px solid rgba(247, 147, 26, 0.22);
+    border-radius: 22px;
+}
+.security__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 24px;
+}
+.security__item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+.security__item-icon {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: rgba(247, 147, 26, 0.12);
+    border: 1px solid rgba(247, 147, 26, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+.security__item-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 4px;
+}
+.security__item-text {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: #8896b0;
+    margin: 0;
+}
+
+/* FAQ */
+.faq {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 860px;
+    margin: 0 auto;
+}
+.faq__item {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.25s;
+}
+.faq__item[open] { border-color: rgba(247, 147, 26, 0.28); }
+
+.faq__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 16px 20px;
+    cursor: pointer;
+    list-style: none;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #e8ecf4;
+    transition: color 0.2s;
+    user-select: none;
+}
+.faq__q::-webkit-details-marker { display: none; }
+.faq__q:hover { color: #f7931a; }
+.faq__q::after {
+    content: '+';
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 700;
+    color: #f7931a;
+    background: rgba(247, 147, 26, 0.1);
+    border: 1px solid rgba(247, 147, 26, 0.28);
+    border-radius: 6px;
+    transition: transform 0.25s;
+}
+.faq__item[open] .faq__q::after {
+    content: '−';
+    transform: rotate(180deg);
+}
+.faq__a {
+    padding: 0 20px 18px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: #9aa6bd;
+}
+.faq__a p { margin: 0 0 10px; }
+.faq__a p:last-child { margin-bottom: 0; }
+
+/* CTA */
+.cta {
+    margin-top: clamp(40px, 7vw, 64px);
+    padding: clamp(28px, 6vw, 44px) clamp(22px, 5vw, 40px);
+    background:
+        linear-gradient(135deg, rgba(247, 147, 26, 0.10), rgba(34, 211, 238, 0.04));
+    border: 1px solid rgba(247, 147, 26, 0.28);
+    border-radius: 22px;
+    text-align: center;
+}
+.cta__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(20px, 5vw, 28px);
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 12px;
+    line-height: 1.25;
+}
+.cta__text {
+    font-size: clamp(13.5px, 3.5vw, 15px);
+    line-height: 1.65;
+    color: #9aa6bd;
+    max-width: 560px;
+    margin: 0 auto 24px;
+}
+.cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+.cta__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 26px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14.5px;
+    font-weight: 600;
+    border-radius: 11px;
+    text-decoration: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+.cta__btn--primary {
+    background: linear-gradient(135deg, #f7931a, #ffb04d);
+    color: #1a1a1a;
+    box-shadow: 0 8px 24px rgba(247, 147, 26, 0.35);
+}
+.cta__btn--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(247, 147, 26, 0.5);
+    filter: brightness(1.05);
+}
+.cta__btn--ghost {
+    background: rgba(255, 255, 255, 0.04);
+    color: #e8ecf4;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+.cta__btn--ghost:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(247, 147, 26, 0.4);
+    color: #f7931a;
+}
+
+/* Футер */
+.site-footer {
+    position: relative;
+    z-index: 2;
+    margin-top: 60px;
+    background: #070a14;
+    border-top: 1px solid var(--border, rgba(255,255,255,0.06));
+    font-family: 'Inter', sans-serif;
+    color: var(--text-muted, #8896b0);
+    font-size: 13px;
+}
+.site-footer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(247, 147, 26, 0.5), transparent);
+}
+.site-footer__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 24px 16px;
+}
+.site-footer__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.site-footer__copy {
+    font-size: 12px;
+    color: var(--text-muted, #8896b0);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'JetBrains Mono', monospace;
+}
+.site-footer__copy-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 6px #22c55e;
+    flex-shrink: 0;
+}
+.site-footer__badges {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.site-footer__badge {
+    padding: 3px 8px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border, rgba(255,255,255,0.06));
+    border-radius: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--text-muted, #8896b0);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.site-footer__disclaimer {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border, rgba(255,255,255,0.06));
+    font-size: 11px;
+    line-height: 1.55;
+    color: rgba(136, 150, 176, 0.7);
+    text-align: center;
+}
+
+/* Скроллбар */
+html::-webkit-scrollbar, body::-webkit-scrollbar { width: 10px; height: 10px; }
+html::-webkit-scrollbar-track, body::-webkit-scrollbar-track { background: rgba(7, 10, 20, 0.6); }
+html::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #f7931a, #ffb04d);
+    border-radius: 8px;
+    box-shadow: inset 0 0 6px rgba(247, 147, 26, 0.5);
+}
+html::-webkit-scrollbar-thumb:hover, body::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ffb04d, #f7931a);
+}
+html, body {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(247, 147, 26, 0.7) rgba(7, 10, 20, 0.6);
+}
+
+/* Мобилки */
+@media (max-width: 640px) {
+    .top-nav__inner { padding: 12px 16px; }
+    .page { padding: 0 16px 40px; }
+    .cta__actions { flex-direction: column; }
+    .cta__btn { width: 100%; justify-content: center; }
+    .security { padding: 20px 18px; }
+    .site-footer__inner { padding: 20px 16px 14px; }
+    .site-footer__bottom { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .site-footer__disclaimer { font-size: 10.5px; text-align: left; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero__badge::before { animation: none; }
+    .stat-card, .feature-card { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-decor"></div>
+<div class="grid-overlay"></div>
+
+<!-- ============================================================
+     ТОП-НАВИГАЦИЯ
+     ============================================================ -->
+<nav class="top-nav">
+    <div class="top-nav__inner">
+        <a href="/" class="top-nav__brand">
+            <span class="top-nav__brand-icon">₿</span>
+            Bitcoin <span>Bonus</span>
+        </a>
+        <a href="/" class="top-nav__back">← На главную</a>
+    </div>
+</nav>
+
+<main class="page">
+
+    <!-- ============================================================
+         HERO
+         ============================================================ -->
+    <section class="hero">
+        <div class="hero__badge">О сервисе</div>
+        <h1 class="hero__title">
+            Собираем <span class="hero__title-accent">биткоин-бонусы</span><br>
+            со всего мира — для вас
+        </h1>
+        <p class="hero__subtitle">
+            Bitcoin Bonus — платформа для сбора криптовалютных бонусов из программ
+            лояльности бирж, кэшбэк-сервисов и партнёрских начислений. Мы помогаем
+            получать вознаграждения с минимальными комиссиями и без лишних
+            посредников.
+        </p>
+    </section>
+
+    <!-- ============================================================
+         СТАТИСТИКА
+         ============================================================ -->
+    <section class="section">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-card__value">180K+</div>
+                <div class="stat-card__label">Активных участников программы</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card__value">12.4 BTC</div>
+                <div class="stat-card__label">Собрано бонусов за последний месяц</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card__value">36</div>
+                <div class="stat-card__label">Партнёрских программ и бирж</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card__value">0,14%</div>
+                <div class="stat-card__label">Средняя комиссия на обмен</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         КАК ЭТО РАБОТАЕТ
+         ============================================================ -->
+    <section class="section">
+        <div class="section__head">
+            <div class="section__eyebrow">Как это работает</div>
+            <h2 class="section__title">Четыре шага от аккаунта до выплаты</h2>
+            <p class="section__desc">
+                Мы агрегируем бонусные программы бирж и кэшбэк-сервисов в единую
+                систему с прозрачной историей начислений.
+            </p>
+        </div>
+
+        <div class="steps-grid">
+            <div class="step-card">
+                <h3 class="step-card__title">Регистрация</h3>
+                <p class="step-card__text">
+                    Создайте личный кабинет — он нужен, чтобы отслеживать историю
+                    начислений и статус каждой выплаты.
+                </p>
+            </div>
+            <div class="step-card">
+                <h3 class="step-card__title">Сбор бонусов</h3>
+                <p class="step-card__text">
+                    Система автоматически собирает доступные бонусы с бирж и
+                    партнёрских программ, привязанных к вашему профилю.
+                </p>
+            </div>
+            <div class="step-card">
+                <h3 class="step-card__title">Обмен BTC → RUB</h3>
+                <p class="step-card__text">
+                    Когда накоплений достаточно, вы обмениваете их на рубли по
+                    актуальному курсу и минимальной комиссии.
+                </p>
+            </div>
+            <div class="step-card">
+                <h3 class="step-card__title">Получение выплаты</h3>
+                <p class="step-card__text">
+                    Средства зачисляются на указанные вами реквизиты — банковскую
+                    карту, счёт или электронный кошелёк.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         ПРЕИМУЩЕСТВА
+         ============================================================ -->
+    <section class="section">
+        <div class="section__head">
+            <div class="section__eyebrow">Преимущества</div>
+            <h2 class="section__title">Почему выбирают Bitcoin Bonus</h2>
+            <p class="section__desc">
+                Мы делаем ставку на прозрачность, скорость и минимальные издержки
+                для участников.
+            </p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-card__icon">⚡</div>
+                <div class="feature-card__body">
+                    <div class="feature-card__title">Мгновенные начисления</h3>
+                    <p class="feature-card__text">
+                        Бонусы зачисляются на баланс в течение нескольких минут
+                        после подтверждения события партнёрской программой.
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-card__icon">🔒</div>
+                <div class="feature-card__body">
+                    <div class="feature-card__title">Защищённые транзакции</h3>
+                    <p class="feature-card__text">
+                        Все операции проходят по протоколу TLS 1.3 с проверкой
+                        сертификатов и двухфакторной аутентификацией.
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-card__icon">💎</div>
+                <div class="feature-card__body">
+                    <div class="feature-card__title">Минимальные комиссии</h3>
+                    <p class="feature-card__text">
+                        Средняя комиссия на обмен BTC → RUB — 0,14%, что в 2–3
+                        раза ниже, чем на классических биржах.
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-card__icon">🌍</div>
+                <div class="feature-card__body">
+                    <div class="feature-card__title">Международные партнёры</h3>
+                    <p class="feature-card__text">
+                        Мы работаем с более чем 36 партнёрскими программами из
+                        Европы, Азии и Северной Америки.
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-card__icon">📊</div>
+                <div class="feature-card__body">
+                    <div class="feature-card__title">Полная статистика</h3>
+                    <p class="feature-card__text">
+                        В личном кабинете — история начислений, движение курсов,
+                        общая сумма собранных бонусов и прогноз выплат.
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-card__icon">🎯</div>
+                <div class="feature-card__body">
+                    <div class="feature-card__title">Персональный подход</h3>
+                    <p class="feature-card__text">
+                        Каждый участник получает сопровождение персонального
+                        менеджера и приоритетную поддержку.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         БЕЗОПАСНОСТЬ
+         ============================================================ -->
+    <section class="section">
+        <div class="security">
+            <div class="section__head" style="margin-bottom: 0;">
+                <div class="section__eyebrow">Безопасность</div>
+                <h2 class="section__title">Ваши средства под защитой</h2>
+                <p class="section__desc">
+                    Мы применяем промышленные стандарты безопасности,
+                    используемые крупнейшими криптобиржами мира.
+                </p>
+            </div>
+
+            <div class="security__grid">
+                <div class="security__item">
+                    <div class="security__item-icon">🔐</div>
+                    <div>
+                        <div class="security__item-title">Шифрование TLS 1.3</div>
+                        <p class="security__item-text">Все соединения защищены современным протоколом передачи данных.</p>
+                    </div>
+                </div>
+                <div class="security__item">
+                    <div class="security__item-icon">🛡️</div>
+                    <div>
+                        <div class="security__item-title">PCI DSS</div>
+                        <p class="security__item-text">Платёжный шлюз сертифицирован по международному стандарту безопасности карточных данных.</p>
+                    </div>
+                </div>
+                <div class="security__item">
+                    <div class="security__item-icon">✅</div>
+                    <div>
+                        <div class="security__item-title">ISO 27001</div>
+                        <p class="security__item-text">Управление информационной безопасностью соответствует международному стандарту.</p>
+                    </div>
+                </div>
+                <div class="security__item">
+                    <div class="security__item-icon">🔑</div>
+                    <div>
+                        <div class="security__item-title">2FA и антифрод</div>
+                        <p class="security__item-text">Двухфакторная аутентификация и автоматические антифрод-проверки каждой операции.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         FAQ
+         ============================================================ -->
+    <section class="section">
+        <div class="section__head">
+            <div class="section__eyebrow">FAQ</div>
+            <h2 class="section__title">Частые вопросы</h2>
+            <p class="section__desc">
+                Если не нашли ответ — напишите в поддержку из личного кабинета.
+            </p>
+        </div>
+
+        <div class="faq">
+            <details class="faq__item">
+                <summary class="faq__q">Откуда берутся бонусы?</summary>
+                <div class="faq__a">
+                    <p>
+                        Бонусы формируются из партнёрских программ криптовалютных
+                        бирж, кэшбэк-сервисов и реферальных начислений. Мы
+                        агрегируем эти источники и показываем накопления в едином
+                        балансе личного кабинета.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Сколько стоит пользование сервисом?</summary>
+                <div class="faq__a">
+                    <p>
+                        Регистрация и сбор бонусов — бесплатно. Мы удерживаем
+                        комиссию только при выводе средств. Средняя комиссия на
+                        обмен BTC → RUB — 0,14% от суммы конвертации.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">В какой валюте можно получить выплату?</summary>
+                <div class="faq__a">
+                    <p>
+                        Базовая валюта вывода — российский рубль. В отдельных
+                        случаях возможны выплаты в USD и EUR — детали уточняйте у
+                        персонального менеджера.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Как быстро приходят деньги?</summary>
+                <div class="faq__a">
+                    <p>
+                        Бонусы зачисляются на баланс в течение нескольких минут
+                        после подтверждения от партнёрской программы. Выплата на
+                        реквизиты — обычно в течение 10 минут после подтверждения
+                        операции.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Нужно ли платить налоги?</summary>
+                <div class="faq__a">
+                    <p>
+                        Порядок налогообложения зависит от вашего налогового
+                        статуса и юрисдикции. Мы рекомендуем консультироваться с
+                        налоговым специалистом. Сервис предоставляет всю
+                        необходимую отчётность по операциям в личном кабинете.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Что делать, если возникла проблема с выплатой?</summary>
+                <div class="faq__a">
+                    <p>
+                        Напишите персональному менеджеру прямо в личном кабинете —
+                        он ответит в течение рабочего дня. В большинстве случаев
+                        вопрос решается в течение часа.
+                    </p>
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         CTA
+         ============================================================ -->
+    <section class="cta">
+        <h2 class="cta__title">Начните собирать бонусы прямо сейчас</h2>
+        <p class="cta__text">
+            Создайте личный кабинет за минуту и получите доступ к 36 партнёрским
+            программам с общей суммой бонусов более 12 BTC в месяц.
+        </p>
+        <div class="cta__actions">
+            <a href="/" class="cta__btn cta__btn--primary">
+                В личный кабинет →
+            </a>
+            <a href="/" class="cta__btn cta__btn--ghost">
+                Вернуться на главную
+            </a>
+        </div>
+    </section>
+
+</main>
+
+<!-- ============================================================
+     ФУТЕР
+     ============================================================ -->
+<footer class="site-footer">
+    <div class="site-footer__inner">
+        <div class="site-footer__bottom">
+            <div class="site-footer__copy">
+                <span class="site-footer__copy-dot"></span>
+                © <span id="footerYear">2025</span> Bitcoin Bonus · Все права защищены
+            </div>
+            <div class="site-footer__badges">
+                <span class="site-footer__badge">SSL / TLS 1.3</span>
+                <span class="site-footer__badge">PCI DSS</span>
+                <span class="site-footer__badge">ISO 27001</span>
+                <span class="site-footer__badge">2FA</span>
+            </div>
+        </div>
+        <div class="site-footer__disclaimer">
+            Сервис оказывает услуги обработки транзитных криптовалютных переводов.
+            Курсы и комиссии рассчитываются автоматически платёжным шлюзом.
+            Все операции выполняются в соответствии с действующим законодательством.
+        </div>
+    </div>
+</footer>
+
+<script>
+(function () {
+    var yearEl = document.getElementById('footerYear');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+})();
+</script>
+
+</body>
+</html>
