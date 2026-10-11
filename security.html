@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<title>Безопасность | Bitcoin Bonus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+/* ============================================================
+   SECURITY PAGE — Безопасность
+   ============================================================ */
+
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background: #070a14;
+    color: #e8ecf4;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Фон */
+.bg-decor {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+        radial-gradient(circle at 15% 5%, rgba(247, 147, 26, 0.14), transparent 40%),
+        radial-gradient(circle at 85% 95%, rgba(34, 211, 238, 0.09), transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(247, 147, 26, 0.04), transparent 65%);
+}
+.grid-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+        linear-gradient(rgba(247, 147, 26, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(247, 147, 26, 0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(circle at 50% 30%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle at 50% 30%, #000 30%, transparent 80%);
+}
+
+/* Топ-навигация */
+.top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(7, 10, 20, 0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.top-nav__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+.top-nav__brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #e8ecf4;
+    text-decoration: none;
+    letter-spacing: -0.2px;
+    white-space: nowrap;
+}
+.top-nav__brand-icon {
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, #f7931a, #ffb04d);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: #fff;
+    box-shadow: 0 0 14px rgba(247, 147, 26, 0.45);
+    flex-shrink: 0;
+}
+.top-nav__brand span { color: #f7931a; }
+
+.top-nav__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 9px;
+    color: #b7bfcc;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+.top-nav__back:hover {
+    background: rgba(247, 147, 26, 0.08);
+    border-color: rgba(247, 147, 26, 0.35);
+    color: #f7931a;
+}
+
+/* Контент */
+.page {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 60px;
+}
+
+/* Hero */
+.hero {
+    padding: clamp(36px, 7vw, 72px) 0 clamp(28px, 5vw, 44px);
+    text-align: center;
+}
+.hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    background: rgba(247, 147, 26, 0.08);
+    border: 1px solid rgba(247, 147, 26, 0.25);
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #ffb04d;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+}
+.hero__badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 10px #22c55e;
+    animation: badgePulse 1.8s ease-in-out infinite;
+}
+@keyframes badgePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
+.hero__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(28px, 6vw, 46px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+    color: #ffffff;
+}
+.hero__title-accent {
+    background: linear-gradient(135deg, #f7931a 0%, #ffb04d 50%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+.hero__subtitle {
+    font-size: clamp(14px, 3.6vw, 16px);
+    line-height: 1.65;
+    color: #9aa6bd;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+/* Полоса метрик */
+.metrics-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 18px;
+    overflow: hidden;
+    margin-bottom: clamp(36px, 7vw, 56px);
+}
+.metric {
+    padding: 22px 20px;
+    background: #0a0e1a;
+    text-align: center;
+    transition: background 0.25s;
+}
+.metric:hover { background: #0d1220; }
+.metric__value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(22px, 5vw, 30px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #f7931a, #ffb04d);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+}
+.metric__value.green {
+    background: linear-gradient(135deg, #22c55e, #4ade80);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+.metric__label {
+    font-size: 11.5px;
+    line-height: 1.45;
+    color: #8896b0;
+    font-weight: 500;
+}
+
+/* Секции */
+.section {
+    padding: clamp(32px, 6vw, 52px) 0 0;
+}
+.section__head {
+    text-align: center;
+    margin-bottom: clamp(24px, 4vw, 36px);
+}
+.section__eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #f7931a;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+.section__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(20px, 4.6vw, 30px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+    margin: 0 0 10px;
+}
+.section__desc {
+    font-size: clamp(13px, 3.4vw, 14.5px);
+    line-height: 1.65;
+    color: #8896b0;
+    max-width: 620px;
+    margin: 0 auto;
+}
+
+/* Сетка технологий безопасности */
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+}
+.tech-card {
+    padding: 22px 20px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012));
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+.tech-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(247, 147, 26, 0.32);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+.tech-card__icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(247, 147, 26, 0.22), rgba(247, 147, 26, 0.06));
+    border: 1px solid rgba(247, 147, 26, 0.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    margin-bottom: 14px;
+}
+.tech-card__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15.5px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 8px;
+    line-height: 1.3;
+}
+.tech-card__text {
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #8896b0;
+    margin: 0 0 12px;
+}
+.tech-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.tech-card__tag {
+    padding: 3px 8px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 700;
+    color: #8896b0;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+/* Чек-лист пользователя */
+.checklist {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+}
+.check-item {
+    padding: 18px 20px;
+    background: linear-gradient(180deg, rgba(34, 197, 94, 0.05), rgba(255, 255, 255, 0.008));
+    border: 1px solid rgba(34, 197, 94, 0.18);
+    border-radius: 14px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    transition: transform 0.25s, border-color 0.25s;
+}
+.check-item:hover {
+    transform: translateY(-2px);
+    border-color: rgba(34, 197, 94, 0.35);
+}
+.check-item__icon {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #22c55e, #4ade80);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0a0e1a;
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+}
+.check-item__body { flex: 1; min-width: 0; }
+.check-item__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 6px;
+    line-height: 1.35;
+}
+.check-item__text {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: #9aa6bd;
+    margin: 0;
+}
+
+/* Блок про мошенничество */
+.warning-block {
+    padding: clamp(24px, 5vw, 36px);
+    background:
+        linear-gradient(135deg, rgba(255, 56, 96, 0.08), rgba(247, 147, 26, 0.04));
+    border: 1px solid rgba(255, 56, 96, 0.28);
+    border-radius: 22px;
+    position: relative;
+    overflow: hidden;
+}
+.warning-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 56, 96, 0.7), transparent);
+}
+.warning-block__header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+}
+.warning-block__icon {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(255, 56, 96, 0.24), rgba(255, 56, 96, 0.08));
+    border: 1px solid rgba(255, 56, 96, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+.warning-block__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(18px, 4.4vw, 22px);
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 4px;
+    line-height: 1.25;
+}
+.warning-block__sub {
+    font-size: 13px;
+    color: #9aa6bd;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.warning-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+}
+.warning-item {
+    padding: 16px 18px;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+}
+.warning-item__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #ff8fa0;
+    margin: 0 0 8px;
+}
+.warning-item__title::before {
+    content: '⚠';
+    font-size: 14px;
+}
+.warning-item__text {
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #b7bfcc;
+    margin: 0;
+}
+.warning-item__text strong {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* Верификация */
+.verify-flow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    counter-reset: vstep;
+}
+.verify-step {
+    padding: 24px 20px 20px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.008));
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    position: relative;
+    counter-increment: vstep;
+    transition: border-color 0.25s;
+}
+.verify-step:hover { border-color: rgba(247, 147, 26, 0.32); }
+.verify-step::before {
+    content: counter(vstep, decimal-leading-zero);
+    position: absolute;
+    top: -14px;
+    left: 20px;
+    padding: 5px 12px;
+    background: #0d1220;
+    border: 1px solid rgba(247, 147, 26, 0.35);
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #f7931a;
+    letter-spacing: 0.5px;
+}
+.verify-step__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 8px;
+    line-height: 1.35;
+}
+.verify-step__text {
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #8896b0;
+    margin: 0;
+}
+
+/* Что делать если что-то пошло не так */
+.incident-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+}
+.incident-card {
+    padding: 22px 20px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.008));
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    transition: border-color 0.25s, transform 0.25s;
+}
+.incident-card:hover {
+    border-color: rgba(247, 147, 26, 0.32);
+    transform: translateY(-2px);
+}
+.incident-card__icon {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    background: rgba(247, 147, 26, 0.12);
+    border: 1px solid rgba(247, 147, 26, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+}
+.incident-card__body { flex: 1; min-width: 0; }
+.incident-card__title {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 8px;
+    line-height: 1.35;
+}
+.incident-card__text {
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #9aa6bd;
+    margin: 0;
+}
+.incident-card__text a {
+    color: #f7931a;
+    text-decoration: none;
+    border-bottom: 1px dotted rgba(247, 147, 26, 0.5);
+    transition: border-color 0.2s;
+}
+.incident-card__text a:hover { border-bottom-color: #f7931a; }
+
+/* FAQ */
+.faq {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 860px;
+    margin: 0 auto;
+}
+.faq__item {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.25s;
+}
+.faq__item[open] { border-color: rgba(247, 147, 26, 0.28); }
+.faq__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 16px 20px;
+    cursor: pointer;
+    list-style: none;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #e8ecf4;
+    transition: color 0.2s;
+    user-select: none;
+}
+.faq__q::-webkit-details-marker { display: none; }
+.faq__q:hover { color: #f7931a; }
+.faq__q::after {
+    content: '+';
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 700;
+    color: #f7931a;
+    background: rgba(247, 147, 26, 0.1);
+    border: 1px solid rgba(247, 147, 26, 0.28);
+    border-radius: 6px;
+    transition: transform 0.25s;
+}
+.faq__item[open] .faq__q::after {
+    content: '−';
+    transform: rotate(180deg);
+}
+.faq__a {
+    padding: 0 20px 18px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: #9aa6bd;
+}
+.faq__a p { margin: 0 0 10px; }
+.faq__a p:last-child { margin-bottom: 0; }
+.faq__a strong { color: #e8ecf4; font-weight: 600; }
+.faq__a code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    padding: 1px 7px;
+    background: rgba(247, 147, 26, 0.1);
+    border: 1px solid rgba(247, 147, 26, 0.2);
+    border-radius: 5px;
+    color: #ffb04d;
+}
+
+/* CTA */
+.cta {
+    margin-top: clamp(36px, 7vw, 56px);
+    padding: clamp(28px, 6vw, 44px) clamp(22px, 5vw, 40px);
+    background:
+        linear-gradient(135deg, rgba(247, 147, 26, 0.10), rgba(34, 211, 238, 0.04));
+    border: 1px solid rgba(247, 147, 26, 0.28);
+    border-radius: 22px;
+    text-align: center;
+}
+.cta__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(20px, 5vw, 28px);
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 12px;
+    line-height: 1.25;
+}
+.cta__text {
+    font-size: clamp(13.5px, 3.5vw, 15px);
+    line-height: 1.65;
+    color: #9aa6bd;
+    max-width: 560px;
+    margin: 0 auto 24px;
+}
+.cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+.cta__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 26px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14.5px;
+    font-weight: 600;
+    border-radius: 11px;
+    text-decoration: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+.cta__btn--primary {
+    background: linear-gradient(135deg, #f7931a, #ffb04d);
+    color: #1a1a1a;
+    box-shadow: 0 8px 24px rgba(247, 147, 26, 0.35);
+}
+.cta__btn--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(247, 147, 26, 0.5);
+    filter: brightness(1.05);
+}
+.cta__btn--ghost {
+    background: rgba(255, 255, 255, 0.04);
+    color: #e8ecf4;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+.cta__btn--ghost:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(247, 147, 26, 0.4);
+    color: #f7931a;
+}
+
+/* Футер */
+.site-footer {
+    position: relative;
+    z-index: 2;
+    margin-top: 60px;
+    background: #070a14;
+    border-top: 1px solid var(--border, rgba(255,255,255,0.06));
+    font-family: 'Inter', sans-serif;
+    color: var(--text-muted, #8896b0);
+    font-size: 13px;
+}
+.site-footer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(247, 147, 26, 0.5), transparent);
+}
+.site-footer__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 24px 16px;
+}
+.site-footer__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.site-footer__copy {
+    font-size: 12px;
+    color: var(--text-muted, #8896b0);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'JetBrains Mono', monospace;
+}
+.site-footer__copy-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 6px #22c55e;
+    flex-shrink: 0;
+}
+.site-footer__badges {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.site-footer__badge {
+    padding: 3px 8px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border, rgba(255,255,255,0.06));
+    border-radius: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--text-muted, #8896b0);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.site-footer__disclaimer {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border, rgba(255,255,255,0.06));
+    font-size: 11px;
+    line-height: 1.55;
+    color: rgba(136, 150, 176, 0.7);
+    text-align: center;
+}
+
+/* Скроллбар */
+html::-webkit-scrollbar, body::-webkit-scrollbar { width: 10px; height: 10px; }
+html::-webkit-scrollbar-track, body::-webkit-scrollbar-track { background: rgba(7, 10, 20, 0.6); }
+html::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #f7931a, #ffb04d);
+    border-radius: 8px;
+    box-shadow: inset 0 0 6px rgba(247, 147, 26, 0.5);
+}
+html::-webkit-scrollbar-thumb:hover, body::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ffb04d, #f7931a);
+}
+html, body {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(247, 147, 26, 0.7) rgba(7, 10, 20, 0.6);
+}
+
+/* Мобилки */
+@media (max-width: 640px) {
+    .top-nav__inner { padding: 12px 16px; }
+    .page { padding: 0 16px 40px; }
+    .cta__actions { flex-direction: column; }
+    .cta__btn { width: 100%; justify-content: center; }
+    .site-footer__inner { padding: 20px 16px 14px; }
+    .site-footer__bottom { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .site-footer__disclaimer { font-size: 10.5px; text-align: left; }
+    .warning-block { padding: 20px 18px; }
+    .warning-block__header { gap: 12px; margin-bottom: 18px; }
+    .warning-block__icon { width: 44px; height: 44px; font-size: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero__badge::before { animation: none; }
+    .tech-card, .check-item, .incident-card, .verify-step { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-decor"></div>
+<div class="grid-overlay"></div>
+
+<!-- ============================================================
+     ТОП-НАВИГАЦИЯ
+     ============================================================ -->
+<nav class="top-nav">
+    <div class="top-nav__inner">
+        <a href="/" class="top-nav__brand">
+            <span class="top-nav__brand-icon">₿</span>
+            Bitcoin <span>Bonus</span>
+        </a>
+        <a href="/" class="top-nav__back">← На главную</a>
+    </div>
+</nav>
+
+<main class="page">
+
+    <!-- ============================================================
+         HERO
+         ============================================================ -->
+    <section class="hero">
+        <div class="hero__badge">Безопасность</div>
+        <h1 class="hero__title">
+            Ваши бонусы и данные —<br>
+            под <span class="hero__title-accent">промышленной защитой</span>
+        </h1>
+        <p class="hero__subtitle">
+            Мы применяем те же стандарты безопасности, что крупнейшие мировые
+            криптобиржи: TLS 1.3, PCI DSS, ISO 27001, 2FA, антифрод и раздельное
+            хранение средств.
+        </p>
+    </section>
+
+    <!-- ============================================================
+         МЕТРИКИ
+         ============================================================ -->
+    <section class="metrics-strip">
+        <div class="metric">
+            <div class="metric__value green">99,99%</div>
+            <div class="metric__label">Аптайм платформы</div>
+        </div>
+        <div class="metric">
+            <div class="metric__value">256-bit</div>
+            <div class="metric__label">Шифрование каналов</div>
+        </div>
+        <div class="metric">
+            <div class="metric__value">24/7</div>
+            <div class="metric__label">Мониторинг транзакций</div>
+        </div>
+        <div class="metric">
+            <div class="metric__value">0 ₽</div>
+            <div class="metric__label">Потерь пользователей за год</div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         ТЕХНОЛОГИИ ЗАЩИТЫ
+         ============================================================ -->
+    <section class="section">
+        <div class="section__head">
+            <div class="section__eyebrow">Технологии</div>
+            <h2 class="section__title">Что защищает ваши средства</h2>
+            <p class="section__desc">
+                Многоуровневая система защиты на каждом этапе: от входа в аккаунт
+                до вывода средств на реквизиты.
+            </p>
+        </div>
+
+        <div class="tech-grid">
+            <div class="tech-card">
+                <div class="tech-card__icon">🔐</div>
+                <h3 class="tech-card__title">Шифрование TLS 1.3</h3>
+                <p class="tech-card__text">
+                    Все соединения защищены современным протоколом передачи данных.
+                    Трафик невозможно перехватить или подменить на пути к серверу.
+                </p>
+                <div class="tech-card__tags">
+                    <span class="tech-card__tag">TLS 1.3</span>
+                    <span class="tech-card__tag">AES-256</span>
+                </div>
+            </div>
+
+            <div class="tech-card">
+                <div class="tech-card__icon">🛡️</div>
+                <h3 class="tech-card__title">PCI DSS Level 1</h3>
+                <p class="tech-card__text">
+                    Платёжный шлюз сертифицирован по международному стандарту
+                    безопасности карточных данных. Ваши реквизиты не хранятся
+                    на наших серверах.
+                </p>
+                <div class="tech-card__tags">
+                    <span class="tech-card__tag">PCI DSS L1</span>
+                    <span class="tech-card__tag">3-D Secure</span>
+                </div>
+            </div>
+
+            <div class="tech-card">
+                <div class="tech-card__icon">✅</div>
+                <h3 class="tech-card__title">ISO 27001</h3>
+                <p class="tech-card__text">
+                    Управление информационной безопасностью соответствует
+                    международному стандарту. Регулярные внутренние и внешние
+                    аудиты процессов.
+                </p>
+                <div class="tech-card__tags">
+                    <span class="tech-card__tag">ISO 27001</span>
+                    <span class="tech-card__tag">SOC 2</span>
+                </div>
+            </div>
+
+            <div class="tech-card">
+                <div class="tech-card__icon">🔑</div>
+                <h3 class="tech-card__title">Двухфакторная аутентификация</h3>
+                <p class="tech-card__text">
+                    2FA через TOTP-приложение или SMS. Дополнительный уровень защиты
+                    даже в случае, если пароль был скомпрометирован.
+                </p>
+                <div class="tech-card__tags">
+                    <span class="tech-card__tag">TOTP</span>
+                    <span class="tech-card__tag">SMS</span>
+                </div>
+            </div>
+
+            <div class="tech-card">
+                <div class="tech-card__icon">👁️</div>
+                <h3 class="tech-card__title">Антифрод-мониторинг 24/7</h3>
+                <p class="tech-card__text">
+                    Автоматические алгоритмы анализируют каждую операцию.
+                    Подозрительные транзакции блокируются до подтверждения
+                    владельцем.
+                </p>
+                <div class="tech-card__tags">
+                    <span class="tech-card__tag">ML-модели</span>
+                    <span class="tech-card__tag">24/7</span>
+                </div>
+            </div>
+
+            <div class="tech-card">
+                <div class="tech-card__icon">🏦</div>
+                <h3 class="tech-card__title">Раздельное хранение</h3>
+                <p class="tech-card__text">
+                    Пользовательские средства хранятся отдельно от операционных.
+                    Большая часть активов — в cold storage с мультиподписью.
+                </p>
+                <div class="tech-card__tags">
+                    <span class="tech-card__tag">Cold storage</span>
+                    <span class="tech-card__tag">Multisig</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         ЧЕК-ЛИСТ ПОЛЬЗОВАТЕЛЯ
+         ============================================================ -->
+    <section class="section">
+        <div class="section__head">
+            <div class="section__eyebrow">Ваша часть</div>
+            <h2 class="section__title">Что можете сделать вы</h2>
+            <p class="section__desc">
+                6 простых привычек, которые снижают риск потерять доступ
+                или средства до нуля.
+            </p>
+        </div>
+
+        <div class="checklist">
+            <div class="check-item">
+                <div class="check-item__icon">✓</div>
+                <div class="check-item__body">
+                    <div class="check-item__title">Включите 2FA</div>
+                    <p class="check-item__text">
+                        Даже если пароль украдут — войти без второго фактора не получится.
+                        Настройка занимает 2 минуты в личном кабинете.
+                    </p>
+                </div>
+            </div>
+
+            <div class="check-item">
+                <div class="check-item__icon">✓</div>
+                <div class="check-item__body">
+                    <div class="check-item__title">Используйте уникальный пароль</div>
+                    <p class="check-item__text">
+                        Минимум 12 символов, буквы + цифры + спецсимволы. Не используйте
+                        тот же пароль, что на других сайтах.
+                    </p>
+                </div>
+            </div>
+
+            <div class="check-item">
+                <div class="check-item__icon">✓</div>
+                <div class="check-item__body">
+                    <div class="check-item__title">Проверяйте адрес сайта</div>
+                    <p class="check-item__text">
+                        Всегда вводите адрес вручную. Не переходите по ссылкам из
+                        подозрительных писем и сообщений в мессенджерах.
+                    </p>
+                </div>
+            </div>
+
+            <div class="check-item">
+                <div class="check-item__icon">✓</div>
+                <div class="check-item__body">
+                    <div class="check-item__title">Не сообщайте коды из SMS</div>
+                    <p class="check-item__text">
+                        Настоящая поддержка никогда не запрашивает коды подтверждения,
+                        пароли или данные карт. Мы уже видим вашу операцию в системе.
+                    </p>
+                </div>
+            </div>
+
+            <div class="check-item">
+                <div class="check-item__icon">✓</div>
+                <div class="check-item__body">
+                    <div class="check-item__title">Обновляйте браузер и ОС</div>
+                    <p class="check-item__text">
+                        Свежие версии закрывают известные уязвимости. Автообновление
+                        включено по умолчанию — не отключайте его.
+                    </p>
+                </div>
+            </div>
+
+            <div class="check-item">
+                <div class="check-item__icon">✓</div>
+                <div class="check-item__body">
+                    <div class="check-item__title">Проверяйте историю операций</div>
+                    <p class="check-item__text">
+                        Раз в неделю открывайте личный кабинет и просматривайте
+                        список транзакций. Любую неизвестную операцию можно
+                        отменить через поддержку.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         МОШЕННИЧЕСТВО
+         ============================================================ -->
+    <section class="section">
+        <div class="section__head">
+            <div class="section__eyebrow">Осторожно</div>
+            <h2 class="section__title">Как распознать мошенников</h2>
+            <p class="section__desc">
+                Существует несколько распространённых схем обмана. Мы их
+                отслеживаем — но предупреждён значит вооружён.
+            </p>
+        </div>
+
+        <div class="warning-block">
+            <div class="warning-block__header">
+                <div class="warning-block__icon">⚠️</div>
+                <div>
+                    <h3 class="warning-block__title">Типичные приёмы мошенников</h3>
+                    <p class="warning-block__sub">
+                        Если что-то из этого вам предложили — прекратите диалог и напишите в поддержку.
+                    </p>
+                </div>
+            </div>
+
+            <div class="warning-grid">
+                <div class="warning-item">
+                    <div class="warning-item__title">Просят назвать код из SMS</div>
+                    <p class="warning-item__text">
+                        <strong>Реальная поддержка так никогда не делает.</strong>
+                        Код из SMS — последний рубеж защиты аккаунта. Никому его не сообщайте,
+                        даже если человек представился менеджером.
+                    </p>
+                </div>
+
+                <div class="warning-item">
+                    <div class="warning-item__title">Предлагают «ускорить вывод» за деньги</div>
+                    <p class="warning-item__text">
+                        Все ускорения работают через тарифы платформы и оплачиваются
+                        <strong>только внутри личного кабинета</strong>. Никаких переводов
+                        на карты частных лиц.
+                    </p>
+                </div>
+
+                <div class="warning-item">
+                    <div class="warning-item__title">Присылают ссылки на «зеркало» сайта</div>
+                    <p class="warning-item__text">
+                        Домен платформы всегда один. Любые «зеркала», «резервные входы» и
+                        «бэкап-ссылки» — фишинг. <strong>Вводите адрес вручную.</strong>
+                    </p>
+                </div>
+
+                <div class="warning-item">
+                    <div class="warning-item__title">Просят установить «специальное приложение»</div>
+                    <p class="warning-item__text">
+                        Платформа не требует установки никакого дополнительного ПО.
+                        Сторонние приложения могут перехватывать SMS и логины.
+                    </p>
+                </div>
+
+                <div class="warning-item">
+                    <div class="warning-item__title">Обещают «гарантированный доход»</div>
+                    <p class="warning-item__text">
+                        Мы не даём инвестиционных советов и не обещаем фиксированную
+                        доходность. Все начисления зависят от партнёрских программ
+                        и курса BTC.
+                    </p>
+                </div>
+
+                <div class="warning-item">
+                    <div class="warning-item__title">Требуют данные банковской карты в чате</div>
+                    <p class="warning-item__text">
+                        Все реквизиты вводятся <strong>только в защищённой форме</strong>
+                        внутри личного кабинета. В чате и по email данные карт не собираются.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         ВЕРИФИКАЦИЯ
+         ============================================================ -->
+    <section class="section">
+        <div class="section__head">
+            <div class="section__eyebrow">Верификация</div>
+            <h2 class="section__title">Как проходит подтверждение личности</h2>
+            <p class="section__desc">
+                4 шага — как на крупных биржах. Верификация нужна, чтобы защитить
+                ваш аккаунт и упростить вывод крупных сумм.
+            </p>
+        </div>
+
+        <div class="verify-flow">
+            <div class="verify-step">
+                <h3 class="verify-step__title">Email + телефон</h3>
+                <p class="verify-step__text">
+                    Базовый уровень. Подтверждение почты и номера телефона
+                    открывает доступ ко всем функциям личного кабинета.
+                </p>
+            </div>
+            <div class="verify-step">
+                <h3 class="verify-step__title">Документ</h3>
+                <p class="verify-step__text">
+                    Паспорт, ID-карта или водительское удостоверение. Проверка
+                    автоматическая, обычно занимает 2–5 минут.
+                </p>
+            </div>
+            <div class="verify-step">
+                <h3 class="verify-step__title">Селфи с документом</h3>
+                <p class="verify-step__text">
+                    Нужно для подтверждения, что документ принадлежит именно вам.
+                    Фото не сохраняется после успешной проверки.
+                </p>
+            </div>
+            <div class="verify-step">
+                <h3 class="verify-step__title">Адрес проживания</h3>
+                <p class="verify-step__text">
+                    Квитанция ЖКХ, выписка из банка или справка. Требуется только
+                    при выводе крупных сумм — от 1 000 000 ₽.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         ИНЦИДЕНТЫ
+         ============================================================ -->
+    <section class="section">
+        <div class="section__head">
+            <div class="section__eyebrow">Если что-то пошло не так</div>
+            <h2 class="section__title">Экстренные сценарии</h2>
+            <p class="section__desc">
+                Инструкции для типичных ситуаций. Если вашего случая нет —
+                сразу пишите в поддержку.
+            </p>
+        </div>
+
+        <div class="incident-grid">
+            <div class="incident-card">
+                <div class="incident-card__icon">🔓</div>
+                <div class="incident-card__body">
+                    <div class="incident-card__title">Забыл пароль</div>
+                    <p class="incident-card__text">
+                        Восстановите через «Забыли пароль?» на странице входа.
+                        Ссылка придёт на email. Если почта тоже недоступна — обратитесь
+                        в поддержку с паспортными данными.
+                    </p>
+                </div>
+            </div>
+
+            <div class="incident-card">
+                <div class="incident-card__icon">📱</div>
+                <div class="incident-card__body">
+                    <div class="incident-card__title">Потерян телефон с 2FA</div>
+                    <p class="incident-card__text">
+                        Используйте резервные коды, выданные при настройке 2FA.
+                        Если их нет — напишите в поддержку, верификация займёт 1–2 дня.
+                    </p>
+                </div>
+            </div>
+
+            <div class="incident-card">
+                <div class="incident-card__icon">🚨</div>
+                <div class="incident-card__body">
+                    <div class="incident-card__title">Вижу чужую транзакцию</div>
+                    <p class="incident-card__text">
+                        Немедленно смените пароль и отвяжите все устройства
+                        в разделе «Сессии». Напишите в поддержку — операцию
+                        можно заморозить. <a href="help.html">Инструкция →</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="incident-card">
+                <div class="incident-card__icon">⛔</div>
+                <div class="incident-card__body">
+                    <div class="incident-card__title">Подозрительное письмо</div>
+                    <p class="incident-card__text">
+                        Не переходите по ссылкам и не открывайте вложения.
+                        Перешлите письмо в поддержку — мы проверим и сообщим,
+                        если это была попытка фишинга.
+                    </p>
+                </div>
+            </div>
+
+            <div class="incident-card">
+                <div class="incident-card__icon">🔒</div>
+                <div class="incident-card__body">
+                    <div class="incident-card__title">Аккаунт заблокирован</div>
+                    <p class="incident-card__text">
+                        Автоматическая блокировка обычно связана с подозрительной
+                        активностью. Напишите в поддержку — 99% блокировок снимаются
+                        в течение часа.
+                    </p>
+                </div>
+            </div>
+
+            <div class="incident-card">
+                <div class="incident-card__icon">💳</div>
+                <div class="incident-card__body">
+                    <div class="incident-card__title">Вывод не пришёл</div>
+                    <p class="incident-card__text">
+                        Проверьте статус в истории операций. Если прошло больше
+                        24 часов — обратитесь к персональному менеджеру. Комиссия
+                        за отклонённую операцию возвращается автоматически.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         FAQ
+         ============================================================ -->
+    <section class="section">
+        <div class="section__head">
+            <div class="section__eyebrow">FAQ</div>
+            <h2 class="section__title">Частые вопросы о безопасности</h2>
+            <p class="section__desc">
+                Если не нашли ответ — пишите в поддержку из личного кабинета.
+            </p>
+        </div>
+
+        <div class="faq">
+            <details class="faq__item">
+                <summary class="faq__q">Храните ли вы мои платёжные данные?</summary>
+                <div class="faq__a">
+                    <p>
+                        Нет. Реквизиты карт обрабатываются платёжным шлюзом,
+                        сертифицированным по <strong>PCI DSS Level 1</strong>, и не
+                        попадают на серверы платформы. Мы видим только маску карты
+                        (последние 4 цифры) для истории операций.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Обязательно ли включать 2FA?</summary>
+                <div class="faq__a">
+                    <p>
+                        Для обычных операций — нет, для вывода крупных сумм — да.
+                        Мы <strong>настоятельно рекомендуем</strong> включить 2FA
+                        сразу после регистрации: это снижает риск потери средств
+                        практически до нуля.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Что делать, если получил фишинговое письмо?</summary>
+                <div class="faq__a">
+                    <p>
+                        Не открывайте ссылки и вложения. Перешлите письмо в поддержку
+                        через форму в личном кабинете или на <code>support@bitcoin-bonus.example</code>.
+                        Мы отслеживаем такие письма и передаём информацию в
+                        соответствующие органы.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Как часто нужно менять пароль?</summary>
+                <div class="faq__a">
+                    <p>
+                        Раз в <strong>6–12 месяцев</strong>. Обязательно — если вы
+                        заметили подозрительную активность, входили в аккаунт с
+                        чужого устройства или получили уведомление об утечке
+                        пароля от менеджера паролей.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Кто имеет доступ к моим средствам?</summary>
+                <div class="faq__a">
+                    <p>
+                        Только вы. Платформа не может распоряжаться средствами
+                        пользователей — все операции требуют вашего подтверждения
+                        через 2FA. Даже сотрудники поддержки не могут инициировать
+                        вывод от вашего имени.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Гарантируется ли возврат средств при взломе?</summary>
+                <div class="faq__a">
+                    <p>
+                        Если взлом произошёл по нашей вине (утечка на стороне
+                        платформы) — средства компенсируются полностью.
+                        Если из-за компрометации пароля и отсутствия 2FA —
+                        мы делаем всё возможное, чтобы остановить вывод,
+                        но 100% гарантии дать нельзя.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Куда жаловаться на мошенников?</summary>
+                <div class="faq__a">
+                    <p>
+                        Сообщите в нашу поддержку через личный кабинет или на
+                        <code>security@bitcoin-bonus.example</code>. Если вы уже
+                        столкнулись с потерей средств — обратитесь в банк и в
+                        полицию по месту жительства.
+                    </p>
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         CTA
+         ============================================================ -->
+    <section class="cta">
+        <h2 class="cta__title">Остались вопросы по безопасности?</h2>
+        <p class="cta__text">
+            Персональный менеджер ответит на любой вопрос и поможет настроить
+            2FA, восстановить доступ или разобраться с подозрительной активностью.
+        </p>
+        <div class="cta__actions">
+            <a href="/" class="cta__btn cta__btn--primary">
+                Связаться с поддержкой →
+            </a>
+            <a href="help.html" class="cta__btn cta__btn--ghost">
+                Открыть справочный центр
+            </a>
+        </div>
+    </section>
+
+</main>
+
+<!-- ============================================================
+     ФУТЕР
+     ============================================================ -->
+<footer class="site-footer">
+    <div class="site-footer__inner">
+        <div class="site-footer__bottom">
+            <div class="site-footer__copy">
+                <span class="site-footer__copy-dot"></span>
+                © <span id="footerYear">2025</span> Bitcoin Bonus · Все права защищены
+            </div>
+            <div class="site-footer__badges">
+                <span class="site-footer__badge">SSL / TLS 1.3</span>
+                <span class="site-footer__badge">PCI DSS</span>
+                <span class="site-footer__badge">ISO 27001</span>
+                <span class="site-footer__badge">2FA</span>
+            </div>
+        </div>
+        <div class="site-footer__disclaimer">
+            Сервис оказывает услуги обработки транзитных криптовалютных переводов.
+            Курсы и комиссии рассчитываются автоматически платёжным шлюзом.
+            Все операции выполняются в соответствии с действующим законодательством.
+        </div>
+    </div>
+</footer>
+
+<script>
+(function () {
+    var yearEl = document.getElementById('footerYear');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+})();
+</script>
+
+</body>
+</html>
