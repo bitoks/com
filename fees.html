@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<title>Комиссии | Bitcoin Bonus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+/* ============================================================
+   FEES PAGE — Комиссии
+   ============================================================ */
+
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background: #070a14;
+    color: #e8ecf4;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Фон */
+.bg-decor {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+        radial-gradient(circle at 15% 5%, rgba(247, 147, 26, 0.14), transparent 40%),
+        radial-gradient(circle at 85% 95%, rgba(34, 211, 238, 0.09), transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(247, 147, 26, 0.04), transparent 65%);
+}
+.grid-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+        linear-gradient(rgba(247, 147, 26, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(247, 147, 26, 0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(circle at 50% 30%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle at 50% 30%, #000 30%, transparent 80%);
+}
+
+/* Топ-навигация */
+.top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(7, 10, 20, 0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.top-nav__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+.top-nav__brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #e8ecf4;
+    text-decoration: none;
+    letter-spacing: -0.2px;
+    white-space: nowrap;
+}
+.top-nav__brand-icon {
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, #f7931a, #ffb04d);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: #fff;
+    box-shadow: 0 0 14px rgba(247, 147, 26, 0.45);
+    flex-shrink: 0;
+}
+.top-nav__brand span { color: #f7931a; }
+
+.top-nav__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 9px;
+    color: #b7bfcc;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+.top-nav__back:hover {
+    background: rgba(247, 147, 26, 0.08);
+    border-color: rgba(247, 147, 26, 0.35);
+    color: #f7931a;
+}
+
+/* Контент */
+.page {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 60px;
+}
+
+/* Hero */
+.hero {
+    padding: clamp(36px, 7vw, 72px) 0 clamp(28px, 5vw, 44px);
+    text-align: center;
+}
+.hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    background: rgba(247, 147, 26, 0.08);
+    border: 1px solid rgba(247, 147, 26, 0.25);
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #ffb04d;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+}
+.hero__badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #f7931a;
+    box-shadow: 0 0 10px #f7931a;
+    animation: badgePulse 1.8s ease-in-out infinite;
+}
+@keyframes badgePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
+.hero__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(28px, 6vw, 46px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+    color: #ffffff;
+}
+.hero__title-accent {
+    background: linear-gradient(135deg, #f7931a 0%, #ffb04d 50%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+.hero__subtitle {
+    font-size: clamp(14px, 3.6vw, 16px);
+    line-height: 1.65;
+    color: #9aa6bd;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+/* Карточки ключевых комиссий */
+.key-fees {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    margin-bottom: clamp(36px, 7vw, 56px);
+}
+.key-fee {
+    padding: 26px 22px;
+    background:
+        linear-gradient(180deg, rgba(247, 147, 26, 0.06), rgba(255, 255, 255, 0.012));
+    border: 1px solid rgba(247, 147, 26, 0.22);
+    border-radius: 18px;
+    text-align: center;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    position: relative;
+    overflow: hidden;
+}
+.key-fee::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #f7931a, transparent);
+    opacity: 0.7;
+}
+.key-fee:hover {
+    transform: translateY(-3px);
+    border-color: rgba(247, 147, 26, 0.42);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+.key-fee__label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #8896b0;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+.key-fee__value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(28px, 6.5vw, 40px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #f7931a, #ffb04d);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+}
+.key-fee__desc {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #8896b0;
+}
+
+/* Секции */
+.section {
+    padding: clamp(32px, 6vw, 52px) 0 0;
+}
+.section__head {
+    text-align: center;
+    margin-bottom: clamp(24px, 4vw, 36px);
+}
+.section__eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #f7931a;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+.section__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(20px, 4.6vw, 30px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+    margin: 0 0 10px;
+}
+.section__desc {
+    font-size: clamp(13px, 3.4vw, 14.5px);
+    line-height: 1.65;
+    color: #8896b0;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Табы */
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+.tab {
+    padding: 9px 18px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 100px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #b7bfcc;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+.tab:hover {
+    background: rgba(247, 147, 26, 0.06);
+    border-color: rgba(247, 147, 26, 0.28);
+    color: #f7931a;
+}
+.tab.active {
+    background: linear-gradient(135deg, #f7931a, #ffb04d);
+    border-color: transparent;
+    color: #1a1a1a;
+    box-shadow: 0 6px 20px rgba(247, 147, 26, 0.35);
+}
+
+/* Таблица */
+.fee-table-wrap {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.008));
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 18px;
+    overflow: hidden;
+}
+.fee-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+}
+.fee-table thead {
+    background: rgba(255, 255, 255, 0.025);
+}
+.fee-table th {
+    padding: 16px 18px;
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #8896b0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    white-space: nowrap;
+}
+.fee-table th:not(:first-child),
+.fee-table td:not(:first-child) {
+    text-align: right;
+}
+.fee-table td {
+    padding: 16px 18px;
+    color: #e8ecf4;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.045);
+    vertical-align: middle;
+}
+.fee-table tbody tr:last-child td {
+    border-bottom: none;
+}
+.fee-table tbody tr {
+    transition: background 0.15s;
+}
+.fee-table tbody tr:hover {
+    background: rgba(247, 147, 26, 0.035);
+}
+
+.fee-table .tier-name {
+    font-weight: 600;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.fee-table .tier-name .tier-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 5px;
+    background: rgba(247, 147, 26, 0.14);
+    color: #ffb04d;
+    letter-spacing: 0.3px;
+}
+.fee-table .tier-name .tier-badge.green {
+    background: rgba(34, 197, 94, 0.14);
+    color: #22c55e;
+}
+.fee-table .tier-name .tier-badge.blue {
+    background: rgba(34, 211, 238, 0.14);
+    color: #22d3ee;
+}
+.fee-table .fee-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+    font-weight: 600;
+    color: #ffffff;
+}
+.fee-table .fee-value.accent {
+    color: #f7931a;
+}
+.fee-table .fee-value.muted {
+    color: #8896b0;
+}
+.fee-table .fee-sub {
+    display: block;
+    font-size: 11px;
+    color: #667285;
+    margin-top: 3px;
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+    font-variant-numeric: normal;
+}
+
+/* Калькулятор */
+.calc {
+    padding: clamp(22px, 5vw, 32px);
+    background:
+        linear-gradient(135deg, rgba(247, 147, 26, 0.06), rgba(34, 211, 238, 0.025));
+    border: 1px solid rgba(247, 147, 26, 0.22);
+    border-radius: 22px;
+}
+.calc__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+@media (min-width: 720px) {
+    .calc__grid {
+        grid-template-columns: 1fr 1fr;
+        align-items: end;
+    }
+}
+.calc__field label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #8896b0;
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
+}
+.calc__input-wrap {
+    position: relative;
+}
+.calc__input {
+    width: 100%;
+    padding: 14px 56px 14px 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+}
+.calc__input:focus {
+    border-color: rgba(247, 147, 26, 0.45);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 0 0 4px rgba(247, 147, 26, 0.08);
+}
+.calc__suffix {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: #8896b0;
+    pointer-events: none;
+}
+.calc__presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+}
+.calc__preset {
+    padding: 5px 11px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 7px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: #8896b0;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.calc__preset:hover {
+    background: rgba(247, 147, 26, 0.1);
+    border-color: rgba(247, 147, 26, 0.3);
+    color: #f7931a;
+}
+
+.calc__results {
+    margin-top: 22px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 14px;
+}
+.calc__result {
+    padding: 18px;
+    background: rgba(0, 0, 0, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 14px;
+}
+.calc__result-label {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #8896b0;
+    letter-spacing: 0.3px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+}
+.calc__result-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(20px, 4.5vw, 26px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+}
+.calc__result-value.accent {
+    background: linear-gradient(135deg, #f7931a, #ffb04d);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+.calc__result-value.green { color: #22c55e; }
+.calc__result-sub {
+    display: block;
+    margin-top: 6px;
+    font-size: 11.5px;
+    color: #667285;
+}
+
+/* Сравнение */
+.compare-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+}
+.compare-card {
+    padding: 22px 20px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.008));
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    position: relative;
+    transition: transform 0.25s, border-color 0.25s;
+}
+.compare-card.best {
+    border-color: rgba(247, 147, 26, 0.4);
+    background: linear-gradient(180deg, rgba(247, 147, 26, 0.07), rgba(255, 255, 255, 0.012));
+}
+.compare-card.best::before {
+    content: 'Лучшее';
+    position: absolute;
+    top: -9px;
+    right: 16px;
+    padding: 3px 9px;
+    background: linear-gradient(135deg, #f7931a, #ffb04d);
+    color: #1a1a1a;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+.compare-card:hover { transform: translateY(-3px); }
+.compare-card__name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 14px;
+    line-height: 1.3;
+}
+.compare-card__row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 0;
+    font-size: 13px;
+    color: #8896b0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.compare-card__row:last-child { border-bottom: none; }
+.compare-card__row span:last-child {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    color: #ffffff;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+}
+.compare-card__row span:last-child.accent { color: #f7931a; }
+
+/* FAQ */
+.faq {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 860px;
+    margin: 0 auto;
+}
+.faq__item {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.25s;
+}
+.faq__item[open] { border-color: rgba(247, 147, 26, 0.28); }
+.faq__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 16px 20px;
+    cursor: pointer;
+    list-style: none;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #e8ecf4;
+    transition: color 0.2s;
+    user-select: none;
+}
+.faq__q::-webkit-details-marker { display: none; }
+.faq__q:hover { color: #f7931a; }
+.faq__q::after {
+    content: '+';
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 700;
+    color: #f7931a;
+    background: rgba(247, 147, 26, 0.1);
+    border: 1px solid rgba(247, 147, 26, 0.28);
+    border-radius: 6px;
+    transition: transform 0.25s;
+}
+.faq__item[open] .faq__q::after {
+    content: '−';
+    transform: rotate(180deg);
+}
+.faq__a {
+    padding: 0 20px 18px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: #9aa6bd;
+}
+.faq__a p { margin: 0 0 10px; }
+.faq__a p:last-child { margin-bottom: 0; }
+.faq__a strong { color: #e8ecf4; font-weight: 600; }
+.faq__a code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    padding: 1px 7px;
+    background: rgba(247, 147, 26, 0.1);
+    border: 1px solid rgba(247, 147, 26, 0.2);
+    border-radius: 5px;
+    color: #ffb04d;
+}
+
+/* CTA */
+.cta {
+    margin-top: clamp(36px, 7vw, 56px);
+    padding: clamp(28px, 6vw, 44px) clamp(22px, 5vw, 40px);
+    background:
+        linear-gradient(135deg, rgba(247, 147, 26, 0.10), rgba(34, 211, 238, 0.04));
+    border: 1px solid rgba(247, 147, 26, 0.28);
+    border-radius: 22px;
+    text-align: center;
+}
+.cta__title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(20px, 5vw, 28px);
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 12px;
+    line-height: 1.25;
+}
+.cta__text {
+    font-size: clamp(13.5px, 3.5vw, 15px);
+    line-height: 1.65;
+    color: #9aa6bd;
+    max-width: 560px;
+    margin: 0 auto 24px;
+}
+.cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+.cta__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 26px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14.5px;
+    font-weight: 600;
+    border-radius: 11px;
+    text-decoration: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+.cta__btn--primary {
+    background: linear-gradient(135deg, #f7931a, #ffb04d);
+    color: #1a1a1a;
+    box-shadow: 0 8px 24px rgba(247, 147, 26, 0.35);
+}
+.cta__btn--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(247, 147, 26, 0.5);
+    filter: brightness(1.05);
+}
+.cta__btn--ghost {
+    background: rgba(255, 255, 255, 0.04);
+    color: #e8ecf4;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+.cta__btn--ghost:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(247, 147, 26, 0.4);
+    color: #f7931a;
+}
+
+/* Футер */
+.site-footer {
+    position: relative;
+    z-index: 2;
+    margin-top: 60px;
+    background: #070a14;
+    border-top: 1px solid var(--border, rgba(255,255,255,0.06));
+    font-family: 'Inter', sans-serif;
+    color: var(--text-muted, #8896b0);
+    font-size: 13px;
+}
+.site-footer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(247, 147, 26, 0.5), transparent);
+}
+.site-footer__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 24px 16px;
+}
+.site-footer__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.site-footer__copy {
+    font-size: 12px;
+    color: var(--text-muted, #8896b0);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'JetBrains Mono', monospace;
+}
+.site-footer__copy-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 6px #22c55e;
+    flex-shrink: 0;
+}
+.site-footer__badges {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.site-footer__badge {
+    padding: 3px 8px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border, rgba(255,255,255,0.06));
+    border-radius: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--text-muted, #8896b0);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.site-footer__disclaimer {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border, rgba(255,255,255,0.06));
+    font-size: 11px;
+    line-height: 1.55;
+    color: rgba(136, 150, 176, 0.7);
+    text-align: center;
+}
+
+/* Скроллбар */
+html::-webkit-scrollbar, body::-webkit-scrollbar { width: 10px; height: 10px; }
+html::-webkit-scrollbar-track, body::-webkit-scrollbar-track { background: rgba(7, 10, 20, 0.6); }
+html::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #f7931a, #ffb04d);
+    border-radius: 8px;
+    box-shadow: inset 0 0 6px rgba(247, 147, 26, 0.5);
+}
+html::-webkit-scrollbar-thumb:hover, body::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ffb04d, #f7931a);
+}
+html, body {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(247, 147, 26, 0.7) rgba(7, 10, 20, 0.6);
+}
+
+/* Мобилки */
+@media (max-width: 640px) {
+    .top-nav__inner { padding: 12px 16px; }
+    .page { padding: 0 16px 40px; }
+    .cta__actions { flex-direction: column; }
+    .cta__btn { width: 100%; justify-content: center; }
+    .site-footer__inner { padding: 20px 16px 14px; }
+    .site-footer__bottom { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .site-footer__disclaimer { font-size: 10.5px; text-align: left; }
+
+    /* Таблица → карточки на мобилке */
+    .fee-table thead { display: none; }
+    .fee-table,
+    .fee-table tbody,
+    .fee-table tr,
+    .fee-table td {
+        display: block;
+        width: 100%;
+    }
+    .fee-table tr {
+        padding: 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .fee-table tr:last-child { border-bottom: none; }
+    .fee-table td {
+        padding: 6px 0;
+        border: none;
+        text-align: left !important;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+    }
+    .fee-table td::before {
+        content: attr(data-label);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10.5px;
+        font-weight: 700;
+        letter-spacing: 0.4px;
+        color: #8896b0;
+        text-transform: uppercase;
+        flex-shrink: 0;
+    }
+    .fee-table td:first-child {
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        margin-bottom: 6px;
+    }
+    .fee-table td:first-child::before { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero__badge::before { animation: none; }
+    .key-fee, .compare-card, .tab, .fee-table tbody tr { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-decor"></div>
+<div class="grid-overlay"></div>
+
+<!-- ============================================================
+     ТОП-НАВИГАЦИЯ
+     ============================================================ -->
+<nav class="top-nav">
+    <div class="top-nav__inner">
+        <a href="/" class="top-nav__brand">
+            <span class="top-nav__brand-icon">₿</span>
+            Bitcoin <span>Bonus</span>
+        </a>
+        <a href="/" class="top-nav__back">← На главную</a>
+    </div>
+</nav>
+
+<main class="page">
+
+    <!-- ============================================================
+         HERO
+         ============================================================ -->
+    <section class="hero">
+        <div class="hero__badge">Тарифы и комиссии</div>
+        <h1 class="hero__title">
+            Прозрачные <span class="hero__title-accent">комиссии</span><br>
+            без скрытых платежей
+        </h1>
+        <p class="hero__subtitle">
+            Все тарифы видны заранее. Никаких подписок, платы за неактивность
+            или внезапных списаний — платите только за то, чем реально пользуетесь.
+        </p>
+    </section>
+
+    <!-- ============================================================
+         КЛЮЧЕВЫЕ КОМИССИИ
+         ============================================================ -->
+    <section class="key-fees">
+        <div class="key-fee">
+            <div class="key-fee__label">Обмен BTC → RUB</div>
+            <div class="key-fee__value" id="kfExchange">0,14%</div>
+            <div class="key-fee__desc">Средняя комиссия на конвертацию</div>
+        </div>
+        <div class="key-fee">
+            <div class="key-fee__label">Ввод средств</div>
+            <div class="key-fee__value">0 ₽</div>
+            <div class="key-fee__desc">Бесплатно на все способы пополнения</div>
+        </div>
+        <div class="key-fee">
+            <div class="key-fee__label">Сбор бонусов</div>
+            <div class="key-fee__value">0 ₽</div>
+            <div class="key-fee__desc">Плата за накопление бонусов не взимается</div>
+        </div>
+        <div class="key-fee">
+            <div class="key-fee__label">Вывод на карту</div>
+            <div class="key-fee__value">1,5%</div>
+            <div class="key-fee__desc">От суммы вывода, минимум 50 ₽</div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         УРОВНИ / ТАРИФЫ
+         ============================================================ -->
+    <section class="section">
+        <div class="section__head">
+            <div class="section__eyebrow">Уровни аккаунта</div>
+            <h2 class="section__title">Чем больше собираете — тем ниже комиссия</h2>
+            <p class="section__desc">
+                Уровень пересчитывается автоматически каждый месяц на основе
+                собранных бонусов. Ничего не нужно активировать вручную.
+            </p>
+        </div>
+
+        <div class="tabs" id="tierTabs">
+            <button class="tab active" data-tab="tiers">Уровни</button>
+            <button class="tab" data-tab="spot">Обмены</button>
+            <button class="tab" data-tab="payouts">Выплаты</button>
+            <button class="tab" data-tab="limits">Лимиты</button>
+        </div>
+
+        <!-- Уровни -->
+        <div class="fee-table-wrap" data-panel="tiers">
+            <table class="fee-table">
+                <thead>
+                    <tr>
+                        <th>Уровень</th>
+                        <th>Собрано за 30 дней</th>
+                        <th>Комиссия обмена</th>
+                        <th>Вывод карта</th>
+                        <th>Вывод кошелёк</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Уровень">
+                            <span class="tier-name">
+                                <span class="tier-badge">STD</span>
+                                Standard
+                            </span>
+                        </td>
+                        <td data-label="Собрано"><span class="fee-value muted">&lt; 0,01 BTC</span></td>
+                        <td data-label="Обмен"><span class="fee-value">0,20%</span></td>
+                        <td data-label="Вывод карта"><span class="fee-value">1,8%</span></td>
+                        <td data-label="Вывод кошелёк"><span class="fee-value">1,0%</span></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Уровень">
+                            <span class="tier-name">
+                                <span class="tier-badge blue">PLUS</span>
+                                Plus
+                            </span>
+                        </td>
+                        <td data-label="Собрано"><span class="fee-value muted">0,01 — 0,05 BTC</span></td>
+                        <td data-label="Обмен"><span class="fee-value">0,14%</span></td>
+                        <td data-label="Вывод карта"><span class="fee-value">1,5%</span></td>
+                        <td data-label="Вывод кошелёк"><span class="fee-value">0,8%</span></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Уровень">
+                            <span class="tier-name">
+                                <span class="tier-badge green">PRO</span>
+                                Pro
+                            </span>
+                        </td>
+                        <td data-label="Собрано"><span class="fee-value muted">0,05 — 0,2 BTC</span></td>
+                        <td data-label="Обмен"><span class="fee-value accent">0,10%</span></td>
+                        <td data-label="Вывод карта"><span class="fee-value">1,2%</span></td>
+                        <td data-label="Вывод кошелёк"><span class="fee-value">0,6%</span></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Уровень">
+                            <span class="tier-name">
+                                <span class="tier-badge green">VIP</span>
+                                VIP
+                            </span>
+                        </td>
+                        <td data-label="Собрано"><span class="fee-value muted">&gt; 0,2 BTC</span></td>
+                        <td data-label="Обмен"><span class="fee-value accent">0,07%</span></td>
+                        <td data-label="Вывод карта"><span class="fee-value accent">0,9%</span></td>
+                        <td data-label="Вывод кошелёк"><span class="fee-value accent">0,4%</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Обмены -->
+        <div class="fee-table-wrap" data-panel="spot" hidden>
+            <table class="fee-table">
+                <thead>
+                    <tr>
+                        <th>Направление</th>
+                        <th>Мин. сумма</th>
+                        <th>Макс. сумма</th>
+                        <th>Комиссия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Направление"><span class="tier-name">BTC → RUB</span></td>
+                        <td data-label="Мин."><span class="fee-value muted">0,0001 BTC</span></td>
+                        <td data-label="Макс."><span class="fee-value muted">10 BTC</span></td>
+                        <td data-label="Комиссия"><span class="fee-value accent">0,14%</span></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Направление"><span class="tier-name">BTC → USDT</span></td>
+                        <td data-label="Мин."><span class="fee-value muted">0,0001 BTC</span></td>
+                        <td data-label="Макс."><span class="fee-value muted">10 BTC</span></td>
+                        <td data-label="Комиссия"><span class="fee-value">0,10%</span></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Направление"><span class="tier-name">RUB → BTC</span></td>
+                        <td data-label="Мин."><span class="fee-value muted">1 000 ₽</span></td>
+                        <td data-label="Макс."><span class="fee-value muted">500 000 ₽</span></td>
+                        <td data-label="Комиссия"><span class="fee-value">0,18%</span></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Направление"><span class="tier-name">BTC → ETH</span></td>
+                        <td data-label="Мин."><span class="fee-value muted">0,0001 BTC</span></td>
+                        <td data-label="Макс."><span class="fee-value muted">5 BTC</span></td>
+                        <td data-label="Комиссия"><span class="fee-value">0,15%</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Выплаты -->
+        <div class="fee-table-wrap" data-panel="payouts" hidden>
+            <table class="fee-table">
+                <thead>
+                    <tr>
+                        <th>Способ вывода</th>
+                        <th>Комиссия</th>
+                        <th>Срок</th>
+                        <th>Минимум</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Способ"><span class="tier-name">💳 Банковская карта</span></td>
+                        <td data-label="Комиссия"><span class="fee-value">1,5%</span><span class="fee-sub">мин. 50 ₽</span></td>
+                        <td data-label="Срок"><span class="fee-value">до 10 мин</span></td>
+                        <td data-label="Минимум"><span class="fee-value muted">1 000 ₽</span></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Способ"><span class="tier-name">🏦 Банковский счёт</span></td>
+                        <td data-label="Комиссия"><span class="fee-value">1,2%</span><span class="fee-sub">мин. 100 ₽</span></td>
+                        <td data-label="Срок"><span class="fee-value">до 1 ч</span></td>
+                        <td data-label="Минимум"><span class="fee-value muted">3 000 ₽</span></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Способ"><span class="tier-name">📱 СБП</span></td>
+                        <td data-label="Комиссия"><span class="fee-value accent">0,8%</span></td>
+                        <td data-label="Срок"><span class="fee-value">до 5 мин</span></td>
+                        <td data-label="Минимум"><span class="fee-value muted">500 ₽</span></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Способ"><span class="tier-name">💎 Crypto-кошелёк</span></td>
+                        <td data-label="Комиссия"><span class="fee-value accent">0,4%</span></td>
+                        <td data-label="Срок"><span class="fee-value">до 15 мин</span></td>
+                        <td data-label="Минимум"><span class="fee-value muted">0,0005 BTC</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Лимиты -->
+        <div class="fee-table-wrap" data-panel="limits" hidden>
+            <table class="fee-table">
+                <thead>
+                    <tr>
+                        <th>Тип операции</th>
+                        <th>Standard</th>
+                        <th>Plus</th>
+                        <th>Pro / VIP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Операция"><span class="tier-name">Суточный вывод</span></td>
+                        <td data-label="Standard"><span class="fee-value muted">300 000 ₽</span></td>
+                        <td data-label="Plus"><span class="fee-value">1 000 000 ₽</span></td>
+                        <td data-label="Pro/VIP"><span class="fee-value accent">5 000 000 ₽</span></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Операция"><span class="tier-name">Месячный вывод</span></td>
+                        <td data-label="Standard"><span class="fee-value muted">2 000 000 ₽</span></td>
+                        <td data-label="Plus"><span class="fee-value">10 000 000 ₽</span></td>
+                        <td data-label="Pro/VIP"><span class="fee-value accent">без лимита</span></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Операция"><span class="tier-name">Макс. за одну операцию</span></td>
+                        <td data-label="Standard"><span class="fee-value muted">100 000 ₽</span></td>
+                        <td data-label="Plus"><span class="fee-value">500 000 ₽</span></td>
+                        <td data-label="Pro/VIP"><span class="fee-value accent">2 000 000 ₽</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         КАЛЬКУЛЯТОР
+         ============================================================ -->
+    <section class="section">
+        <div class="section__head">
+            <div class="section__eyebrow">Калькулятор</div>
+            <h2 class="section__title">Посчитайте комиссию заранее</h2>
+            <p class="section__desc">
+                Введите сумму вывода или обмена — калькулятор покажет
+                комиссию и то, сколько вы получите на руки.
+            </p>
+        </div>
+
+        <div class="calc">
+            <div class="calc__grid">
+                <div class="calc__field">
+                    <label for="calcAmount">Сумма операции</label>
+                    <div class="calc__input-wrap">
+                        <input
+                            type="text"
+                            inputmode="numeric"
+                            class="calc__input"
+                            id="calcAmount"
+                            value="50 000"
+                            autocomplete="off"
+                        >
+                        <span class="calc__suffix">₽</span>
+                    </div>
+                    <div class="calc__presets">
+                        <button class="calc__preset" data-amount="10000">10 000</button>
+                        <button class="calc__preset" data-amount="50000">50 000</button>
+                        <button class="calc__preset" data-amount="100000">100 000</button>
+                        <button class="calc__preset" data-amount="500000">500 000</button>
+                    </div>
+                </div>
+
+                <div class="calc__field">
+                    <label for="calcMethod">Способ вывода</label>
+                    <div class="calc__input-wrap">
+                        <select class="calc__input" id="calcMethod" style="padding-right: 16px; appearance: none; cursor: pointer;">
+                            <option value="card" data-fee="0.015">Банковская карта — 1,5%</option>
+                            <option value="account" data-fee="0.012">Банковский счёт — 1,2%</option>
+                            <option value="sbp" data-fee="0.008" selected>СБП — 0,8%</option>
+                            <option value="wallet" data-fee="0.004">Crypto-кошелёк — 0,4%</option>
+                        </select>
+                    </div>
+                    <div class="calc__presets">
+                        <span style="font-size: 11.5px; color: #667285; align-self: center;">
+                            Ставка зависит от уровня аккаунта — <a href="#" style="color: #f7931a; text-decoration: none;">подробнее</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calc__results">
+                <div class="calc__result">
+                    <div class="calc__result-label">Сумма к выводу</div>
+                    <div class="calc__result-value" id="calcAmountOut">50 000 ₽</div>
+                </div>
+                <div class="calc__result">
+                    <div class="calc__result-label">Комиссия сервиса</div>
+                    <div class="calc__result-value accent" id="calcFee">400 ₽</div>
+                    <div class="calc__result-sub" id="calcFeePct">0,80% от суммы</div>
+                </div>
+                <div class="calc__result">
+                    <div class="calc__result-label">Получите на руки</div>
+                    <div class="calc__result-value green" id="calcPayout">49 600 ₽</div>
+                    <div class="calc__result-sub">Зачисление до 10 минут</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         СРАВНЕНИЕ
+         ============================================================ -->
+    <section class="section">
+        <div class="section__head">
+            <div class="section__eyebrow">Сравнение</div>
+            <h2 class="section__title">Как мы выглядим на фоне рынка</h2>
+            <p class="section__desc">
+                Средние рыночные комиссии на обмен и вывод криптовалюты —
+                для честного сравнения.
+            </p>
+        </div>
+
+        <div class="compare-grid">
+            <div class="compare-card">
+                <div class="compare-card__name">Классические биржи</div>
+                <div class="compare-card__row"><span>Обмен</span><span>0,20 — 0,50%</span></div>
+                <div class="compare-card__row"><span>Вывод на карту</span><span>2,5 — 4%</span></div>
+                <div class="compare-card__row"><span>Срок</span><span>до 24 ч</span></div>
+                <div class="compare-card__row"><span>Минимум</span><span>5 000 ₽</span></div>
+            </div>
+
+            <div class="compare-card best">
+                <div class="compare-card__name">Bitcoin Bonus</div>
+                <div class="compare-card__row"><span>Обмен</span><span class="accent">0,14%</span></div>
+                <div class="compare-card__row"><span>Вывод на карту</span><span class="accent">1,5%</span></div>
+                <div class="compare-card__row"><span>Срок</span><span class="accent">до 10 мин</span></div>
+                <div class="compare-card__row"><span>Минимум</span><span>500 ₽</span></div>
+            </div>
+
+            <div class="compare-card">
+                <div class="compare-card__name">Обменники</div>
+                <div class="compare-card__row"><span>Обмен</span><span>1,5 — 3%</span></div>
+                <div class="compare-card__row"><span>Вывод на карту</span><span>1,0 — 2,5%</span></div>
+                <div class="compare-card__row"><span>Срок</span><span>5 — 60 мин</span></div>
+                <div class="compare-card__row"><span>Минимум</span><span>1 000 ₽</span></div>
+            </div>
+
+            <div class="compare-card">
+                <div class="compare-card__name">P2P-площадки</div>
+                <div class="compare-card__row"><span>Обмен</span><span>0,5 — 2%</span></div>
+                <div class="compare-card__row"><span>Вывод на карту</span><span>0% (P2P)</span></div>
+                <div class="compare-card__row"><span>Срок</span><span>15 мин — 2 ч</span></div>
+                <div class="compare-card__row"><span>Риск</span><span>средний</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         FAQ
+         ============================================================ -->
+    <section class="section">
+        <div class="section__head">
+            <div class="section__eyebrow">FAQ</div>
+            <h2 class="section__title">Частые вопросы о комиссиях</h2>
+            <p class="section__desc">
+                Если не нашли ответ — пишите в поддержку из личного кабинета.
+            </p>
+        </div>
+
+        <div class="faq">
+            <details class="faq__item">
+                <summary class="faq__q">Как рассчитывается комиссия на обмен BTC → RUB?</summary>
+                <div class="faq__a">
+                    <p>
+                        Комиссия — это процент от суммы обмена. Например, при обмене
+                        <code>0,01 BTC</code> по курсу <code>8 000 000 ₽/BTC</code> комиссия
+                        составит <code>0,14% × 80 000 ₽ = 112 ₽</code>.
+                    </p>
+                    <p>
+                        Никаких дополнительных фиксированных платежей нет — платите только
+                        процент. Комиссия показывается перед подтверждением операции.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Почему комиссия разная для разных способов вывода?</summary>
+                <div class="faq__a">
+                    <p>
+                        Каждый способ вывода обрабатывается разными платёжными системами
+                        со своей себестоимостью. <strong>СБП</strong> и <strong>crypto-кошельки</strong> —
+                        самые дешёвые, потому что работают без посредников. Банковские карты
+                        дороже из-за комиссий эквайринга.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Как перейти на следующий уровень?</summary>
+                <div class="faq__a">
+                    <p>
+                        Уровень пересчитывается <strong>автоматически каждый месяц</strong>
+                        на основе собранных за последние 30 дней бонусов. Как только сумма
+                        накоплений превысит порог следующего уровня — ставки снижаются
+                        без ваших действий.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Есть ли скрытые комиссии?</summary>
+                <div class="faq__a">
+                    <p>
+                        Нет. Все тарифы опубликованы на этой странице. Перед каждой
+                        операцией показывается <strong>точная сумма комиссии</strong> —
+                        вы видите её до подтверждения и можете отказаться, если что-то
+                        не устраивает.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Что такое «транзитная экспресс-ячейка» и сколько она стоит?</summary>
+                <div class="faq__a">
+                    <p>
+                        Это сервисная функция для выплат, превышающих лимиты платёжной
+                        системы массовых выплат. Через неё перевод проходит в обход
+                        стандартных ограничений. Стоимость активации — <code>2 700 ₽</code>,
+                        услуги брони — <code>2 800 ₽</code>. Все платежи видны заранее.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Как получить VIP-уровень?</summary>
+                <div class="faq__a">
+                    <p>
+                        VIP присваивается автоматически при накоплении более
+                        <code>0,2 BTC</code> за 30 дней. Альтернативный путь — корпоративные
+                        аккаунты с оборотом от <code>5 BTC/мес</code>. Для таких аккаунтов
+                        персональный менеджер рассчитывает индивидуальные условия.
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__q">Можно ли вернуть комиссию, если операция отменена?</summary>
+                <div class="faq__a">
+                    <p>
+                        Да. Если операция не была выполнена (например, транзакция
+                        отклонена банком), комиссия возвращается на баланс
+                        <strong>в течение 24 часов автоматически</strong>. Уведомление
+                        придёт в личный кабинет.
+                    </p>
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         CTA
+         ============================================================ -->
+    <section class="cta">
+        <h2 class="cta__title">Готовы начать экономить на комиссиях?</h2>
+        <p class="cta__text">
+            Зарегистрируйтесь и начните собирать бонусы по минимальным ставкам
+            с первого дня. Уровень повышается автоматически.
+        </p>
+        <div class="cta__actions">
+            <a href="/" class="cta__btn cta__btn--primary">
+                Начать собирать бонусы →
+            </a>
+            <a href="help.html" class="cta__btn cta__btn--ghost">
+                Открыть справочный центр
+            </a>
+        </div>
+    </section>
+
+</main>
+
+<!-- ============================================================
+     ФУТЕР
+     ============================================================ -->
+<footer class="site-footer">
+    <div class="site-footer__inner">
+        <div class="site-footer__bottom">
+            <div class="site-footer__copy">
+                <span class="site-footer__copy-dot"></span>
+                © <span id="footerYear">2025</span> Bitcoin Bonus · Все права защищены
+            </div>
+            <div class="site-footer__badges">
+                <span class="site-footer__badge">SSL / TLS 1.3</span>
+                <span class="site-footer__badge">PCI DSS</span>
+                <span class="site-footer__badge">ISO 27001</span>
+                <span class="site-footer__badge">2FA</span>
+            </div>
+        </div>
+        <div class="site-footer__disclaimer">
+            Сервис оказывает услуги обработки транзитных криптовалютных переводов.
+            Курсы и комиссии рассчитываются автоматически платёжным шлюзом.
+            Все операции выполняются в соответствии с действующим законодательством.
+        </div>
+    </div>
+</footer>
+
+<script>
+(function () {
+    /* ---- Год в футере ---- */
+    var yearEl = document.getElementById('footerYear');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    /* ============================================================
+       ТАБЫ (Уровни / Обмены / Выплаты / Лимиты)
+       ============================================================ */
+    var tabs = document.querySelectorAll('#tierTabs .tab');
+    var panels = document.querySelectorAll('[data-panel]');
+
+    tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+            var name = tab.getAttribute('data-tab');
+            tabs.forEach(function (t) { t.classList.remove('active'); });
+            tab.classList.add('active');
+            panels.forEach(function (p) {
+                p.hidden = p.getAttribute('data-panel') !== name;
+            });
+        });
+    });
+
+    /* ============================================================
+       КАЛЬКУЛЯТОР
+       ============================================================ */
+    var calcInput = document.getElementById('calcAmount');
+    var calcMethod = document.getElementById('calcMethod');
+    var outAmount = document.getElementById('calcAmountOut');
+    var outFee = document.getElementById('calcFee');
+    var outFeePct = document.getElementById('calcFeePct');
+    var outPayout = document.getElementById('calcPayout');
+
+    /* Храним чистое значение отдельно от форматированного */
+    var calcValue = 50000;
+
+    function formatRub(n, withSymbol) {
+        var s = Math.round(n).toLocaleString('ru-RU').replace(/\u00A0/g, ' ');
+        return withSymbol ? s + ' ₽' : s;
+    }
+
+    function parseRub(str) {
+        var clean = String(str || '').replace(/[^\d]/g, '');
+        var n = parseInt(clean, 10);
+        return isFinite(n) ? n : 0;
+    }
+
+    function updateCalc() {
+        var amount = calcValue;
+        var opt = calcMethod.options[calcMethod.selectedIndex];
+        var feePct = parseFloat(opt.getAttribute('data-fee')) || 0;
+        var feeAbs = amount * feePct;
+        var payout = Math.max(0, amount - feeAbs);
+
+        outAmount.textContent = formatRub(amount, true);
+        outFee.textContent = formatRub(feeAbs, true);
+        outFeePct.textContent = (feePct * 100).toFixed(2).replace('.', ',') + '% от суммы';
+        outPayout.textContent = formatRub(payout, true);
+    }
+
+    /* Форматирование input при вводе */
+    if (calcInput) {
+        calcInput.addEventListener('input', function () {
+            calcValue = parseRub(calcInput.value);
+            /* Обновляем отображение с пробелами, но не сбиваем курсор на пустом вводе */
+            var formatted = calcValue ? formatRub(calcValue, false) : '';
+            if (formatted !== calcInput.value) {
+                calcInput.value = formatted;
+            }
+            updateCalc();
+        });
+
+        calcInput.addEventListener('blur', function () {
+            if (!calcValue) calcValue = 0;
+            calcInput.value = formatRub(calcValue, false);
+            updateCalc();
+        });
+    }
+
+    if (calcMethod) calcMethod.addEventListener('change', updateCalc);
+
+    /* Пресеты */
+    document.querySelectorAll('.calc__preset').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var amt = parseInt(btn.getAttribute('data-amount'), 10) || 0;
+            calcValue = amt;
+            calcInput.value = formatRub(amt, false);
+            updateCalc();
+        });
+    });
+
+    /* Первичный рендер */
+    updateCalc();
+})();
+</script>
+
+</body>
+</html>
